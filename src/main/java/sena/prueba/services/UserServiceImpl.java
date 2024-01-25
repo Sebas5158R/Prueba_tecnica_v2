@@ -12,10 +12,7 @@ import sena.prueba.models.Role;
 import sena.prueba.models.User;
 import sena.prueba.repository.UserRepository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,10 +53,10 @@ public class UserServiceImpl implements UserService{
         Optional<User> userOptional = userRepository.findByEmail(email);
 
         return userOptional.map(user -> {
-            Collection<? extends GrantedAuthority> authorities = getAuthorities(user.getRoles());
-            authorities.forEach(authority -> {
-                System.out.println("Role: " + authority.getAuthority());
-            });
+//            Collection<? extends GrantedAuthority> authorities =user.getRoles();
+//            authorities.forEach(authority -> {
+//                System.out.println("Role: " + authority.getAuthority());
+//            });
             return passwordEncoder.matches(password, user.getPassword());
         }).orElse(false);
     }
