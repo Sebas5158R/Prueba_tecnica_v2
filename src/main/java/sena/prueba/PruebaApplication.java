@@ -40,7 +40,7 @@ public class PruebaApplication {
 
 
 			 Role role1  = roleRepository.save(new Role(1,"Administrador"));
-			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","CarlosGalindo8090","cc",1212121,"PASSWORD",null ));
+			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","CarlosGalindo8090","cc",1212121,"PASSWORD",null,null));
 			 user1.setRoles(Set.of(role1));
 			 User userEnd=userRepository.save(user1);
 

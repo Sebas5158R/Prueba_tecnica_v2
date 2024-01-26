@@ -35,20 +35,16 @@ public class User {
 
     @Column(name = "password", length = 120, nullable = false)
     private String password;
-
+    @Column (name ="legal_person")
+    private  Boolean legal_person;
     @ManyToMany(fetch = FetchType.EAGER , cascade =  CascadeType.ALL)
     @JoinTable (
              name="usu_rol",
-
             joinColumns =  {
-
-                     @JoinColumn (name="fk_rol")
-
+                     @JoinColumn (name="fk_user")
             },
             inverseJoinColumns = {
-                     @JoinColumn (name = "fk_producto")
-
-
+                     @JoinColumn (name = "fk_rol")
             }
     )
     private Set<Role> roles ;

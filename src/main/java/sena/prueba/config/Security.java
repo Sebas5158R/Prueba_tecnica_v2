@@ -9,6 +9,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import sena.prueba.models.Role;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -24,8 +25,7 @@ public class Security {
                         authRequest
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.POST,"/user/addFirstUser").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/user/listUsers").hasRole("SUPER_ADMINISTRADOR")
-                                .anyRequest().authenticated()
+                                .requestMatchers(HttpMethod.GET, "/user/listUsers").permitAll()
                 )
                 .formLogin(withDefaults())
                 .build();
