@@ -38,25 +38,16 @@ public class PruebaApplication {
 	 ){
 		 return args ->  {
 
-
 			 Role role1  = roleRepository.save(new Role(1,"Administrador"));
-			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","CarlosGalindo8090","cc",1212121,"PASSWORD",null,null));
+			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","CarlosGalindo8090","cc",1212121,75757,"PASSWORD",null,null));
 			 user1.setRoles(Set.of(role1));
 			 User userEnd=userRepository.save(user1);
-
 			  System.out.println("User name"+userEnd.getNames());
 			  userEnd.getRoles().forEach(
 					  a-> System.out.println("Roles"+a.getIdRole()+a.getIdRole())
 			  );
-
-
-
 			  String email = "CarlosGalindo8090";
 			 Optional<User> user2 =userRepository.findByEmail(email);
-
-
-
-
 		 };
 
 

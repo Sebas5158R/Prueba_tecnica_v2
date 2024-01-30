@@ -27,6 +27,7 @@ public class UserController {
         return userServiceImpl.addUser(user);
     }
 
+
     @GetMapping(value = "/listUsers")
     public ResponseEntity<List<User>> listUsers() {
         List<User> users = userServiceImpl.getAllUsers();
