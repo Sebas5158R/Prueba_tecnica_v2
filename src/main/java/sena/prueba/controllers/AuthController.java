@@ -27,9 +27,15 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<ReqRes> login(@RequestBody ReqRes signInRequest) {
-        System.out.println(signInRequest.getRole());
-        return ResponseEntity.ok(authService.signIn(signInRequest));
+        ReqRes response = authService.signIn(signInRequest);
+
+        if (response.getStatusCode() == 200) {
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(response.getStatusCode()).body(response);
+        }
     }
+
 
     @PostMapping("/refresh")
     public ResponseEntity<ReqRes> refreshToken(@RequestBody ReqRes refreshTokenRequest) {
