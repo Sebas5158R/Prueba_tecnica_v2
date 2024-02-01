@@ -19,7 +19,18 @@ public class Company {
         private String name_company;
     @Column(name="description_company",length = 50 , nullable = false)
         private  String description_company;
+    @Column(name ="state_company")
+        private String  state_company;
+    @Column(name="code_validation")
+        private  String codevalidation;
+
     @OneToOne
         private User user;
 
+
+/*
+y la etapa de creacion
+tambien tiene que ir el paht de la carpeta de los documentos
+aqui va el codigo de creacion para la compañia preguntar como se va a hacer
+ */
 }
