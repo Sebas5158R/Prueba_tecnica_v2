@@ -1,6 +1,7 @@
 // UserTable.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ModalRegisterEmployees from "./modalRegisterEmployees";
 
 const TableEmployees = ({ data }) => {
 
@@ -31,18 +32,16 @@ const TableEmployees = ({ data }) => {
   };
 
   return (
-    <div className="flex items-center justify-center h-full">
-      <div className="relative h-fit overflow-x-auto shadow-md sm:rounded-lg">
-        <div className="flex items-center justify-between mb-4">
+    <div className="flex items-center justify-center w-full h-full ">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <div className="flex items-center justify-between mb-4 self-center">
           <input
             type="text"
             placeholder="Search..."
             className="p-2 border border-gray-300 rounded-md"
           />
           <h1 className="text-2xl font-bold">Employee Management</h1>
-          <Link to="/add-employee" className="bg-blue-500 text-white px-4 py-2 rounded-md">
-            Add Employee
-          </Link>
+          <ModalRegisterEmployees/>
         </div>
         {currentItems.length === 0 && (
           <p className="text-gray-500">No hay datos disponibles.</p>
@@ -78,22 +77,26 @@ const TableEmployees = ({ data }) => {
               <tr
                 key={index}
                 className={`${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-50 dark:bg-gray-800'
-                  } border-b dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600`}
+                  } bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600`}
               >
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  {employee.name}
+                  {employee.names}
                 </th>
-                <td className="px-6 py-4">{employee.lastName}</td>
+                <td className="px-6 py-4">{employee.lastNames}</td>
                 <td className="px-6 py-4">{employee.email}</td>
                 <td className="px-6 py-4">{employee.documentType}</td>
                 <td className="px-6 py-4">{employee.documentNumber}</td>
-                <td className="px-6 py-4">{employee.role}</td>
+                <td className="px-6 py-4">
+                  {employee.roles.map((role, index) => (
+                      <div key={index}>{role.roleType}</div>
+                  ))}
+                </td>
                 <td className="px-6 py-4 text-right">
                   <Link
-                    to={`#edit/${employee.id}`}
+                      to={`#edit/${employee.idUser}`}
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                   >
                     Edit

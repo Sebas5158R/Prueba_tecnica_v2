@@ -8,8 +8,8 @@ api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('user');
         if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-            console.log("Token del url base", token);
+            const tokenWithoutQuotesToken = token.replace(/['"]+/g, '')
+            config.headers.Authorization = `Bearer ${tokenWithoutQuotesToken}`;
         }
         return config;
     },
