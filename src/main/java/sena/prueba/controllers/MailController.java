@@ -30,7 +30,9 @@ public class MailController {
           emailService.SendEmail(emailDTO.getToUser(),emailDTO.getSubject(),emailDTO.getMessage());
           Map<String ,String> response = new HashMap<>();
           response.put("estado","enviado");
-          return ( ResponseEntity<?>) ResponseEntity.ok();
+          return ( ResponseEntity<?>)
+
+                  ResponseEntity.ok();
 
     }
 
@@ -38,7 +40,7 @@ public class MailController {
 public  ResponseEntity<?>  receiveRequestEmailwhitFile(@ModelAttribute EmailFileDTO emailFileDTO ){
 
 try {
-   String fileName = emailFileDTO.getFile().getName();
+   String fileName = emailFileDTO.getFile().getOriginalFilename();
     Path path = Paths.get("src/mail/resources/files/"+fileName);
     Files.createDirectories(path.getParent());
     Files.copy(emailFileDTO.getFile().getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
@@ -47,6 +49,9 @@ try {
 
     Map<String ,String> response = new HashMap<>();
     response.put("estado","enviado");
+
+
+
     response.put("archivo","fileName");
     return ( ResponseEntity<?>) ResponseEntity.ok();
 

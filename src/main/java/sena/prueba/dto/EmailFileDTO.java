@@ -1,15 +1,14 @@
 package sena.prueba.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 @ToString
 public class EmailFileDTO {
     private  String toUser;

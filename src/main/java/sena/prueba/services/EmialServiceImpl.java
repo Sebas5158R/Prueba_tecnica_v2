@@ -21,7 +21,7 @@ public class EmialServiceImpl  implements  IEmailService{
     public void SendEmail(String toUser, String subjet, String message) {
         SimpleMailMessage mailMessage =  new SimpleMailMessage();
 
-        mailMessage.setFrom("carlosgalindo8090@gmail.com");
+        mailMessage.setFrom("norepli@gmail.com");
         mailMessage.setTo(toUser);
         mailMessage.setSubject(subjet);
         mailMessage.setText(message);
