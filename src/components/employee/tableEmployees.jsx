@@ -1,11 +1,10 @@
-// UserTable.js
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ModalRegisterEmployees from "./modalRegisterEmployees";
 
 const TableEmployees = ({ data }) => {
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 6;
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -41,7 +40,7 @@ const TableEmployees = ({ data }) => {
             className="p-2 border border-gray-300 rounded-md"
           />
           <h1 className="text-2xl font-bold">Employee Management</h1>
-          <ModalRegisterEmployees/>
+          <ModalRegisterEmployees />
         </div>
         {currentItems.length === 0 && (
           <p className="text-gray-500">No hay datos disponibles.</p>
@@ -65,6 +64,9 @@ const TableEmployees = ({ data }) => {
                 Document number
               </th>
               <th scope="col" className="px-6 py-3">
+                Phone number
+              </th>
+              <th scope="col" className="px-6 py-3">
                 Role
               </th>
               <th scope="col" className="px-6 py-3">
@@ -73,37 +75,44 @@ const TableEmployees = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {currentItems.map((employee, index) => (
-              <tr
-                key={index}
-                className={`${index % 2 === 0 ? 'bg-gray-800' : 'bg-gray-50 dark:bg-gray-800'
-                  } bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600`}
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+            {currentItems
+              .filter((employee) => [1, 2, 3].includes(employee.roles[0].idRole))
+              .map((employee, index) => (
+                <tr
+                  key={index}
+                  className={'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'}
                 >
-                  {employee.names}
-                </th>
-                <td className="px-6 py-4">{employee.lastNames}</td>
-                <td className="px-6 py-4">{employee.email}</td>
-                <td className="px-6 py-4">{employee.documentType}</td>
-                <td className="px-6 py-4">{employee.documentNumber}</td>
-                <td className="px-6 py-4">
-                  {employee.roles.map((role, index) => (
-                      <div key={index}>{role.roleType}</div>
-                  ))}
-                </td>
-                <td className="px-6 py-4 text-right">
-                  <Link
-                      to={`#edit/${employee.idUser}`}
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    Edit
-                  </Link>
-                </td>
-              </tr>
-            ))}
+                    {employee.names}
+                  </th>
+                  <td className="px-6 py-4">{employee.lastNames}</td>
+                  <td className="px-6 py-4">{employee.email}</td>
+                  <td className="px-6 py-4">{employee.documentType}</td>
+                  <td className="px-6 py-4">{employee.documentNumber}</td>
+                  <td className="px-6 py-4">{employee.phoneNumber}</td>
+                  {employee.roles.length > 0 ? (
+                    <td className="px-6 py-4">
+                      {employee.roles.map((role, index) => (
+                        <div key={index}>{role.roleType}</div>
+                      ))}
+                    </td>
+                  ) : (
+                    <td className="px-6 py-4">No roles available</td>
+                  )}
+
+                  <td className="px-6 py-4 text-right">
+                    <Link
+                      to={`#edit/${employee.idUser}`}
+                      className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >
+                      Edit
+                    </Link>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
 

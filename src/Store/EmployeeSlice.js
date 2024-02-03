@@ -15,6 +15,19 @@ export const fetchEmployees = createAsyncThunk(
     }
 );
 
+export const addEmployee = createAsyncThunk(
+    'employees/addEmployee',
+    async (employeeData) => {
+        try {
+            const response = await api.post('/user/addUser', employeeData);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+);
+
+
 const employeeSlice = createSlice({
     name: "employees",
     initialState: {
@@ -35,6 +48,14 @@ const employeeSlice = createSlice({
             } else {
                 state.error = action.error.message;
             }
+        })
+        .addCase(addEmployee.fulfilled, (state, action) => {
+            state.users = action.payload;
+            state.error = null;
+        })
+        .addCase(addEmployee.rejected, (state, action) => {
+            state.users = [];
+            console.log(action.error.message);
         })
     }
 
