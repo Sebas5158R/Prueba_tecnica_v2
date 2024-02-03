@@ -13,15 +13,12 @@ import java.util.List;
 @RequestMapping("/user")
 @CrossOrigin("*")
 public class UserController {
-
     @Autowired
     private UserServiceImpl userServiceImpl;
-
     @PostMapping(value = "/addFirstUser")
     public String addFirstUSer(@RequestBody User user) {
         return userServiceImpl.addUser(user);
     }
-
     @GetMapping(value = "/listUsers")
     public ResponseEntity<List<User>> listUsers() {
         List<User> users = userServiceImpl.getAllUsers();

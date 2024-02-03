@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -22,4 +24,5 @@ public class Service {
     private  int values_service;
     @Column (name ="pending_service")
     private  Boolean pending;
+
 }

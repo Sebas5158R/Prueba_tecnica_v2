@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService{
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public List<User> getAllUsers() {
+   public List<User> getAllUsers() {
         return userRepository.findAll(Sort.by(Sort.Direction.DESC, "idUser"));
     }
 

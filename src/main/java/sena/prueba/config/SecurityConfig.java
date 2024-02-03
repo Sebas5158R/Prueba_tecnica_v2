@@ -36,6 +36,9 @@ public class SecurityConfig {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/auth/**", "/user/addFirstUser").permitAll()
                         .requestMatchers("/user/listUsers").hasAnyAuthority("ROLE_SUPER_ADMINISTRADOR")
+                        .requestMatchers("/service/addService").permitAll()
+                        .requestMatchers("/email/**","/email/sendEmail","email/sendMessageFile").permitAll()
+                        .requestMatchers("company/addCompany").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
