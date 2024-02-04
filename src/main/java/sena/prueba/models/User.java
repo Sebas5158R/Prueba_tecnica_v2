@@ -2,6 +2,7 @@ package sena.prueba.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -36,9 +37,9 @@ public class User implements UserDetails {
     private String documentType;
 
     @Column(name = "document_number", length = 12, nullable = false)
-    private int documentNumber;
+    private long documentNumber;
     @Column(name="phone_number")
-    private  int phoneNumber;
+    private  long phoneNumber;
     @Column(name = "password", length = 120, nullable = false)
     private String password;
     @Column (name ="legal_person")
@@ -53,7 +54,7 @@ public class User implements UserDetails {
                      @JoinColumn (name = "fk_rol")
             }
     )
-    private Set<Role> roles ;
+    private Set<Role> roles;
 
 
     @Override

@@ -34,8 +34,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request -> request.requestMatchers("/auth/**", "/user/addFirstUser").permitAll()
-                        .requestMatchers("/user/listUsers").hasAnyAuthority("ROLE_SUPER_ADMINISTRADOR")
+                .authorizeHttpRequests(request -> request.requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_SUPER_ADMINISTRADOR", "ROLE_ADMINISTRADOR")
                         .requestMatchers("/service/addService").permitAll()
                         .requestMatchers("/email/**","/email/sendEmail","email/sendMessageFile").permitAll()
                         .requestMatchers("company/addCompany").permitAll()

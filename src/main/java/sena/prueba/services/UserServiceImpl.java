@@ -2,18 +2,16 @@ package sena.prueba.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import sena.prueba.models.Role;
 import sena.prueba.models.User;
+import sena.prueba.repository.RoleRepository;
 import sena.prueba.repository.UserRepository;
 
+import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -23,6 +21,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
    public List<User> getAllUsers() {
@@ -38,33 +39,22 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<String> getRolesByEmail(String email) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
+    public void saveUsersFromExcelToDatabase(MultipartFile file) {
+        if (ExcelUploadService.isValidExcelFile(file)) {
+            try {
+                List<User> users = ExcelUploadService.getUserDataFromExcel(file.getInputStream());
 
-        return userOptional.map(user -> {
-            return user.getRoles().stream()
-                    .map(role -> role.getRoleType())
-                    .collect(Collectors.toList());
-        }).orElse(Collections.emptyList());
-    }
-
-    @Override
-    public boolean authenticate(String email, String password) {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-
-        return userOptional.map(user -> {
-//            Collection<? extends GrantedAuthority> authorities =user.getRoles();
-//            authorities.forEach(authority -> {
-//                System.out.println("Role: " + authority.getAuthority());
-//            });
-            return passwordEncoder.matches(password, user.getPassword());
-        }).orElse(false);
-    }
-
-    private Collection<? extends GrantedAuthority> getAuthorities(List<Role> roles) {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getRoleType()))
-                .collect(Collectors.toList());
+                Role defaultRole = roleRepository.findById(4).orElseThrow();
+                for (User user : users) {
+                    if (user.getRoles() == null || user.getRoles().isEmpty()) {
+                        user.setRoles(new HashSet<>(Arrays.asList(defaultRole)));
+                    }
+                }
+                this.userRepository.saveAll(users);
+            } catch (IOException e) {
+                throw new IllegalArgumentException("The file is not a valid Excel file");
+            }
+        }
     }
 
 
