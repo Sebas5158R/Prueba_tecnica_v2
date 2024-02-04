@@ -20,7 +20,7 @@ const SideBar = () => {
             submenu: true,
             submenuItems: [
                 { title: "Employees", path: "/employees" },
-                { title: "Customers" },
+                { title: "Customers", path: "/customers" },
                 { title: "Companies" }
             ],
         },
