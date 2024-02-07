@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addEmployee } from "../../Store/EmployeeSlice";
+import {addUser} from "../../Store/UserSlice";
 
 const ModalRegisterEmployees = () => {
 
@@ -37,7 +37,7 @@ const ModalRegisterEmployees = () => {
         };
 
         console.log(newEmployee);
-        dispatch(addEmployee(newEmployee));
+        dispatch(addUser(newEmployee));
 
         setNames("");
         setLastNames("");

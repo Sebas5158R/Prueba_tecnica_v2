@@ -1,14 +1,23 @@
-import React from "react";
+import React, {useEffect} from "react";
 import SideBar from "../../components/SideBar";
-import ModalRegisterCustomersForExcel from "../../components/customer/modalRegisterExcel";
+import TableCustomers from "../../components/customer/tableCustomers";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchUsers} from "../../Store/UserSlice";
 
 const ModuleCustomers = () => {
+
+    const dispatch = useDispatch();
+    const customers = useSelector(state => state.users_from_db.users);
+
+    useEffect(() => {
+        dispatch(fetchUsers());
+    }, [dispatch]);
+
     return(
         <div className="flex">
             <SideBar/>
             <div className="ml-4">
-                <h1>Welcome</h1>
-                <ModalRegisterCustomersForExcel/>
+                <TableCustomers data={customers}/>
             </div>
         </div>
     );

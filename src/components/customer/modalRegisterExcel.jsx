@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addCustomersForExcel } from "../../Store/CustomerSlice";
+import {addCustomersForExcel} from "../../Store/UserSlice";
 
 const ModalRegisterCustomersForExcel = () => {
 
@@ -102,7 +102,6 @@ const ModalRegisterCustomersForExcel = () => {
                                         </button>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
