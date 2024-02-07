@@ -11,8 +11,10 @@ import sena.prueba.models.Role;
 import sena.prueba.models.User;
 import sena.prueba.repository.RoleRepository;
 import sena.prueba.repository.UserRepository;
+import sena.prueba.services.CompanyService;
 
 
+import java.io.File;
 import java.util.Set;
 @SpringBootApplication
 public class PruebaApplication {
@@ -36,7 +38,7 @@ public class PruebaApplication {
 
 
 
-			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","CarlosGalindo8090@gmail.com","Cedula de ciudadania",1212121,33424,"PASSWORD",null,null));
+			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","sebastianriveraaviles4@gmail.com","Cedula de ciudadania",1212121,33424,"PASSWORD",null,null));
 			 user1.setRoles(Set.of(role1));
 			 User userEnd=userRepository.save(user1);
 			  System.out.println("User name "+userEnd.getNames());
@@ -45,8 +47,9 @@ public class PruebaApplication {
 					  a-> System.out.println("Roles: "+a.getIdRole()+a.getIdRole())
 			  );
 
-			 
-			 
+
+
+
 		 };
 	}
 }

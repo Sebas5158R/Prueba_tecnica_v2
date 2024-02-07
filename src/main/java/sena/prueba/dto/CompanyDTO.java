@@ -12,6 +12,7 @@ public class CompanyDTO {
     private String name_company;
     private String   description_company;
     private  String state_company;
+    private  int user;
     private   int codevalidation;
     private  Boolean active;
     private MultipartFile documents;

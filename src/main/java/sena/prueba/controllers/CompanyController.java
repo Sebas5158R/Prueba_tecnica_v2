@@ -1,28 +1,41 @@
 package sena.prueba.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.CompanyDTO;
+import sena.prueba.dto.FileDTO;
 import sena.prueba.models.Company;
+import sena.prueba.models.Record;
+import sena.prueba.models.User;
 import sena.prueba.services.CompanyService;
 import sena.prueba.services.IEmailService;
+import sena.prueba.services.UserServiceImpl;
+
 
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.SplittableRandom;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.*;
 
 @RestController
 @RequestMapping("/company")
-@CrossOrigin
+@CrossOrigin("*")
 public class CompanyController {
+
 
     @Autowired
     CompanyService companyService ;
+
+    @Autowired
+    UserServiceImpl userService;
     SplittableRandom splittableRandom = new SplittableRandom();
     @Autowired
     IEmailService emailService;
+
 
 @PostMapping(value ="/addCompany")
 public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
@@ -36,26 +49,80 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
         System.out.println(validation+"codigo de validacion generado");
         String message = "Hi here a new request  for create a new company"+companyDTO.getName_company().toUpperCase()+"in this message is the code of validation for the creation :"+validation+"and too the documentation about the company";
         Company company = new Company();
+        User usu = userService.findByid(companyDTO.getUser());
+        if (usu.getUsername().isEmpty() ){
+            System.out.println("valio monda ");
+        }
         company.setIdCompany(companyDTO.getIdCompany());
-        company.setName_company(companyDTO.getName_company());
-        company.setDescription_company(companyDTO.getDescription_company());
-        company.setState_company("pending");
-        company.setCodevalidation(validation);
+        company.setNameCompany(companyDTO.getName_company());
+        company.setDescriptionCompany(companyDTO.getDescription_company());
+        company.setStateCompany("pending");
+        company.setUser(usu);
+        company.setCodeValidation(validation);
         company.setActive(false);
+        LocalDate  initialdate = LocalDate.now();
+        company.setDateCreation(initialdate);
+        company.setDateEndProcess(initialdate.plus(Period.ofDays(15)));
         System.out.println(file.getPath()+"esta es la direccion de el archivo");
-        company.setPath_documentation(file.getPath());
+        company.setPathDocumentation(file.getPath());
         emailService.sendEmailwhitFile("carlosgalindo8090l@gmail.com","request creation company",message,file);
+        String messageUsu = " Hi"+usu.getNames()+"the application for  cretion company in our sistem was send  in:"+company.getDateCreation()+"you will have an answer approximately in:"+company.getDateEndProcess()+"thank you";
+        emailService.SendEmail(usu.getEmail(),"start company creation process",messageUsu);
         return    this.companyService.saveCompany(company);
-
-
     }catch (Exception e){
         throw  new RuntimeException("error en el envio de datos"+e.getMessage());
     }
-
 }
 
 
+@PostMapping ( value = "/editcompany")
+public  Company editCompany ( @RequestBody Company company){
+    return  this.companyService.saveCompany(company);
+}
 
+
+@GetMapping (value = "/company/{id}")
+public Company companyByid (@PathVariable int id){
+
+    System.out.println("estoy aquiiiiiii");
+          Company company = companyService.findCompany_id(id);
+          if(company != null){
+              company.setStateCompany("Revisado");
+
+               companyService.saveCompany(company);
+
+          }else {
+
+              System.out.println("no esta trayendo el id");
+          }
+    return  company;
+};
+
+
+@PostMapping( value = "/createCompany")
+public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
+    Company company = companyService.findCompany_id(companyDTO.getIdCompany());
+    try {
+        if (companyDTO.getCodevalidation() == company.getCodeValidation()){
+            company.setStateCompany("Created");
+            companyService.saveCompany(company);
+        }
+    }
+   catch (Exception e){
+        System.out.println(e);
+   }
+    return null;
+};
+
+@GetMapping ( value = "/companies")
+        public ArrayList <Company> getCompanies (){
+        return companyService.getCompanies();
+}
+
+    @PostMapping("/companiesDocument")
+    public List<File> listarArchivos(@RequestBody FileDTO fileDTO) {
+        return companyService.getFilesInDirectory(fileDTO.getDescripcion());
+    }
 
 
 }
