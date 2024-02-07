@@ -58,4 +58,10 @@ public class UserServiceImpl implements UserService{
     }
 
 
+    public User findByid (int id){
+
+        return   userRepository.findByIdUser(id);
+
+    }
+
 }

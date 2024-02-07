@@ -1,6 +1,5 @@
 package sena.prueba;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,6 +13,7 @@ import sena.prueba.repository.RoleRepository;
 import sena.prueba.repository.UserRepository;
 
 
+import java.io.File;
 import java.util.Set;
 @SpringBootApplication
 public class PruebaApplication {
@@ -51,8 +51,6 @@ public class PruebaApplication {
 					  a -> System.out.println("User 2 Roles: "+a.getIdRole()+a.getIdRole())
 			  );
 
-			 
-			 
 		 };
 	}
 }

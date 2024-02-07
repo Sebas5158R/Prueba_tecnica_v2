@@ -6,8 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.File;
-import java.nio.file.Files;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -19,19 +18,26 @@ public class Company {
     @Column  (name = "nit_company")
         private Integer idCompany ;
     @Column (name ="name_company" , length = 50 , nullable = false)
-        private String name_company;
+        private String nameCompany;
     @Column(name="description_company",length = 50 , nullable = false)
-        private  String description_company;
+        private  String descriptionCompany;
     @Column(name ="state_company")
-        private String  state_company;
+        private String  stateCompany;
     @Column(name="code_validation")
-        private  int codevalidation;
+        private  int codeValidation;
     @OneToOne
         private User user;
     @Column (name = "active")
     private  Boolean active;
+
+    @Column (name ="date_creation")
+    private LocalDate dateCreation;
+
+    @Column (name = "date_end_process")
+    private  LocalDate dateEndProcess;
+
    @Column (name = "path_documentation")
-    private  String path_documentation;
+    private  String pathDocumentation;
 
     /**/
 

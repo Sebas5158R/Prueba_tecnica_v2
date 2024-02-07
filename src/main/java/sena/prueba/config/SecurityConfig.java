@@ -38,7 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/user/**").hasAnyAuthority("ROLE_SUPER_ADMINISTRADOR", "ROLE_ADMINISTRADOR")
                         .requestMatchers("/service/addService").permitAll()
                         .requestMatchers("/email/**","/email/sendEmail","email/sendMessageFile").permitAll()
-                        .requestMatchers("company/addCompany").permitAll()
+                        .requestMatchers("/company/**","company/addCompany","company/companiesDocument","company/createCompany","company/companies","company/company/").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
