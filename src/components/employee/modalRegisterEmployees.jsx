@@ -12,15 +12,11 @@ const ModalRegisterEmployees = () => {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
     const [idRole, setIdRole] = useState(null);
-
     const dispatch = useDispatch()
-
     const [step, setStep] = useState(1);
     const [isOpen, setIsOpen] = useState(false);
-
     const handleSubmit = async (event) => {
         event.preventDefault();
-
         const newEmployee = {
             names,
             lastNames,
@@ -47,9 +43,7 @@ const ModalRegisterEmployees = () => {
         setPhoneNumber("");
         setPassword("");
         setIdRole("");
-
         window.alert("Empleado registrado exitosamente");
-
         window.location.reload();
     };
 
@@ -64,13 +58,11 @@ const ModalRegisterEmployees = () => {
 
     return (
         <div>
-
             <button onClick={() => setIsOpen(true)} data-modal-target="select-modal" data-modal-toggle="select-modal"
                 className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 type="button">
                 Add Employee
             </button>
-
             {
                 isOpen && step === 1 && (
                     <div tabIndex="-1" aria-hidden="true"

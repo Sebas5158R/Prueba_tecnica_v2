@@ -56,7 +56,7 @@ const userSlice = createSlice({
             state.users = [];
             console.log(action.error.message);
             if(action.error.message === 'Request failed with status code 500') {
-                state.error = 'Access Denied! Invalid Credentials';
+                state.error = 'Access Denied';
             } else {
                 state.error = action.error.message;
             }

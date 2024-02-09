@@ -3,10 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 
 const SideBar = () => {
-
     const [open, setOpen] = useState(true);
     const [subMenuOpen, setSubMenuOpen] = useState(false);
-
     const handleLogout = () => {
         localStorage.removeItem('user');
         window.location.replace('/');
@@ -21,7 +19,7 @@ const SideBar = () => {
             submenuItems: [
                 { title: "Employees", path: "/employees" },
                 { title: "Customers", path: "/customers" },
-                { title: "Companies" }
+                { title: "Companies" ,path: "/companies"}
             ],
         },
         { title: "Inbox", icon: <FontAwesomeIcon icon="fa-solid fa-inbox" /> },

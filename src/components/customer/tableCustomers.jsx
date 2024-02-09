@@ -6,7 +6,6 @@ const TableCustomers = ({ data }) => {
 
     const itemsPerPage = 6;
     const [currentPage, setCurrentPage] = useState(1);
-
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);

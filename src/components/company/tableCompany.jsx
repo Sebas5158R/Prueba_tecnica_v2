@@ -1,55 +1,36 @@
 import React ,{useState} from "react";
 import  {Link} from "react-router-dom";
 import ModalRegisterCustomersForExcel from "../customer/modalRegisterExcel";
+import Detailscompany from "./detailscompany";
 
-const TableCompany =({data}) =>{
+const TableCompany =({data,handleEdit}) =>{
     const  itemsPerPage=6;
     const  [currentPage,setCurrentpage]= useState(1);
-
     const indexOfLastItem= currentPage*itemsPerPage;
     const indexOfFirstItem=indexOfLastItem-itemsPerPage;
     const currentItems = data.slice(indexOfFirstItem,indexOfLastItem);
-
+   const [isOpen,setIsOpen]=useState(true);
     const  totalPages = Math.ceil(
         data.length/itemsPerPage
     )
 
     const renderPageNumbers =() =>{
-
         const  pageNumbers=[];
         for (let i = 1; i<= totalPages;i++){
             pageNumbers.push(
-
-
                <li
                key={i}
-
                className={`mx-1 p-2 cursor-pointer ${i === currentPage ?'bg-blue-500  text-white':'bg-gray-200'}`}
                onClick={()=>setCurrentpage(i)}
-
                >
-
-
                    {i}
-
                </li>
-
-
-
-
-
             );
-
-
-
         }
         return pageNumbers;
-
-
-
-
     };
     return (
+
 
         <div className="flex items-center justify-center w-full h-full ">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -71,26 +52,23 @@ const TableCompany =({data}) =>{
                         className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" className="px-6 py-3">
-                            Names
+                            NIT COMPANY
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Last names
+                            Name Comapany
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Email
+                            Description Company
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Document type
+                            Estate company
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Document number
+                            Represent  company
                         </th>
                         <th scope="col" className="px-6 py-3">
-                            Phone number
                         </th>
-                        <th scope="col" className="px-6 py-3">
-                            Role
-                        </th>
+
                         <th scope="col" className="px-6 py-3">
                             <span className="sr-only">Edit</span>
                         </th>
@@ -98,41 +76,31 @@ const TableCompany =({data}) =>{
                     </thead>
                     <tbody>
                     {currentItems
-                        .map((compani, index) => (
-                            <tr
-                                key={index}
-                                className={'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'}
+                        .map((company, index) => <tr
+                            key={index}
+                            className={'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'}
+                        >
+                            <th
+                                scope="row"
+                                className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                                <th
-                                    scope="row"
-                                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                                >
-                                    {customer.names}
-                                </th>
-                                <td className="px-6 py-4">{customer.lastNames}</td>
-                                <td className="px-6 py-4">{customer.email}</td>
-                                <td className="px-6 py-4">{customer.documentType}</td>
-                                <td className="px-6 py-4">{customer.documentNumber}</td>
-                                <td className="px-6 py-4">{customer.phoneNumber}</td>
-                                {customer.roles.length > 0 ? (
-                                    <td className="px-6 py-4">
-                                        {customer.roles.map((role, index) => (
-                                            <div key={index}>{role.roleType}</div>
-                                        ))}
-                                    </td>
-                                ) : (
-                                    <td className="px-6 py-4">No roles available</td>
-                                )}
-                                <td className="px-6 py-4 text-right">
-                                    <Link
-                                        to={`#edit/${customer.idUser}`}
-                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                                    >
-                                        Edit
-                                    </Link>
-                                </td>
-                            </tr>
-                        ))}
+                                {company.idCompany}
+                            </th>
+
+                            <td className="px-6 py-4">{company.nameCompany}</td>
+                            <td className="px-6 py-4">{company.descriptionCompany}</td>
+                            <td className="px-6 py-4">{company.stateCompany}</td>
+                            <td className="px-6 py-4">{company.user.names}</td>
+                            <td className="px-6 py-4 text-right">
+                                <Link to={'#'}>
+                                    <button onClick={ ()=>handleEdit(company.idCompany)}>
+                                         <Detailscompany data={data} idCompany={company.idCompany} />
+                                    </button>
+
+
+                                </Link>
+                        </td>
+                        </tr>)}
                     </tbody>
                 </table>
 
@@ -144,7 +112,5 @@ const TableCompany =({data}) =>{
 
 
     );
-    export default TableCompany;
-
-
 }
+export  default  TableCompany;
