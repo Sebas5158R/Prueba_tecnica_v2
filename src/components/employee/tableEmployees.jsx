@@ -105,10 +105,10 @@ const TableEmployees = ({ data }) => {
 
                   <td className="px-6 py-4 text-right">
                     <Link
-                      to={`#edit/${employee.idUser}`}
+                      to={`/editUser/${employee.idUser}`}
                       className="font-medium text-purple-600 hover:underline"
                     >
-                      Edit
+                      Editar
                     </Link>
                   </td>
                 </tr>
