@@ -1,11 +1,8 @@
 package sena.prueba.models;
-
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
 @Entity
@@ -28,16 +25,17 @@ public class Company {
     @OneToOne
         private User user;
     @Column (name = "active")
-    private  Boolean active;
-
+        private  Boolean active;
+    @Column( name ="phone")
+        private  int phone;
+    @Column ( name = "address")
+        private  String address;
     @Column (name ="date_creation")
-    private LocalDate dateCreation;
-
+        private LocalDate dateCreation;
     @Column (name = "date_end_process")
-    private  LocalDate dateEndProcess;
-
-   @Column (name = "path_documentation")
-    private  String pathDocumentation;
+        private  LocalDate dateEndProcess;
+    @Column (name = "path_documentation")
+        private  String pathDocumentation;
 
     /**/
 
