@@ -5,6 +5,7 @@ import DashboardEmployee from "./pages/employees/dashboardEmployee";
 import ModuleEmployees from "./pages/employees/moduleEmployees";
 import ModuleCustomers from "./pages/customers/moduleCustomers";
 import ModuleCompany from "./pages/company/moduleCompany";
+import Detailscompany from "./components/company/detailscompany";
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
           <Route path="/employees" exact element = {<ModuleEmployees/>}/>
           <Route path="/customers" exact element = {<ModuleCustomers/>}/>
           <Route path="/companies" exact element = {<ModuleCompany/>}/>
-
+          <Route  path={"/detailscompany"  }  exact element={<Detailscompany/>} />
         </Routes>
       </Router>
     </Fragment>
