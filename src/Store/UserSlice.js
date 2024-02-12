@@ -97,6 +97,8 @@ const userSlice = createSlice({
         .addCase(addCustomersForExcel.fulfilled, (state, action) => {
             state.users = action.payload;
             state.error = null;
+            alert("Clients were imported successfully");
+            window.location.reload();
         })
         .addCase(addCustomersForExcel.rejected, (state, action) => {
             state.users = [];

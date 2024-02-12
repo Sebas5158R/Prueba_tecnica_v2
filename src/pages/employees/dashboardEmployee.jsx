@@ -79,7 +79,7 @@ const DashboardEmployee = () => {
                     </div>
                 </Link>
 
-                <Link to={"#"} className="bg-white rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-6">
+                <Link to={"/companies"} className="bg-white rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full shadow-lg border-2 border-transparent hover:border-purple-400 transition-all mb-6">
                     {/* ICON */}
                     <div className="w-full md:w-[10%] flex items-center justify-start md:justify-center">
                         <RiCommunityFill className="text-7xl bg-purple-100 text-purple-600 p-4 rounded-md" />

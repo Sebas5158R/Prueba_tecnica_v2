@@ -11,6 +11,11 @@ export const loginUser = createAsyncThunk(
     }
 );
 
+export const logout = () => ({
+    type: 'LOGOUT',
+  });
+  
+  
 const userSlice = createSlice({
     name: 'user',
     initialState: {
@@ -40,6 +45,15 @@ const userSlice = createSlice({
             } else {
                 state.error = action.error.message;
             }
+        })
+        .addCase('LOGOUT', (state) => {
+            localStorage.removeItem("user");
+            window.location.replace("/");
+            return {
+                ...state,
+                isLoggedIn: false,
+                user: null,
+            };
         })
     }
 });
