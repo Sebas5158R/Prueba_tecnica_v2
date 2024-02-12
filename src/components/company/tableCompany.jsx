@@ -2,6 +2,7 @@ import React ,{useState} from "react";
 import  {Link} from "react-router-dom";
 import ModalRegisterCustomersForExcel from "../customer/modalRegisterExcel";
 import Detailscompany from "./detailscompany";
+import Modaleditcompany from "./detailscompany";
 
 const TableCompany =({data,handleEdit}) =>{
     const  itemsPerPage=6;
@@ -46,8 +47,7 @@ const TableCompany =({data,handleEdit}) =>{
                 {currentItems.length === 0 && (
                     <p className="text-gray-500">No hay datos disponibles.</p>
                 )}
-                <table
-                    className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table-auto">
+
                     <thead
                         className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
@@ -74,11 +74,11 @@ const TableCompany =({data,handleEdit}) =>{
                         </th>
                     </tr>
                     </thead>
-                    <tbody>
+
                     {currentItems
                         .map((company, index) => <tr
                             key={index}
-                            className={'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'}
+
                         >
                             <th
                                 scope="row"
@@ -87,22 +87,42 @@ const TableCompany =({data,handleEdit}) =>{
                                 {company.idCompany}
                             </th>
 
-                            <td className="px-6 py-4">{company.nameCompany}</td>
-                            <td className="px-6 py-4">{company.descriptionCompany}</td>
-                            <td className="px-6 py-4">{company.stateCompany}</td>
-                            <td className="px-6 py-4">{company.user.names}</td>
+                            <div id="accordion-collapse" data-accordion="collapse">
+                                <h2 id="accordion-collapse-heading-1">
+                                    <button type="button"
+                                            className="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+                                            data-accordion-target="#accordion-collapse-body-1" aria-expanded="true"
+                                            aria-controls="accordion-collapse-body-1">
+                                        <span>{company.nameCompany}</span>
+                                    </button>
+                                </h2>
+                                <div id="accordion-collapse-body-1" className="hidden"
+                                     aria-labelledby="accordion-collapse-heading-1">
+                                    <div
+                                        className="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                                        <p className="">{company.nameCompany}</p>
+                                        <p className="">{company.descriptionCompany}</p>
+                                        <p className="">{company.stateCompany}</p>
+                                        <tp className="">{company.user.names}</tp>
+                                        <Modaleditcompany data={data} idCompany={1}></Modaleditcompany>
+                                    </div>
+                                </div>
+                            </div>
+
+
                             <td className="px-6 py-4 text-right">
                                 <Link to={'#'}>
-                                    <button onClick={ ()=>handleEdit(company.idCompany)}>
-                                         <Detailscompany data={data} idCompany={company.idCompany} />
+                                    <button onClick={() => handleEdit(company.idCompany)}>
+
+                                        <Modaleditcompany data={data} idCompany={company.idCompany} />
+
                                     </button>
-
-
                                 </Link>
-                        </td>
+                            </td>
                         </tr>)}
-                    </tbody>
-                </table>
+
+
+
 
                 <div className="flex justify-end mt-4">
                     <ul className="flex space-x-2">{renderPageNumbers()}</ul>
@@ -113,4 +133,4 @@ const TableCompany =({data,handleEdit}) =>{
 
     );
 }
-export  default  TableCompany;
+export default TableCompany;

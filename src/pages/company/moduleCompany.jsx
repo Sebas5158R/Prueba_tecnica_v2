@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
-import  Sidebar from  "../../components/SideBar";
 import TableCompany from "../../components/company/tableCompany";
 import  {useDispatch,useSelector} from "react-redux";
 import {changeIdCompany, fetchComapanies, fetchCompanyById} from "../../Store/companySlice";
 import SideBar from "../../components/SideBar";
-import  {getElementoPorId} from "./selector";
+
+
 
 const  ModuleCompany =() =>{
    const  dispatch = useDispatch();
@@ -15,12 +15,12 @@ const  ModuleCompany =() =>{
        dispatch(fetchComapanies());
    },[dispatch]);
 
+
+
     const handleEdit =(id)=>{
         dispatch(changeIdCompany(id));
         console.log(`2d ${companiesD.id}`);
     }
-
-
    return (
        <div className="flex">
        <SideBar/>

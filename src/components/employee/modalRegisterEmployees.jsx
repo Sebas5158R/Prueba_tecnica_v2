@@ -34,7 +34,6 @@ const ModalRegisterEmployees = () => {
 
         console.log(newEmployee);
         dispatch(addUser(newEmployee));
-
         setNames("");
         setLastNames("");
         setEmail("");
@@ -52,6 +51,11 @@ const ModalRegisterEmployees = () => {
     };
 
     const handleRoleSelection = (roleId) => {
+
+
+
+
+
         setIdRole(roleId);
         nextStep();
     }
@@ -72,6 +76,8 @@ const ModalRegisterEmployees = () => {
                                 <div
                                     className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                                     <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                       -
+
                                         Register a new Employee
                                     </h3>
                                     <button onClick={() => setIsOpen(false)} type="button"
