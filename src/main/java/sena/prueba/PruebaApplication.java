@@ -38,7 +38,7 @@ public class PruebaApplication {
 			 User user2 = userRepository.save(new User(2, "Sebastian", "Rivera Aviles", "sebas@gmail.com", "Cedula de ciudadania", 32432432, 301202020, passwordEncoder.encode("sebas1"), null, null));
 
 			 user1.setRoles(Set.of(role1));
-			 user2.setRoles(Set.of(role1));
+			 user2.setRoles(Set.of(role1, role2));
 
 			 User userEnd=userRepository.save(user1);
 			 User userEnd2 = userRepository.save(user2);

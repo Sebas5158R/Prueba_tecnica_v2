@@ -57,10 +57,20 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+    @Override
+    public User updateUser(int id, User user) {
+        Optional<User> existingUser = userRepository.findById(id);
+        if (existingUser.isPresent()) {
+            user.setIdUser(id);
+            return userRepository.save(user);
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
 
     public User findByid (int id){
-
-        return   userRepository.findByIdUser(id);
+        return userRepository.findByIdUser(id);
 
     }
 

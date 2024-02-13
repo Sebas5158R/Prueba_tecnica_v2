@@ -12,4 +12,6 @@ public interface UserService  {
     public List<User> getAllUsers();
     public String addUser(User user);
     public void saveUsersFromExcelToDatabase(MultipartFile file);
+
+    public User updateUser(int id, User user);
 }
