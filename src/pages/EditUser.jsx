@@ -25,7 +25,14 @@ const EditUser = () => {
         documentType: "",
         documentNumber: "",
         phoneNumber: "",
-        legal_person: ""
+        legal_person: "",
+        password: "",
+        roles: [
+            {
+                idRole: "",
+                roleType: ""
+            }
+        ]
     });
 
     // Verificar si el usuario está disponible antes de renderizar
@@ -44,7 +51,12 @@ const EditUser = () => {
                 documentType: user.documentType,
                 documentNumber: user.documentNumber,
                 phoneNumber: user.phoneNumber,
-                legal_person: user.legal_person
+                legal_person: user.legal_person,
+                password: user.password,
+                roles: user.roles.map(role => ({
+                    idRole: role.idRole,
+                    roleType: role.roleType
+                }))
             });
         }
     }, [user]);
@@ -59,7 +71,7 @@ const EditUser = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(updateUser(user.idUser, formData));
+        dispatch(updateUser({id:user.idUser,userData:formData}));
     }
 
     useEffect(() => {
@@ -107,19 +119,19 @@ const EditUser = () => {
                     <form className={`grid grid-cols-2 gap-4 transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`} onSubmit={handleSubmit}>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                            <input type="text" id="name" value={user.names} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="text" id="name" name="names" value={formData.names} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="lastNames" className="block text-sm font-medium text-gray-700">Last Names</label>
-                            <input type="text" id="lastNames" value={user.lastNames} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="text" id="lastNames" name="lastNames" value={formData.lastNames} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" id="email" value={user.email} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">Document Type</label>
-                            <select id="documentType" value={user.documentType} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <select id="documentType" name="documentType" value={formData.documentType} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
                                 <option value="">Select document type</option>
                                 <option value="Cedula de ciudadania">Cedula de ciudadania</option>
                                 <option value="Tarjeta de identidad">Tarjeta de identidad</option>
@@ -128,19 +140,23 @@ const EditUser = () => {
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="documentNumber" className="block text-sm font-medium text-gray-700">Document Number</label>
-                            <input type="number" id="documentNumber" value={user.documentNumber} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="number" id="documentNumber" name="documentNumber" value={formData.documentNumber} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                            <input type="number" id="phoneNumber" value={user.phoneNumber} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="number" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Legal Person</label>
-                            <input type="text" id="phoneNumber" value={user.legal_person} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="checkbox" id="legal_person" name="legal_person" value={formData.legal_person} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                        </div>
+                        <div className="col-span-2 sm:col-span-1">
+                            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Password</label>
+                            <input type="text" id="password" name="password" placeholder="New password" onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                         </div>
                         <div className="col-span-2">
                             <label htmlFor="roles" className="block text-sm font-medium text-gray-700">Roles</label>
-                            <input type="text" id="roles" value={user.roles.map(role => role.roleType).join(', ')} readOnly className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="text" id="roles" name="roles" value={user.roles.map(role => role.roleType).join(' - ')} onChange={handleChange} readOnly className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
                         </div>
                         <div className="col-span-2">
                             <Link to={"/dashboardEmployee"}><button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">Cancel</button></Link>

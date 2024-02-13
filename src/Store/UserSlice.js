@@ -41,9 +41,11 @@ export const addCustomersForExcel = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
     'user/updateUser',
-    async (id, userData) => {
+    async ({id, userData}) => {
         try {
-            const response = await api.put(`/user/updateUser/${id}`, userData)
+            console.log("ID " + id)
+            const response = await api.put(`/user/updateUser/${id}`, userData);
+            console.log(userData + "userData");
             return response.data;
         } catch(error) {
             throw error;
@@ -55,7 +57,7 @@ export const userById = createAsyncThunk(
     'user/userById',
     async (idUser) => {
         try {
-            const response = await api.get(`user/listUser/${idUser}`);
+            const response = await api.get(`/user/listUser/${idUser}`);
             return response.data;
         } catch(error) {
             throw error;
@@ -111,7 +113,9 @@ const userSlice = createSlice({
         })
         .addCase(updateUser.fulfilled, (state, action) => {
             state.users = action.payload;
-            state.error = null
+            state.error = null;
+            window.alert("Usuario editado exitosamente");
+            window.location.replace("/employees");
         })
         .addCase(updateUser.rejected, (state, action) => {
             state.users = [];
