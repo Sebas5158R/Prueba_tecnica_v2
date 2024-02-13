@@ -39,11 +39,38 @@ export const addCustomersForExcel = createAsyncThunk(
     }
 );
 
+export const updateUser = createAsyncThunk(
+    'user/updateUser',
+    async ({id, userData}) => {
+        try {
+            console.log("ID " + id)
+            const response = await api.put(`/user/updateUser/${id}`, userData);
+            console.log(userData + "userData");
+            return response.data;
+        } catch(error) {
+            throw error;
+        }
+    }
+);
+
+export const userById = createAsyncThunk(
+    'user/userById',
+    async (idUser) => {
+        try {
+            const response = await api.get(`/user/listUser/${idUser}`);
+            return response.data;
+        } catch(error) {
+            throw error;
+        }
+    }
+);
+
 
 const userSlice = createSlice({
     name: "users",
     initialState: {
         users: [],
+        userToEdit: null,
         error: null
     },
     extraReducers: (builder) => {
@@ -72,6 +99,8 @@ const userSlice = createSlice({
         .addCase(addCustomersForExcel.fulfilled, (state, action) => {
             state.users = action.payload;
             state.error = null;
+            alert("Clients were imported successfully");
+            window.location.reload();
         })
         .addCase(addCustomersForExcel.rejected, (state, action) => {
             state.users = [];
@@ -81,6 +110,20 @@ const userSlice = createSlice({
             } else {
                 state.error = action.error.message;
             }
+        })
+        .addCase(updateUser.fulfilled, (state, action) => {
+            state.users = action.payload;
+            state.error = null;
+            window.alert("Usuario editado exitosamente");
+            window.location.replace("/employees");
+        })
+        .addCase(updateUser.rejected, (state, action) => {
+            state.users = [];
+            console.log(action.error.message);
+        })
+        .addCase(userById.fulfilled, (state, action) => {
+            state.userToEdit = action.payload;
+            state.error = null;
         })
     }
 

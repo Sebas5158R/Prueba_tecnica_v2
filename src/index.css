@@ -4,7 +4,7 @@
 
 body {
   margin: 0;
-  background: #f1f1f1;
+  background: white;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -15,4 +15,27 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.item .activeIcon{
+  @apply hidden;
+  
+}
+
+
+.item.active .inactiveIcon{
+  @apply hidden;
+  
+}
+
+.item.active .activeIcon {
+  @apply block;
+}
+
+.item:not(.active) .content {
+  @apply h-0 overflow-hidden py-0;
+}
+
+.item .content {
+  @apply p-8 h-[300px]
 }

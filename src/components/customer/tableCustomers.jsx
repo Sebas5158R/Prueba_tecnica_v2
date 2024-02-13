@@ -18,7 +18,7 @@ const TableCustomers = ({ data }) => {
             pageNumbers.push(
                 <li
                     key={i}
-                    className={`mx-1 p-2 cursor-pointer ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-200'
+                    className={`mx-1 p-2 cursor-pointer ${i === currentPage ? 'bg-purple-600 text-white' : 'bg-gray-200'
                     }`}
                     onClick={() => setCurrentPage(i)}
                 >
@@ -46,9 +46,9 @@ const TableCustomers = ({ data }) => {
                         <p className="text-gray-500">No hay datos disponibles.</p>
                     )}
                     <table
-                        className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table-auto">
+                        className="w-full text-sm text-left rtl:text-right text-gray-500 table-auto">
                         <thead
-                            className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 Names
@@ -82,11 +82,11 @@ const TableCustomers = ({ data }) => {
                             .map((customer, index) => (
                                 <tr
                                     key={index}
-                                    className={'bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'}
+                                    className={'bg-white border-b hover:bg-purple-50'}
                                 >
                                     <th
                                         scope="row"
-                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                                        className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap"
                                     >
                                         {customer.names}
                                     </th>
@@ -107,7 +107,7 @@ const TableCustomers = ({ data }) => {
                                     <td className="px-6 py-4 text-right">
                                         <Link
                                             to={`#edit/${customer.idUser}`}
-                                            className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                                            className="font-medium text-purple-600 hover:underline"
                                         >
                                             Edit
                                         </Link>

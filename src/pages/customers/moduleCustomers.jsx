@@ -1,46 +1,18 @@
 import React, {useEffect, useState} from "react";
-import SideBar from "../../components/SideBar";
 import TableCustomers from "../../components/customer/tableCustomers";
+import { RiCloseLine, RiMenu3Fill } from "react-icons/ri";
 import {useDispatch, useSelector} from "react-redux";
-import {addCustomersForExcel, fetchUsers} from "../../Store/UserSlice";
+import {fetchUsers} from "../../Store/UserSlice";
+import NavBar from "../../components/NavBar";
+import Header from "../../components/Header";
 
 const ModuleCustomers = () => {
 
+    const [sidebar, setSidebar] = useState(false);
 
-    const [isOpen, setIsOpen] = useState(false);
-    const [fileSize, setFileSize] = useState(null);
-    const [excelFile, setExcelFile] = useState(null);
-
-    useEffect(() => {
-        console.log("Current excelFile:", excelFile);
-    }, [excelFile]);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const formData = new FormData();
-        formData.append("file", excelFile);
-        dispatch(addCustomersForExcel(formData));
-
-        setExcelFile("");
-
-        setIsOpen(false);
+    const handleSidebar = () => {
+        setSidebar(!sidebar);
     };
-
-    const handleFileChange = (event) => {
-        const file = event.target.files[0];
-        console.log("Selected File:", file);
-
-        if (file) {
-            const sizeInKB = file.size / 1024;
-            setFileSize(sizeInKB.toFixed(2) + " KB");
-        } else {
-            setFileSize(null);
-        }
-
-        setExcelFile(file);
-    };
-
 
     const dispatch = useDispatch();
     const customers = useSelector(state => state.users_from_db.users);
@@ -49,30 +21,42 @@ const ModuleCustomers = () => {
         dispatch(fetchUsers());
     }, [dispatch]);
 
-    return (
-
-        <div>
-            <button onClick={() => setIsOpen(true)} data-modal-target="crud-modal" data-modal-toggle="crud-modal"
-                    className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                    type="button">
-                    show details
+    return(
+        <div className="min-h-screen grid grid-col-1 lg:grid-cols-6">
+            {/* SIDEBAR */}
+            <div className={`fixed lg:static w-[80%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all ${sidebar ? "-left-0": "-left-full"} h-full overflow-y-scroll col-span-1 p-8 border-r`}>
+                {/* LOGOTIPO */}
+                <div className="text-center p-8">
+                    <h1 className="uppercase font-bold tracking-[4px]">Logo</h1>
+                </div>
+                {/* MENU */}
+                <NavBar titulo1={"Dashboard"} ruta1={"/dashboardEmployee"} titulo2={"Modules"} ruta2={"#"} titulo3={"Calendar"}
+                    ruta3={"#"} titulo4={"Settings"} ruta4={"#"} />
+            </div>
+            {/* BTN MENU MOVIL */}
+            <button onClick={handleSidebar} className="block lg:hidden fixed bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl z-40">
+                {sidebar ? <RiCloseLine/> : <RiMenu3Fill/>}
             </button>
 
-            {
-                isOpen && (
-                    <div className="flex">
-                        <SideBar/>
-                        <div className="ml-4">
-                            <TableCustomers data={customers}/>
-                        </div>
+            {/* CONTENT */}
+            <div className="col-span-5">
+                {/* HEADER */}
+                <Header/>
+                {/* CONTENT */}
+                <div className="p-4 lg:p-12 bg-gray-100 mb-10 shadow-2xl">
+                    {/* TITLE */}
+                    <div>
+                        <h1 className="text-3xl font-bold">Module customers</h1>
                     </div>
-                )
-            }
+                </div>
 
+                {/* TABLE */}
+                <div className="rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full  border-2 border-transparent transition-all mb-6">
+                    <TableCustomers data={customers}/>
+                </div>
+            </div>
         </div>
-
-    )
-        ;
+    );
 }
 
 export default ModuleCustomers;
