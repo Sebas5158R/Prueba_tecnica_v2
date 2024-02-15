@@ -1,17 +1,14 @@
 import React, {useEffect, useState} from "react";
 import  {Link} from "react-router-dom";
 import ModalRegisterCustomersForExcel from "../customer/modalRegisterExcel";
-import {useDispatch} from "react-redux";
-import {addCustomersForExcel} from "../../Store/UserSlice";
-const Modaleditcompany =({data,idCompany}) =>{
+import {useDispatch, useSelector} from "react-redux";
+import {addCustomersForExcel, updateUser} from "../../Store/UserSlice";
+import {editCompany, selectCompanyById} from "../../Store/CompanySlice";
+import api from "../../services/URLService";
+const Modaleditcompany =({idCompany}) =>{
 
-    console.log(data[0]);
-
-    const  itemsPerPage=6;
-    const  [currentPage,setCurrentpage]= useState(1);
-    const indexOfLastItem= currentPage*itemsPerPage;
-    const indexOfFirstItem=indexOfLastItem-itemsPerPage;
-    const currentItems = data.slice(indexOfFirstItem,indexOfLastItem);
+    console.log(idCompany)
+    const company = useSelector(selectCompanyById(idCompany));
     const [isOpen,setIsOpen]=useState(false);
     const  closeModal=async (isOpen) =>{
         if (isOpen === true ){
@@ -22,53 +19,84 @@ const Modaleditcompany =({data,idCompany}) =>{
         }
 
     }
-    const input = document.querySelector("input");
-    const log = document.getElementById("log");
 
-    input.addEventListener("change", updateValue);
 
-    function updateValue(e) {
-        log.textContent = e.target.value;
-    }
 
-    const [nameCompany, setNames] = useState("");
-    const [descriptionCompany, setDescriptionCompany] = useState("");
-    const [idUser, setIdUser] = useState("");
-    const [documents, setDocuments] = useState("");
-    const [phone, setPhone] = useState("");
-    const [address, setAddress] = useState("");
-
-    const company = {
-        nameCompany: "",
-        descriptionCompany: "",
-        idUser: "",
-        documents: "",
+    const [formData, setFormData] = useState({
+        name_company: "",
+        description_company: "",
+        user: "",
         phone: "",
-        address: ""
+        addres: ""
+    });
+
+
+    useEffect(() => {
+        if (company) {
+            setFormData({
+                idCompany:company.idCompany,
+                nameCompany: company.nameCompany,
+                descriptionCompany: company.descriptionCompany,
+                user: company.user,
+                phone: company.phone,
+                address:company.address
+
+            });
+        }
+    }, [company]);
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value
+        });
+    }
+
+    const handleSubmit = async (event) => {
+        try {
+            const response = await api.post('/company/editCompany',formData);
+            console.log(response)
+        }catch (e) {
+            console.log(e)
+        }
+       console.log("sebass care gay ")
+
+         console.log(formData)
+
+
+        // dispatch(editCompany( {companyData:formData}));
     }
 
 
+    // const input = document.querySelector("input");
+    // const log = document.getElementById("log");
+    //
+    // input.addEventListener("change", updateValue);
+
+    // function updateValue(e) {
+    //     log.textContent = e.target.value;
+    // }
+    //
 
 
-    const  totalPages = Math.ceil(
-        data.length/itemsPerPage
-    )
+    //
+    // const [nameCompany, setNames] = useState("");
+    // const [descriptionCompany, setDescriptionCompany] = useState("");
+    // const [idUser, setIdUser] = useState("");
+    // const [documents, setDocuments] = useState("");
+    // const [phone, setPhone] = useState("");
+    // const [address, setAddress] = useState("");
+
+
+
+
     const dispatch = useDispatch();
-    const renderPageNumbers =() =>{
-        const  pageNumbers=[];
-        for (let i = 1; i<= totalPages;i++){
-            pageNumbers.push(
-                <li
-                    key={i}
-                    className={`mx-1 p-2 cursor-pointer ${i === currentPage ?'bg-blue-500  text-white':'bg-gray-200'}`}
-                    onClick={()=>setCurrentpage(i)}
-                >
-                    {i}
-                </li>
-            );
-        }
-        return pageNumbers;
-    };
+
+    if (!company) {
+        return <p>La compañía no existe</p>;
+    }
+
     return (
 
 
@@ -84,125 +112,59 @@ const Modaleditcompany =({data,idCompany}) =>{
             {
 
                 isOpen && (
-                    <div >
-                        {currentItems .filter((company) => (company.idCompany===idCompany)).map((company,index) => <div>
-
-
-                        <div id="crud-modal" tabIndex="-1" aria-hidden="true"
-                             className="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                            <div className="relative p-4 w-full max-w-md max-h-full">
-
-                                <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
-
-                                    <div
-                                        className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-                                            Create New Product
-                                        </h3>
-                                        <button type="button"
-                                                onClick={() => setIsOpen(false)}
-                                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                                data-modal-toggle="crud-modal">
-                                            <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                                 fill="none" viewBox="0 0 14 14">
-                                                <path stroke="currentColor" strokeLinecap={"round"} strokeLinejoin={"round"}
-                                                      strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                            <span className="sr-only">Close modal</span>
-                                        </button>
-                                    </div>
-
-                                    <form className="p-4 md:p-5" onSubmit={"#"}>
-                                        <div className="grid gap-4 mb-4 grid-cols-2">
-                                            <div className="col-span-2">
-                                                <label htmlFor="name"
-                                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Id
-                                                    company</label>
-                                                <input type="text" name="name"
-
-
-                                                       value={idCompany}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                       placeholder="Type product name" required=""/>
-                                            </div>
-
-                                            <div className="col-span-2">
-                                                <label htmlFor="name"
-                                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name
-                                                    company</label>
-                                                <input type="text" name="name"
-                                                       defaultValue={company.nameCompany}
-                                                       onChange={(e) => setNames(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                       placeholder="Type name company" required=""/>
-                                            </div>
-
-                                            <div className="col-span-2">
-                                                <label htmlFor="name"
-                                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                                                <input type="text" name="name"
-                                                       defaultValue={company.descriptionCompany}
-                                                       onChange={(e) => setDescriptionCompany(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                       placeholder="Type description company" required=""/>
-                                            </div>
-
-                                            <div className="col-span-2">
-                                                <label htmlFor="name"
-                                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Id
-                                                    user company</label>
-                                                <input type="text" name="name" id="name"
-                                                       defaultValue={company.user.idUser}
-                                                       onChange={(e) => setIdUser(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                       placeholder="Id user company" required=""/>
-                                            </div>
-
-                                            <div className="col-span-2">
-                                                <label htmlFor="name"
-                                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Documents</label>
-                                                <input type="file" name="name" id="name"
-                                                       defaultValue={company.documents}
-                                                       onChange={(e) => setDocuments(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                       required=""/>
-                                            </div>
-
-                                            <div className="col-span-2">
-                                                <label htmlFor="phone"
-                                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
-                                                <input id="description" defaultValue={company.phone} onChange={(e) => setPhone(e.target.value)}
-                                                       className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                                                       placeholder="Write product description here"/>
-                                            </div>
-
-                                            <div className="col-span-2">
-                                                <label htmlFor="name"
-                                                       className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Id
-                                                    user company</label>
-                                                <input type="text" name="name" id="name"
-                                                       defaultValue={company.address}
-                                                       onChange={(e) => setAddress(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                       placeholder="Id user company" required=""/>
-                                            </div>
-                                        </div>
-                                        <button type="submit"
-                                                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                            <svg className="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path fillRule={"evenodd"}
-                                                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                                                      clipRule="evenodd"></path>
-                                            </svg>
-                                            Save
-                                        </button>
-                                    </form>
+                    <div>
+                        <div className="max-w-lg mx-auto">
+                            <form
+                                className={`grid grid-cols-2 gap-4 transition-opacity`}
+                                onSubmit={handleSubmit}>
+                                <input type={"number"}   value={formData.idCompany}   hidden={true}/>
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+                                    <input type="text" id="name" name="nameCompany" value={formData.nameCompany} onChange={handleChange}
+                                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                                 </div>
-                            </div>
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="lastNames" className="block text-sm font-medium text-gray-700">Last
+                                        Names</label>
+                                    <input type="text" id="lastNames" name="lastNames" value={formData.descriptionCompany}
+                                           onChange={handleChange}
+                                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                                </div>
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="number" className="block text-sm font-medium text-gray-700">Email</label>
+                                    <input type="email" id="email" name="email" value={formData.user.idUser}
+                                           onChange={handleChange}
+                                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                                </div>
+
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="documentNumber" className="block text-sm font-medium text-gray-700">Document
+                                        Number</label>
+                                    <input type="number" id="documentNumber" name="documentNumber"
+                                           value={formData.phone} onChange={handleChange}
+                                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                                </div>
+                                <div className="col-span-2 sm:col-span-1">
+                                    <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone
+                                        Number</label>
+                                    <input type="text" id="phoneNumber" name="phoneNumber" value={formData.address}
+                                           onChange={handleChange}
+                                           className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
+                                </div>
+
+                                <div className="col-span-2">
+                                    <Link to={"/companies"}>
+                                        <button onClick={handleSubmit}
+                                                className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">Cancel
+                                        </button>
+                                    </Link>
+                                    <button type={"submit"}
+                                            className="bg-purple-500 hover:bg-purple-600 text-white font-medium py-2 px-4 rounded-md float-end">Save
+                                    </button>
+                                </div>
+                            </form>
                         </div>
 
-                        </div>)}
                     </div>
                 )
             }

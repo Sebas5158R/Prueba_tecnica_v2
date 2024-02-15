@@ -33,7 +33,7 @@ const EditUser = () => {
                 roleType: ""
             }
         ]
-    });
+});
 
     // Verificar si el usuario está disponible antes de renderizar
     useEffect(() => {

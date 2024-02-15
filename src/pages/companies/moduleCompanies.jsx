@@ -16,8 +16,8 @@ const ModuleCompanies = () => {
     };
 
     const  dispatch = useDispatch();
-    const   companiesD = useSelector(state => state.company);
-    const companies = companiesD.companies;
+    const   companiesD = useSelector(state => state.company.companies);
+
 
 
     useEffect( () =>  {
@@ -56,7 +56,7 @@ const ModuleCompanies = () => {
 
                 {/* TABLE */}
                 <div className="rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full justify-center  border-2 border-transparent transition-all mb-6">
-                    <TableCompanies data={companies}/>
+                    <TableCompanies data={companiesD}/>
                 </div>
             </div>
         </div>

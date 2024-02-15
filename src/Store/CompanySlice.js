@@ -1,5 +1,6 @@
 import {createAsyncThunk,createSlice,createAction,} from "@reduxjs/toolkit";
 import api from "../services/URLService";
+import {get} from "axios";
 
 export  const  fetchComapanies  = createAsyncThunk(
    'companies/fetchCompanies',
@@ -12,6 +13,8 @@ export  const  fetchComapanies  = createAsyncThunk(
        }
    }
 );
+
+
 
 export  const  addCompanie = createAsyncThunk(
   'companies/addCompany',
@@ -26,6 +29,8 @@ async  (companyData ) =>{
     }
 );
 
+
+
 export  const  createCompany = createAsyncThunk(
     'companies/createCompany',
     async (companyData ) =>{
@@ -38,6 +43,27 @@ export  const  createCompany = createAsyncThunk(
     }
 );
 
+export const  editCompany = createAsyncThunk(
+    'companies/editCompany' ,
+    async (companyData)=>{
+    try {
+        console.log(
+            "aquitoyyyyy"
+        )
+        const  response = await  api.post('/company/editCompany',companyData)
+
+      return response.data
+
+    }catch (e) {
+        throw e;
+    }
+
+}
+
+
+)
+
+
 export  const  fetchCompanyById = createAsyncThunk(
     'companies/fetchCompanyBy' ,
     async  (companyData) =>{
@@ -48,7 +74,15 @@ export  const  fetchCompanyById = createAsyncThunk(
             throw  e;
         }
     }
+
+
+
+
+
 );
+
+
+
 
 export const changeIdCompany = createAction('companies/changeIdCompany');
 
@@ -56,6 +90,7 @@ const  companySlice = createSlice({
     name : "companies",
     initialState:{
         id:null,
+        companyId:null,
         companies:[],
         error : null
 
@@ -115,6 +150,15 @@ const  companySlice = createSlice({
 
 
     }
-});
+
+
+
+
+
+})
+
+export const selectCompanyById = (companyId) => (state) => {
+    return state.company.companies.find(company => company.idCompany === companyId);
+};
 
 export default companySlice.reducer;
