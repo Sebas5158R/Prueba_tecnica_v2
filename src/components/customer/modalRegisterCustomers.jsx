@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import {addUser} from "../../Store/UserSlice";
+import { addUser } from "../../Store/UserSlice";
 
-const ModalRegisterEmployees = () => {
+const ModalRegisterCustomers = () => {
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const [names, setNames] = useState("");
     const [lastNames, setLastNames] = useState("");
@@ -11,17 +13,14 @@ const ModalRegisterEmployees = () => {
     const [documentNumber, setDocumentNumber] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
-    const [idRole, setIdRole] = useState(null);
+    const [idRole, setIdRole] = useState(4);
 
     const dispatch = useDispatch()
-
-    const [step, setStep] = useState(1);
-    const [isOpen, setIsOpen] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const newEmployee = {
+        const newCustomer = {
             names,
             lastNames,
             email,
@@ -36,8 +35,8 @@ const ModalRegisterEmployees = () => {
             ]
         };
 
-        console.log(newEmployee);
-        dispatch(addUser(newEmployee));
+        console.log(newCustomer);
+        dispatch(addUser(newCustomer));
 
         setNames("");
         setLastNames("");
@@ -47,135 +46,17 @@ const ModalRegisterEmployees = () => {
         setPhoneNumber("");
         setPassword("");
         setIdRole("");
-
-        window.alert("Empleado registrado exitosamente");
-
-        window.location.reload();
     };
 
-    const nextStep = () => {
-        setStep(step + 1);
-    };
-
-    const handleRoleSelection = (roleId) => {
-        setIdRole(roleId);
-        nextStep();
-    }
-
-    return (
+    return(
         <div>
 
-            <button onClick={() => setIsOpen(true)} data-modal-target="select-modal" data-modal-toggle="select-modal"
-                className="block text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                type="button">
-                Add Employee
+            <button onClick={() => setIsOpen(true)} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className="block text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
+                Register client
             </button>
 
             {
-                isOpen && step === 1 && (
-                    <div tabIndex="-1" aria-hidden="true"
-                        className="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                        <div className="relative p-4 w-full max-w-md max-h-full">
-                            <div className="relative bg-white rounded-lg shadow-2xl">
-                                <div
-                                    className="flex items-center justify-between p-4 md:p-5 border-b border-blue-300 rounded-t">
-                                    <h3 className="text-lg font-semibold text-gray-900">
-                                        Register a new Employee
-                                    </h3>
-                                    <button onClick={() => setIsOpen(false)} type="button"
-                                        className="text-gray-400 bg-transparent hover:bg-blue-200 hover:text-blue-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center"
-                                        data-modal-toggle="select-modal">
-                                        <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                            fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
-                                                strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                        </svg>
-                                        <span className="sr-only">Close modal</span>
-                                    </button>
-                                </div>
-                                <div className="p-4 md:p-5">
-                                    <p className="text-gray-500">Select which role the new
-                                        employee will be :</p>
-                                    <ul className="space-y-4 mb-4">
-                                        <li>
-                                            <input type="radio" id="role-1" name="roles"
-                                                className="hidden peer"
-                                                onChange={() => handleRoleSelection(1)}
-                                                required />
-                                            <label htmlFor="role-1"
-                                                className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-100">
-                                                <div className="block">
-                                                    <div className="w-full text-lg font-semibold">SUPER ADMINISTRADOR
-                                                    </div>
-                                                    <div className="w-full text-gray-500">Full access
-                                                        to system
-                                                    </div>
-                                                </div>
-                                                <svg
-                                                    className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 14 10">
-                                                    <path stroke="currentColor" strokeLinecap="round"
-                                                        strokeLinejoin="round" strokeWidth="2"
-                                                        d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                                </svg>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" id="role-2" name="roles"
-                                                className="hidden peer"
-                                                onChange={() => handleRoleSelection(2)}
-                                                required />
-                                            <label htmlFor="role-2"
-                                                className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-100">
-                                                <div className="block">
-                                                    <div className="w-full text-lg font-semibold">ADMINISTRADOR</div>
-                                                    <div className="w-full text-gray-500">Full access
-                                                        to modules
-                                                    </div>
-                                                </div>
-                                                <svg
-                                                    className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 14 10">
-                                                    <path stroke="currentColor" strokeLinecap="round"
-                                                        strokeLinejoin="round" strokeWidth="2"
-                                                        d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                                </svg>
-                                            </label>
-                                        </li>
-                                        <li>
-                                            <input type="radio" id="role-3" name="roles"
-                                                className="hidden peer"
-                                                onChange={() => handleRoleSelection(3)}
-                                                required />
-                                            <label htmlFor="role-3"
-                                                className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-100">
-                                                <div className="block">
-                                                    <div className="w-full text-lg font-semibold">USER REGULAR</div>
-                                                    <div className="w-full text-gray-500">Access only
-                                                        to modules that are put on it
-                                                    </div>
-                                                </div>
-                                                <svg
-                                                    className="w-4 h-4 ms-3 rtl:rotate-180 text-gray-500"
-                                                    aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                    viewBox="0 0 14 10">
-                                                    <path stroke="currentColor" strokeLinecap="round"
-                                                        strokeLinejoin="round" strokeWidth="2"
-                                                        d="M1 5h12m0 0L9 1m4 4L9 9" />
-                                                </svg>
-                                            </label>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )
-            }
-            <div>
-                {step === 2 && isOpen && (
+                isOpen && (
                     <div tabIndex="-1" aria-hidden="true"
                         className="flex overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                         <div className="relative p-4 w-full max-w-md max-h-full">
@@ -257,6 +138,8 @@ const ModalRegisterEmployees = () => {
                                             </div>
 
                                             <div className="col-span-2">
+                                            <label htmlFor="phoneNumber"
+                                                    className="block mb-2 text-sm font-medium text-gray-900">Password</label>
                                                 <input type="text" value={password} onChange={(e) => setPassword(e.target.value)}
                                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                                                     placeholder="Password" required={true}
@@ -278,10 +161,11 @@ const ModalRegisterEmployees = () => {
                             </div>
                         </div>
                     </div>
-                )}
-            </div>
+                )
+            }
+
         </div>
     );
 }
 
-export default ModalRegisterEmployees;
+export default ModalRegisterCustomers

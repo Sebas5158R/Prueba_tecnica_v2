@@ -17,7 +17,7 @@ export  const  addCompanie = createAsyncThunk(
   'companies/addCompany',
 async  (companyData ) =>{
       try{
-          const   response = await  api.post('companies/addCompany',companyData);
+          const   response = await  api.post('/company/addCompany',companyData);
           return response.data;
          }
     catch (e) {
@@ -87,6 +87,9 @@ const  companySlice = createSlice({
             .addCase(addCompanie.fulfilled,(state,action) => {
                 state.companies = action.payload ;
                 state.companies=null;
+
+                window.alert("Solicitud enviada exitosamente");
+                window.location.replace("/companies");
             } )
             .addCase(addCompanie.rejected,(state,action
                 ) =>{

@@ -91,6 +91,8 @@ const userSlice = createSlice({
         .addCase(addUser.fulfilled, (state, action) => {
             state.users = action.payload;
             state.error = null;
+            window.alert("Cliente registrado exitosamente");
+            window.location.reload();
         })
         .addCase(addUser.rejected, (state, action) => {
             state.users = [];

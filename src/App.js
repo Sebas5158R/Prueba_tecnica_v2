@@ -6,6 +6,8 @@ import ModuleEmployees from "./pages/employees/moduleEmployees";
 import ModuleCustomers from "./pages/customers/moduleCustomers";
 import EditUser from "./pages/EditUser";
 import ModuleCompanies from "./pages/companies/moduleCompanies";
+import RegisterUser from "./pages/RegisterUser";
+import SendCreationRequest from "./components/company/sendCreationRequest";
 
 
 function App() {
@@ -14,11 +16,13 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" exact element = {<Login/>}/>
+          <Route path="/createAccount" exact element = {<RegisterUser/>}/>
           <Route path="/dashboardEmployee" exact element = {<DashboardEmployee/>}/>
           <Route path="/employees" exact element = {<ModuleEmployees/>}/>
           <Route path="/customers" exact element = {<ModuleCustomers/>}/>
           <Route path="/editUser/:id" exact element = {<EditUser/>}/>
           <Route path="/companies" exact element = {<ModuleCompanies/>}/>
+          <Route path="/sendRequest" exact element = {<SendCreationRequest/>}/>
         </Routes>
       </Router>
     </Fragment>

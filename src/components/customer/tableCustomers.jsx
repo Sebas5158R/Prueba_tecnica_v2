@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Link} from "react-router-dom";
 import ModalRegisterCustomersForExcel from "./modalRegisterExcel";
+import ModalRegisterCustomers from "./modalRegisterCustomers";
 
 const TableCustomers = ({ data }) => {
 
@@ -41,7 +42,10 @@ const TableCustomers = ({ data }) => {
                             className="p-2 border border-gray-300 rounded-md"
                         />
                         <h1 className="text-2xl font-bold">Customers Management</h1>
+                        <div className="flex gap-5">
+                        <ModalRegisterCustomers/>
                         <ModalRegisterCustomersForExcel/>
+                        </div>
                     </div>
                     {currentItems.length === 0 && (
                         <p className="text-gray-500">No hay datos disponibles.</p>
@@ -70,6 +74,9 @@ const TableCustomers = ({ data }) => {
                                 Phone number
                             </th>
                             <th scope="col" className="px-6 py-3">
+                                Legal person
+                            </th>
+                            <th scope="col" className="px-6 py-3">
                                 Role
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -83,7 +90,7 @@ const TableCustomers = ({ data }) => {
                             .map((customer, index) => (
                                 <tr
                                     key={index}
-                                    className={'bg-white border-b hover:bg-purple-50'}
+                                    className={'bg-white border-b hover:bg-blue-50'}
                                 >
                                     <th
                                         scope="row"
@@ -96,6 +103,7 @@ const TableCustomers = ({ data }) => {
                                     <td className="px-6 py-4">{customer.documentType}</td>
                                     <td className="px-6 py-4">{customer.documentNumber}</td>
                                     <td className="px-6 py-4">{customer.phoneNumber}</td>
+                                    <td className="px-6 py-4">{customer.legal_person}</td>
                                     {customer.roles.length > 0 ? (
                                         <td className="px-6 py-4">
                                             {customer.roles.map((role, index) => (
@@ -107,8 +115,8 @@ const TableCustomers = ({ data }) => {
                                     )}
                                     <td className="px-6 py-4 text-right">
                                         <Link
-                                            to={`#edit/${customer.idUser}`}
-                                            className="font-medium text-purple-600 hover:underline"
+                                            to={`/editUser/${customer.idUser}`}
+                                            className="font-medium text-blue-600 hover:underline"
                                         >
                                             Edit
                                         </Link>

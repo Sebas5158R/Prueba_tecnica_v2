@@ -18,7 +18,7 @@ const Header = () => {
                     <li>
                         <Link to={"#"} className="relative">
                             <RiNotification2Line className="text-xl"/>
-                            <RiCheckboxBlankCircleFill className="absolute -right-1 -top-1 text-xs text-red-500" />
+                            <RiCheckboxBlankCircleFill className="absolute -right-1 -top-1 text-xs text-red-500 animate-pulse" />
                         </Link>
                     </li>
 

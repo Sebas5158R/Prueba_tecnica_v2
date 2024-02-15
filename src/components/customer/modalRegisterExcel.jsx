@@ -44,8 +44,8 @@ const ModalRegisterCustomersForExcel = () => {
     return (
         <div>
 
-            <button onClick={() => setIsOpen(true)} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className="block text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
-                Register clients from excel file
+            <button onClick={() => setIsOpen(true)} data-modal-target="crud-modal" data-modal-toggle="crud-modal" className="block text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" type="button">
+                Import clients
             </button>
 
             {
@@ -57,7 +57,7 @@ const ModalRegisterCustomersForExcel = () => {
                                     <h3 className="text-lg font-semibold text-gray-900">
                                         Register clients from Excel file
                                     </h3>
-                                    <button onClick={() => setIsOpen(false)} type="button" className="text-gray-400 bg-transparent hover:bg-purple-200 hover:text-purple-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-toggle="crud-modal">
+                                    <button onClick={() => setIsOpen(false)} type="button" className="text-gray-400 bg-transparent hover:bg-blue-200 hover:text-blue-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-toggle="crud-modal">
                                         <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                                         </svg>
@@ -69,7 +69,7 @@ const ModalRegisterCustomersForExcel = () => {
                                         Upload file
                                     </label>
                                     <input
-                                        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200"
+                                        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                                         aria-describedby="file_input_help"
                                         id="file_input"
                                         type="file"
@@ -85,7 +85,7 @@ const ModalRegisterCustomersForExcel = () => {
                                     <div className="mt-10">
                                         <button
                                             type="submit"
-                                            className="text-white inline-flex items-center bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                            className="text-white inline-flex items-center bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                                         >
                                             <svg
                                                 className="me-1 -ms-1 w-5 h-5"

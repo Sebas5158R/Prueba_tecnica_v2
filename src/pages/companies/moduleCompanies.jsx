@@ -6,6 +6,7 @@ import NavBar from "../../components/NavBar";
 import Header from "../../components/Header";
 import { RiCloseLine, RiMenu3Fill } from "react-icons/ri";
 import TableCompanies from "../../components/company/tableCompanies";
+import { Link } from "react-router-dom";
 
 const ModuleCompanies = () => {
 
@@ -15,8 +16,8 @@ const ModuleCompanies = () => {
         setSidebar(!sidebar);
     };
 
-    const  dispatch = useDispatch();
-    const   companiesD = useSelector(state => state.company);
+    const dispatch = useDispatch();
+    const companiesD = useSelector(state => state.company);
     const companies = companiesD.companies;
 
 
@@ -58,6 +59,8 @@ const ModuleCompanies = () => {
                 <div className="rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full justify-center  border-2 border-transparent transition-all mb-6">
                     <TableCompanies data={companies}/>
                 </div>
+
+                <Link to={"/sendRequest"}>Send request for creation company</Link>
             </div>
         </div>
             );
