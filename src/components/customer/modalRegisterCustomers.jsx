@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../../Store/UserSlice";
 
 const ModalRegisterCustomers = () => {
+
+    const { loading, error } = useSelector(state => state.users_from_db);
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -77,7 +79,12 @@ const ModalRegisterCustomers = () => {
                                         <span className="sr-only">Close modal</span>
                                     </button>
                                 </div>
-                                <div className="p-4 md:p-5">
+                                <div className="p-4">
+                                    {error && (
+                                        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                                            <span className="block sm:inline">{error}</span>
+                                        </div>
+                                    )}
                                     <form className="p-4 md:p-5" onSubmit={handleSubmit}>
                                         <div className="grid gap-4 mb-4 grid-cols-2">
                                             <div className="col-span-2">
@@ -154,7 +161,7 @@ const ModalRegisterCustomers = () => {
                                         </div>
                                         <button type={"submit"}
                                             className="text-white inline-flex w-full justify-center bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                                            Save
+                                            {loading ? 'Loading...': 'Save'}
                                         </button>
                                     </form>
                                 </div>

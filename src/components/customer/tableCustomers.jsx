@@ -20,7 +20,7 @@ const TableCustomers = ({ data }) => {
             pageNumbers.push(
                 <li
                     key={i}
-                    className={`mx-1 p-2 cursor-pointer ${i === currentPage ? 'bg-purple-600 text-white' : 'bg-gray-200'
+                    className={`mx-1 p-2 cursor-pointer ${i === currentPage ? 'bg-blue-600 text-white' : 'bg-gray-200'
                     }`}
                     onClick={() => setCurrentPage(i)}
                 >

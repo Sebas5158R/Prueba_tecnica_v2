@@ -55,6 +55,7 @@ export const changeIdCompany = createAction('companies/changeIdCompany');
 const  companySlice = createSlice({
     name : "companies",
     initialState:{
+        loading: false,
         id:null,
         companies:[],
         error : null
@@ -84,19 +85,24 @@ const  companySlice = createSlice({
                   state.error = action.error.message
                 }
         })
+            .addCase(addCompanie.pending, (state) => {
+                state.loading = true;
+                state.companies = null;
+                state.error = null
+            })
             .addCase(addCompanie.fulfilled,(state,action) => {
+                state.loading = true
                 state.companies = action.payload ;
                 state.companies=null;
 
                 window.alert("Solicitud enviada exitosamente");
                 window.location.replace("/companies");
-            } )
-            .addCase(addCompanie.rejected,(state,action
-                ) =>{
-                 state.companies = action.payload;
-                 state.error = null;
-                }
-                )
+            })
+            .addCase(addCompanie.rejected,(state,action) =>{
+                state.loading = false
+                state.companies = action.payload;
+                state.error = null;
+            })
             .addCase(createCompany.fulfilled,(state,action)=>{
                 state.companies = action.payload;
                 state.error = null ;

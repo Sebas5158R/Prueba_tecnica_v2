@@ -1,8 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { RiNotification2Line, RiArrowDropDownLine, RiSearchLine, RiCheckboxBlankCircleFill } from "react-icons/ri";
+import { jwtDecode } from "jwt-decode";
 
 const Header = () => {
+
+    const token = localStorage.getItem('user');
+    const decodedToken = jwtDecode(token);
+    const email = decodedToken.sub;
+    const roles = decodedToken.roles;
+
     return (
         <header className="flex flex-col md:flex-row gap-4 items-center justify-between p-4 lg:px-12 w-full">
             {/* SEARCH */}
@@ -24,8 +31,9 @@ const Header = () => {
 
                     <li>
                         <Link to={"#"} className="flex items-center gap-1">
-                            User <RiArrowDropDownLine />
+                            {email} <RiArrowDropDownLine />
                         </Link>
+                        <p>{roles}</p>
                     </li>
                 </ul>
             </nav>

@@ -65,7 +65,6 @@ export const userById = createAsyncThunk(
     }
 );
 
-
 const userSlice = createSlice({
     name: "users",
     initialState: {
@@ -91,13 +90,23 @@ const userSlice = createSlice({
         .addCase(addUser.fulfilled, (state, action) => {
             state.users = action.payload;
             state.error = null;
-            window.alert("Cliente registrado exitosamente");
+            window.alert("Empleado registrado exitosamente");
             window.location.reload();
         })
         .addCase(addUser.rejected, (state, action) => {
             state.users = [];
             console.log(action.error.message);
+            if(action.error.message === "Request failed with status code 400") {
+                state.error = 'There is already a registered user with that email';
+            } else if(action.error.message === "Request failed with status code 403") {
+                state.error = 'There is already a registered user with that document or telephone number';
+            }
+             else {
+                state.error = action.error.message;
+            }
         })
+
+
         .addCase(addCustomersForExcel.fulfilled, (state, action) => {
             state.users = action.payload;
             state.error = null;
@@ -113,6 +122,8 @@ const userSlice = createSlice({
                 state.error = action.error.message;
             }
         })
+
+
         .addCase(updateUser.fulfilled, (state, action) => {
             state.users = action.payload;
             state.error = null;
@@ -123,6 +134,8 @@ const userSlice = createSlice({
             state.users = [];
             console.log(action.error.message);
         })
+
+
         .addCase(userById.fulfilled, (state, action) => {
             state.userToEdit = action.payload;
             state.error = null;
