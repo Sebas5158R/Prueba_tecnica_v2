@@ -45,15 +45,15 @@ export  const  createCompany = createAsyncThunk(
 
 export const  editCompany = createAsyncThunk(
     'companies/editCompany' ,
-    async (companyData)=>{
+    async ({idCompany,companyData})=>{
     try {
         console.log(
-            "aquitoyyyyy"
-        )
-        const  response = await  api.post('/company/editCompany',companyData)
-
-      return response.data
-
+            "aquitoyyyyy")
+        console.log(companyData)
+        console.log(idCompany)
+        const  response = await  api.put(`/company/updateCompany/${idCompany}`,companyData)
+        console.log(companyData+"data")
+        return response.data
     }catch (e) {
         throw e;
     }

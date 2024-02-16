@@ -58,7 +58,7 @@ const TableCompanies = ({ data }) => {
                                             <td className="px-6 py-4">{company.user.names}</td>
                                             <td className="px-6 py-4 text-right">
                                                 <Link to={'#'}>
-                                                    <Modaleditcompany idCompany={company.idCompany}></Modaleditcompany>
+                                                    <Modaleditcompany idCompanyE={company.idCompany}></Modaleditcompany>
                                                 </Link>
                                             </td>
                                         </tr>

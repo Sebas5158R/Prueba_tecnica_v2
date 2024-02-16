@@ -1,14 +1,18 @@
 import React, {useEffect, useState} from "react";
-import  {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import ModalRegisterCustomersForExcel from "../customer/modalRegisterExcel";
 import {useDispatch, useSelector} from "react-redux";
 import {addCustomersForExcel, updateUser} from "../../Store/UserSlice";
 import {editCompany, selectCompanyById} from "../../Store/CompanySlice";
 import api from "../../services/URLService";
-const Modaleditcompany =({idCompany}) =>{
+const Modaleditcompany =({idCompanyE}) =>{
+ console.log(idCompanyE)
+  const  idc = idCompanyE
+    const {idCompany}= useParams();
+    const dispatch = useDispatch();
+    const company = useSelector(selectCompanyById(idc));
 
-    console.log(idCompany)
-    const company = useSelector(selectCompanyById(idCompany));
+    console.log(company)
     const [isOpen,setIsOpen]=useState(false);
     const  closeModal=async (isOpen) =>{
         if (isOpen === true ){
@@ -23,11 +27,11 @@ const Modaleditcompany =({idCompany}) =>{
 
 
     const [formData, setFormData] = useState({
-        name_company: "",
-        description_company: "",
+        nameCompany: "",
+        descriptionCompany: "",
         user: "",
         phone: "",
-        addres: ""
+        address: ""
     });
 
 
@@ -37,13 +41,21 @@ const Modaleditcompany =({idCompany}) =>{
                 idCompany:company.idCompany,
                 nameCompany: company.nameCompany,
                 descriptionCompany: company.descriptionCompany,
-                user: company.user,
                 phone: company.phone,
-                address:company.address
-
+                address:company.address,
+                stateCompany:company.stateCompany,
+                codeValidation: company.codeValidation,
+                user:company.user,
+                active: company.active,
+                dateCreation:company.dateCreation ,
+                dateEndProcess: company.dateEndProcess,
+                pathDocumentation: company.pathDocumentation
             });
         }
     }, [company]);
+
+
+
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -53,20 +65,17 @@ const Modaleditcompany =({idCompany}) =>{
         });
     }
 
-    const handleSubmit = async (event) => {
-        try {
-            const response = await api.post('/company/editCompany',formData);
-            console.log(response)
-        }catch (e) {
-            console.log(e)
+    const handleSubmit =  (event) => {
+            event.preventDefault();
+            console.log(formData)
+
+           console.log({companyData:formData});
+             dispatch(editCompany({idCompany:idCompanyE,companyData:formData}));
         }
-       console.log("sebass care gay ")
-
-         console.log(formData)
 
 
-        // dispatch(editCompany( {companyData:formData}));
-    }
+
+
 
 
     // const input = document.querySelector("input");
@@ -91,7 +100,7 @@ const Modaleditcompany =({idCompany}) =>{
 
 
 
-    const dispatch = useDispatch();
+
 
     if (!company) {
         return <p>La compañía no existe</p>;
@@ -117,7 +126,7 @@ const Modaleditcompany =({idCompany}) =>{
                             <form
                                 className={`grid grid-cols-2 gap-4 transition-opacity`}
                                 onSubmit={handleSubmit}>
-                                <input type={"number"}   value={formData.idCompany}   hidden={true}/>
+                                <input type="text"  value={formData.idCompany}   hidden={true}/>
                                 <div className="col-span-2 sm:col-span-1">
                                     <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                                     <input type="text" id="name" name="nameCompany" value={formData.nameCompany} onChange={handleChange}
@@ -126,13 +135,13 @@ const Modaleditcompany =({idCompany}) =>{
                                 <div className="col-span-2 sm:col-span-1">
                                     <label htmlFor="lastNames" className="block text-sm font-medium text-gray-700">Last
                                         Names</label>
-                                    <input type="text" id="lastNames" name="lastNames" value={formData.descriptionCompany}
+                                    <input type="text" id="lastNames" name="descriptionCompany" value={formData.descriptionCompany}
                                            onChange={handleChange}
                                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                                 </div>
                                 <div className="col-span-2 sm:col-span-1">
                                     <label htmlFor="number" className="block text-sm font-medium text-gray-700">Email</label>
-                                    <input type="email" id="email" name="email" value={formData.user.idUser}
+                                    <input type="email" id="email" name="user" value={formData.user.idUser}
                                            onChange={handleChange}
                                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                                 </div>
@@ -140,14 +149,14 @@ const Modaleditcompany =({idCompany}) =>{
                                 <div className="col-span-2 sm:col-span-1">
                                     <label htmlFor="documentNumber" className="block text-sm font-medium text-gray-700">Document
                                         Number</label>
-                                    <input type="number" id="documentNumber" name="documentNumber"
+                                    <input type="number" id="documentNumber" name="phone"
                                            value={formData.phone} onChange={handleChange}
                                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                                 </div>
                                 <div className="col-span-2 sm:col-span-1">
                                     <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone
                                         Number</label>
-                                    <input type="text" id="phoneNumber" name="phoneNumber" value={formData.address}
+                                    <input type="text" id="phoneNumber" name="address" value={formData.address}
                                            onChange={handleChange}
                                            className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"/>
                                 </div>
