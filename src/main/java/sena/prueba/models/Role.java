@@ -21,6 +21,11 @@ public class Role {
 
     @Column(name = "role_type", length = 25, nullable = false)
     private String roleType;
+    @Override
+    public String toString() {
+        return this.getRoleType();
+    }
+
 
 
 }
