@@ -3,6 +3,7 @@ package sena.prueba.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sena.prueba.models.Company;
+import sena.prueba.models.User;
 import sena.prueba.repository.CompanyRepository;
 
 import java.io.File;
@@ -43,7 +44,20 @@ public  Company findCompany_id(int idCompany ){
 
     }
 
-//public String[] documentsConsult  (String path ){
+
+
+    public Company updateCompany(int id, Company company) {
+        Optional<Company> existingUser = companyRepository.findById(id);
+        if (existingUser.isPresent()) {
+            company.setIdCompany(id);
+            return companyRepository.save(company);
+        } else {
+            throw new RuntimeException("User not found");
+        }
+    }
+
+
+    //public String[] documentsConsult  (String path ){
 //
 //
 //File documents = new File(path);

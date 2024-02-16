@@ -23,8 +23,12 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/company")
-@CrossOrigin("*")
+@CrossOrigin(origins="http://localhost:3000")
+
+
 public class CompanyController {
+
+
 
 
     @Autowired
@@ -75,7 +79,7 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
 
 
 @PostMapping ( value = "/editcompany")
-public  Company editCompany ( @RequestBody Company company){
+public  Company editCompany (@RequestBody Company company){
     return  this.companyService.saveCompany(company);
 }
 
@@ -99,6 +103,12 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
    }
     return null;
 };
+
+    @PutMapping("/updateCompany/{id}")
+    public Company updateUser(@PathVariable int id, @RequestBody Company company) {
+        return companyService.updateCompany(id,company);
+    }
+
 
 @GetMapping ( value = "/companies")
         public ArrayList <Company> getCompanies (){
