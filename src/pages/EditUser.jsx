@@ -146,9 +146,9 @@ const EditUser = () => {
                             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone Number</label>
                             <input type="number" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
                         </div>
-                        <div class="flex items-center ps-4 border-2 border-gray-100 rounded-xl">
-                            <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
-                            <label for="bordered-checkbox-2" class="w-full py-4 ms-2 text-sm font-medium text-gray-900">User with company</label>
+                        <div className="flex items-center ps-4 border-2 border-gray-100 rounded-xl">
+                            <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
+                            <label htmlFor="bordered-checkbox-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900">User with company</label>
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Password</label>

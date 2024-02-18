@@ -3,7 +3,7 @@ import  {Link} from "react-router-dom";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
 
 
-const TableCompanies = ({ data, handleEdit }) => {
+const TableCompanies = ({ data }) => {
     
     const currentItems = data.slice();
     let items = document.querySelectorAll('#accordion .item');
@@ -56,10 +56,8 @@ const TableCompanies = ({ data, handleEdit }) => {
                                             <td className="px-6 py-4">{company.stateCompany}</td>
                                             <td className="px-6 py-4">{company.user.names}</td>
                                             <td className="px-6 py-4 text-right">
-                                                <Link to={'#'}>
-                                                    <button onClick={() => handleEdit(company.idCompany)} className="font-medium text-blue-600 hover:underline">
-                                                        Edit
-                                                    </button>
+                                                <Link to={`/editCompany/${company.idCompany}`}>
+                                                    Edit
                                                 </Link>
                                             </td>
                                         </tr>
