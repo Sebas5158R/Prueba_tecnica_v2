@@ -1,5 +1,6 @@
 package sena.prueba.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.CompanyDTO;
@@ -41,7 +42,7 @@ public class CompanyController {
 public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
     try {
         String fileName = companyDTO.getDocuments().getOriginalFilename();
-        Path path = Paths.get("src/mail/resources/files/"+"/"+companyDTO.getName_company()+"/"+fileName);
+        Path path = Paths.get("src/mail/resources/files/"+companyDTO.getName_company()+"/"+fileName);
         Files.createDirectories(path.getParent());
         Files.copy(companyDTO.getDocuments().getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
         File file = path.toFile();
@@ -50,9 +51,6 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
         String message = "Hi here a new request  for create a new company"+companyDTO.getName_company().toUpperCase()+"in this message is the code of validation for the creation :"+validation+"and too the documentation about the company";
         Company company = new Company();
         User usu = userService.findByid(companyDTO.getUser());
-        if (usu.getUsername().isEmpty() ){
-            System.out.println("valio monda ");
-        }
         company.setIdCompany(companyDTO.getIdCompany());
         company.setNameCompany(companyDTO.getName_company());
         company.setDescriptionCompany(companyDTO.getDescription_company());
@@ -60,6 +58,8 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
         company.setUser(usu);
         company.setCodeValidation(validation);
         company.setActive(false);
+        company.setAddress(companyDTO.getAddres());
+        company.setPhone(companyDTO.getPhone());
         LocalDate  initialdate = LocalDate.now();
         company.setDateCreation(initialdate);
         company.setDateEndProcess(initialdate.plus(Period.ofDays(15)));
@@ -75,33 +75,26 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
 }
 
 
-@PostMapping ( value = "/editcompany")
-public  Company editCompany ( @RequestBody Company company){
-    return  this.companyService.saveCompany(company);
+@PutMapping ( value = "/updateCompany/{id}")
+public  Company updateCompany (@PathVariable int id ,@RequestBody Company company){
+    return companyService.updateCompany(id, company);
 }
 
 
-@GetMapping (value = "/company/{id}")
-public Company companyByid (@PathVariable int id){
-
-    System.out.println("estoy aquiiiiiii");
-          Company company = companyService.findCompany_id(id);
-          if(company != null){
-              company.setStateCompany("Revisado");
-
-               companyService.saveCompany(company);
-
-          }else {
-
-              System.out.println("no esta trayendo el id");
-          }
-    return  company;
-};
-
+@GetMapping (value = "/listCompany/{id}")
+public ResponseEntity<?> getCompanyById(@PathVariable int id) {
+    Company company = companyService.findCompanyById(id);
+    if (company != null) {
+        return ResponseEntity.ok(company);
+    } else {
+        String msg = "Company not found";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+    }
+}
 
 @PostMapping( value = "/createCompany")
 public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
-    Company company = companyService.findCompany_id(companyDTO.getIdCompany());
+    Company company = companyService.findCompanyById(companyDTO.getIdCompany());
     try {
         if (companyDTO.getCodevalidation() == company.getCodeValidation()){
             company.setStateCompany("Created");

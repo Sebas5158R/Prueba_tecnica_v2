@@ -2,6 +2,7 @@ package sena.prueba.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +25,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
    public List<User> getAllUsers() {
@@ -68,6 +72,13 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+    @Override
+    public boolean isEmailRegistered(String email) {
+        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, email);
+        return count != null && count > 0;
+
+    }
 
     public User findByid (int id){
         return userRepository.findByIdUser(id);

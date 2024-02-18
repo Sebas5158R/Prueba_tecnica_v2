@@ -20,9 +20,15 @@ public class UserController {
     private UserServiceImpl userServiceImpl;
 
     @PostMapping(value = "/addUser")
-    public String addFirstUSer(@RequestBody User user) {
-        return userServiceImpl.addUser(user);
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        if (userServiceImpl.isEmailRegistered(user.getEmail())) {
+            return ResponseEntity.badRequest().body("Email already registered");
+        } else {
+            String addedUser = userServiceImpl.addUser(user);
+            return ResponseEntity.ok(addedUser);
+        }
     }
+
 
     @GetMapping(value = "/listUsers")
     public ResponseEntity<List<User>> listUsers() {

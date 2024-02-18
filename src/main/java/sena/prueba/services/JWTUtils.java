@@ -12,6 +12,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Component
 public class JWTUtils {
@@ -26,7 +27,10 @@ public class JWTUtils {
     }
 
     public String generateToken(UserDetails userDetails) {
+        HashMap<String, Object> claims = new HashMap<>();
+        claims.put("roles", userDetails.getAuthorities().stream().map(Object::toString).collect(Collectors.toList()));
         return Jwts.builder()
+                .setClaims(claims)
                 .subject(userDetails.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))

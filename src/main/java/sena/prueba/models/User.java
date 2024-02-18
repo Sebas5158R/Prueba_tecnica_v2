@@ -30,15 +30,15 @@ public class User implements UserDetails {
     @Column(name = "last_names", length = 40, nullable = false)
     private String lastNames;
 
-    @Column(name = "email", length = 80, nullable = false)
+    @Column(name = "email", length = 80, nullable = false, unique = true)
     private String email;
 
     @Column(name ="document_type", length = 25, nullable = false)
     private String documentType;
 
-    @Column(name = "document_number", length = 12, nullable = false)
+    @Column(name = "document_number", length = 12, nullable = false, unique = true)
     private long documentNumber;
-    @Column(name="phone_number")
+    @Column(name="phone_number", unique = true)
     private  long phoneNumber;
     @Column(name = "password", length = 120, nullable = false)
     private String password;
