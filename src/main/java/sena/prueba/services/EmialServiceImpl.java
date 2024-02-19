@@ -46,4 +46,18 @@ public class EmialServiceImpl  implements  IEmailService{
           throw new RuntimeException(e);
       }
     }
+
+    @Override
+    public void sendSetPassword(String email) throws MessagingException {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
+        mimeMessageHelper.setTo(email);
+        mimeMessageHelper.setSubject("Set password");
+        mimeMessageHelper.setText("""
+                <div>
+                    <a href="http://localhost:8090/setPassword?email=%s" target="_blank">Click link for change password</a>
+                </div>
+                """.formatted(email), true);
+        mailSender.send(mimeMessage);
+    }
 }

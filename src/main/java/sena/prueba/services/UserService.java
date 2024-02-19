@@ -12,4 +12,6 @@ public interface UserService  {
     public void saveUsersFromExcelToDatabase(MultipartFile file);
     public User updateUser(int id, User user);
     public boolean isEmailRegistered(String email);
+
+    String forgotPassword(String email);
 }

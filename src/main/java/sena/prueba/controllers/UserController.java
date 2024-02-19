@@ -59,4 +59,9 @@ public class UserController {
         }
     }
 
+    @PutMapping("/forgotPassword")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) {
+        return new ResponseEntity<>(userServiceImpl.forgotPassword(email), HttpStatus.OK);
+    }
+
 }
