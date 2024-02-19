@@ -48,7 +48,6 @@ const userSlice = createSlice({
         .addCase('LOGOUT', (state) => {
             localStorage.removeItem("user");
             window.location.replace("/");
-            alert("Session closed successfully");
             return {
                 ...state,
                 isLoggedIn: false,

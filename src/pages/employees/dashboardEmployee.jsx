@@ -22,7 +22,7 @@ const DashboardEmployee = () => {
                     <h1 className="uppercase font-bold tracking-[4px]">Logo</h1>
                 </div>
                 {/* MENU */}
-                <NavBar titulo1={"Dashboard"} ruta1={"/dashboardEmployee"} titulo2={"Modules"} ruta2={"#"} titulo3={"Calendar"}
+                <NavBar titulo1={"Dashboard"} ruta1={"/dashboard"} titulo2={"Modules"} ruta2={"#"} titulo3={"Calendar"}
                     ruta3={"#"} titulo4={"Settings"} ruta4={"#"} />
             </div>
             {/* BTN MENU MOVIL */}

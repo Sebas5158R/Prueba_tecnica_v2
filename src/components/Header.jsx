@@ -9,6 +9,8 @@ const Header = () => {
     const decodedToken = jwtDecode(token);
     const email = decodedToken.sub;
     const roles = decodedToken.roles;
+    const rolesString = roles.toString();
+    const rolesArray = rolesString.replace(/[[\]]/g, '');
 
     return (
         <header className="flex flex-col md:flex-row gap-4 items-center justify-between p-4 lg:px-12 w-full">
@@ -33,7 +35,7 @@ const Header = () => {
                         <Link to={"#"} className="flex items-center gap-1">
                             {email} <RiArrowDropDownLine />
                         </Link>
-                        <p>{roles}</p>
+                        <p>{rolesArray}</p>
                     </li>
                 </ul>
             </nav>

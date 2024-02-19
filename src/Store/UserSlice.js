@@ -65,6 +65,19 @@ export const userById = createAsyncThunk(
     }
 );
 
+export const forgotPassword = createAsyncThunk(
+    'user/forgotPassword',
+    async({email, data}) => {
+        try {
+            const response = await api.put(`/user/forgotPassword?email=${email}`, data);
+            console.log("Email:"+email)
+            return response.data;
+        } catch(error) {
+            throw error;
+        }
+    }
+);
+
 const userSlice = createSlice({
     name: "users",
     initialState: {
@@ -116,8 +129,9 @@ const userSlice = createSlice({
         .addCase(addCustomersForExcel.rejected, (state, action) => {
             state.users = [];
             console.log(action.error.message);
-            if (action.error.status === 403) {
+            if (action.error.message === 'Request failed with status code 403') {
                 state.error = 'Access denied, you do not have the role to list clients.';
+                alert("User with duplicate data, cannot be imported");
             } else {
                 state.error = action.error.message;
             }
@@ -139,6 +153,12 @@ const userSlice = createSlice({
         .addCase(userById.fulfilled, (state, action) => {
             state.userToEdit = action.payload;
             state.error = null;
+        })
+
+        .addCase(forgotPassword.fulfilled, (state, action) => {
+            state.users = action.payload;
+            state.error = null;
+            window.alert("Please check your inbox");
         })
     }
 

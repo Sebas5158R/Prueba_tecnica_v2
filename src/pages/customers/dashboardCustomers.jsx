@@ -1,8 +1,13 @@
 import React from "react";
+import HeaderCustomer from "../../components/HeaderCustomers";
+import BannerCustomers from "../../components/BannerCustomers";
 
 const DashboardCustomers = () => {
     return(
-        <div>Welcome User customer</div>
+        <div>
+            <HeaderCustomer/>
+            <BannerCustomers/>
+        </div>
     );
 }
 

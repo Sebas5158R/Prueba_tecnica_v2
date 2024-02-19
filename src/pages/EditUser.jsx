@@ -94,7 +94,7 @@ const EditUser = () => {
                     <h1 className="uppercase font-bold tracking-[4px]">Logo</h1>
                 </div>
                 {/* MENU */}
-                <NavBar titulo1={"Dashboard"} ruta1={"/dashboardEmployee"} titulo2={"Modules"} ruta2={"/dashboardEmployee"} titulo3={"Calendar"}
+                <NavBar titulo1={"Dashboard"} ruta1={"/dashboard"} titulo2={"Modules"} ruta2={"/dashboard"} titulo3={"Calendar"}
                     ruta3={"#"} titulo4={"Settings"} ruta4={"#"} />
             </div>
             {/* BTN MENU MOVIL */}
@@ -159,7 +159,7 @@ const EditUser = () => {
                             <input type="text" id="roles" name="roles" value={user.roles.map(role => role.roleType).join(' - ')} onChange={handleChange} readOnly className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
                         </div>
                         <div className="col-span-2">
-                            <Link to={"/dashboardEmployee"}><button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">Cancel</button></Link>
+                            <Link to={"/dashboard"}><button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">Cancel</button></Link>
                             <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md float-end">Save</button>
                         </div>
                     </form>

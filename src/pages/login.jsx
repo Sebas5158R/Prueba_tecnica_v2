@@ -24,7 +24,7 @@ const Login = () => {
             if(result.payload) {
                 setEmail('');
                 setPassword('');
-                navigate('/dashboardEmployee')
+                navigate('/dashboard')
             }
         }) 
     }
@@ -52,7 +52,9 @@ const Login = () => {
                                 <input type="checkbox" id="remember"/>
                                 <label htmlFor = "remember" className="ml-2 font-medium text-base">Remember for 30 days</label>
                             </div>
-                            <button className="font-medium text-base text-blue-500">Forgot password</button>
+                            <Link to={"/forgotPassword"}>
+                                <button className="font-medium text-base text-blue-500">Forgot password</button>
+                            </Link>
                         </div>
                         <div className="mt-8 flex flex-col gap-y-4">
                             <button type="submit" className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white font-lg, font-bold">{loading ? 'Loading...': 'Iniciar sesión'}</button>
