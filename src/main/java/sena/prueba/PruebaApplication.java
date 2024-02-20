@@ -34,8 +34,8 @@ public class PruebaApplication {
 			 Role role3 = roleRepository.save(new Role(3,"EMPLEADO"));
 			 Role role4 = roleRepository.save(new Role(4, "CLIENTE"));
 
-			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","CarlosGalindo8090@gmail.com","Cedula de ciudadania",1212121,33424,"PASSWORD",null,null));
-			 User user2 = userRepository.save(new User(2, "Sebastian", "Rivera Aviles", "sebas@gmail.com", "Cedula de ciudadania", 32432432, 301202020, passwordEncoder.encode("sebas1"), null, null));
+			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","carlosgalindo8090l@gmail.com","Cedula de ciudadania",1212121,33424,"PASSWORD",null,null,false,null));
+			 User user2 = userRepository.save(new User(2, "Sebastian", "Rivera Aviles", "sebas@gmail.com", "Cedula de ciudadania", 32432432, 301202020, passwordEncoder.encode("sebas1"), null, null,false,null));
 
 			 user1.setRoles(Set.of(role1));
 			 user2.setRoles(Set.of(role1, role2));

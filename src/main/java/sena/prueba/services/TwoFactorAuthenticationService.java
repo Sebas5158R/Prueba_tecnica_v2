@@ -1,10 +1,6 @@
 package sena.prueba.services;
-
-import dev.samstevens.totp.code.CodeGenerator;
-import dev.samstevens.totp.code.CodeVerifier;
-import dev.samstevens.totp.code.DefaultCodeGenerator;
-import dev.samstevens.totp.code.DefaultCodeVerifier;
-import dev.samstevens.totp.code.HashingAlgorithm;
+import com.warrenstrange.googleauth.GoogleAuthenticator;
+import dev.samstevens.totp.code.*;
 import dev.samstevens.totp.exceptions.QrGenerationException;
 import dev.samstevens.totp.qr.QrData;
 import dev.samstevens.totp.qr.QrGenerator;
@@ -13,17 +9,30 @@ import dev.samstevens.totp.secret.DefaultSecretGenerator;
 import dev.samstevens.totp.time.SystemTimeProvider;
 import dev.samstevens.totp.time.TimeProvider;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import sena.prueba.repository.UserRepository;
 import static dev.samstevens.totp.util.Utils.getDataUriForImage;
-
 @Service
 @Slf4j
 public class TwoFactorAuthenticationService {
+    private final GoogleAuthenticator gAuth;
+
+
+    @Autowired
+    UserRepository userService ;
+
+    public TwoFactorAuthenticationService(GoogleAuthenticator gAuth) {
+        this.gAuth = gAuth;
+    }
+ @Autowired
+ UserRepository userRepository;
 
     public String generateNewSecret() {
         return new DefaultSecretGenerator().generate();
     }
+
+
 
     public String generateQrCodeImageUri(String secret) {
         QrData data = new QrData.Builder()
@@ -46,6 +55,10 @@ public class TwoFactorAuthenticationService {
 
         return getDataUriForImage(imageData, generator.getImageMimeType());
     }
+
+
+
+
 
     public boolean isOtpValid(String secret, String code) {
         TimeProvider timeProvider = new SystemTimeProvider();
