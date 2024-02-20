@@ -5,4 +5,6 @@ import sena.prueba.models.Notification;
 
 public interface notificationRepository extends JpaRepository<Notification,Integer> {
 
+
+
 }

@@ -38,6 +38,7 @@ public class SecurityConfig {
                         .requestMatchers("/service/addService").permitAll()
                         .requestMatchers("/email/**","/email/sendEmail","email/sendMessageFile").permitAll()
                         .requestMatchers("/company/**","company/addCompany","company/companiesDocument","company/createCompany","company/companies","company/company/","company/updateCompany/").permitAll()
+                        .requestMatchers("code/**","code/","code/verify","code/register").permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(withDefaults())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

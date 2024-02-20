@@ -22,7 +22,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<ReqRes> login(@RequestBody ReqRes signInRequest) {
         ReqRes response = authService.signIn(signInRequest);
-
         if (response.getStatusCode() == 200) {
             return ResponseEntity.ok(response);
         } else {
