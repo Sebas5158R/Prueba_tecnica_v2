@@ -4,6 +4,7 @@ import {addUser} from "../../Store/UserSlice";
 
 const ModalRegisterEmployees = () => {
 
+
     const [names, setNames] = useState("");
     const [lastNames, setLastNames] = useState("");
     const [email, setEmail] = useState("");
@@ -11,10 +12,9 @@ const ModalRegisterEmployees = () => {
     const [documentNumber, setDocumentNumber] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
+    const  [isUsingFA,setIsUsingFA] = useState(false)
     const [idRole, setIdRole] = useState(null);
-
     const dispatch = useDispatch()
-
     const [step, setStep] = useState(1);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -29,6 +29,7 @@ const ModalRegisterEmployees = () => {
             documentNumber,
             phoneNumber,
             password,
+            isUsingFA,
             roles: [
                 {
                     idRole
@@ -38,7 +39,6 @@ const ModalRegisterEmployees = () => {
 
         console.log(newEmployee);
         dispatch(addUser(newEmployee));
-
         setNames("");
         setLastNames("");
         setEmail("");
@@ -47,6 +47,8 @@ const ModalRegisterEmployees = () => {
         setPhoneNumber("");
         setPassword("");
         setIdRole("");
+        setIsUsingFA(undefined);
+
 
         window.alert("Empleado registrado exitosamente");
 
@@ -60,6 +62,14 @@ const ModalRegisterEmployees = () => {
     const handleRoleSelection = (roleId) => {
         setIdRole(roleId);
         nextStep();
+    }
+
+    const  handleCheckboxChange = (event)=> {
+        console.log(isUsingFA+" after")
+
+        setIsUsingFA(event.target.checked);
+
+        console.log(isUsingFA+" later")
     }
 
     return (
@@ -201,36 +211,41 @@ const ModalRegisterEmployees = () => {
                                         <div className="grid gap-4 mb-4 grid-cols-2">
                                             <div className="col-span-2">
                                                 <label htmlFor="name"
-                                                    className="block mb-2 text-sm font-medium text-gray-900">Names</label>
-                                                <input type="text" value={names} onChange={(e) => setNames(e.target.value)}
-                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
-                                                        placeholder="John" required={true} />
+                                                       className="block mb-2 text-sm font-medium text-gray-900">Names</label>
+                                                <input type="text" value={names}
+                                                       onChange={(e) => setNames(e.target.value)}
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       placeholder="John" required={true}/>
 
                                             </div>
 
                                             <div className="col-span-2">
                                                 <label htmlFor="lastNames"
-                                                    className="block mb-2 text-sm font-medium text-gray-900">Last
+                                                       className="block mb-2 text-sm font-medium text-gray-900">Last
                                                     names</label>
-                                                <input type="text" value={lastNames} onChange={(e) => setLastNames(e.target.value)}
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
-                                                    placeholder="Doe" required={true} />
+                                                <input type="text" value={lastNames}
+                                                       onChange={(e) => setLastNames(e.target.value)}
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       placeholder="Doe" required={true}/>
                                             </div>
 
                                             <div className="col-span-2">
                                                 <label htmlFor="email"
-                                                    className="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                                                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
-                                                    placeholder="johnDoe@example.com" required={true} />
+                                                       className="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                                                <input type="email" value={email}
+                                                       onChange={(e) => setEmail(e.target.value)}
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       placeholder="johnDoe@example.com" required={true}/>
                                             </div>
 
                                             <div className="col-span-2">
                                                 <label htmlFor="documentType"
-                                                    className="block mb-2 text-sm font-medium text-gray-900">Document
+                                                       className="block mb-2 text-sm font-medium text-gray-900">Document
                                                     type</label>
-                                                <select value={documentType} onChange={(e) => setDocumentType(e.target.value)}
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5" required={true}>
+                                                <select value={documentType}
+                                                        onChange={(e) => setDocumentType(e.target.value)}
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                        required={true}>
                                                     <option value="">Select document type</option>
                                                     <option value="Cedula de ciudadania">Cedula de ciudadania</option>
                                                     <option value="Tarjeta de identidad">Tarjeta de identidad</option>
@@ -240,37 +255,60 @@ const ModalRegisterEmployees = () => {
 
                                             <div className="col-span-2">
                                                 <label htmlFor="documentNumber"
-                                                    className="block mb-2 text-sm font-medium text-gray-900">Document
+                                                       className="block mb-2 text-sm font-medium text-gray-900">Document
                                                     number</label>
-                                                <input type="number" value={documentNumber} onChange={(e) => setDocumentNumber(e.target.value)}
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
-                                                    placeholder="104354343" required={true} />
+                                                <input type="number" value={documentNumber}
+                                                       onChange={(e) => setDocumentNumber(e.target.value)}
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       placeholder="104354343" required={true}/>
                                             </div>
 
                                             <div className="col-span-2">
                                                 <label htmlFor="phoneNumber"
-                                                    className="block mb-2 text-sm font-medium text-gray-900">Phone
+                                                       className="block mb-2 text-sm font-medium text-gray-900">Phone
                                                     number</label>
-                                                <input type="number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
-                                                    placeholder="31409092890" required={true} />
+                                                <input type="number" value={phoneNumber}
+                                                       onChange={(e) => setPhoneNumber(e.target.value)}
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       placeholder="31409092890" required={true}/>
                                             </div>
 
                                             <div className="col-span-2">
-                                                <input type="text" value={password} onChange={(e) => setPassword(e.target.value)}
-                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
-                                                    placeholder="Password" required={true}
+                                                <label htmlFor="isUsing2FA"
+                                                       className="block mb-2 text-sm font-medium text-gray-900">
+                                                  Do You want use Authentication in two steps ?
+                                                </label>
+                                                <input id="link-checkbox" name="isUsing2FA" type={"checkbox"}
+                                                       checked={isUsingFA}
+                                                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                       onChange={handleCheckboxChange}
+                                                />
+
+                                                {/*<input type="text" value={password}*/}
+                                                {/*       onChange={(e) => setPassword(e.target.value)}*/}
+                                                {/*       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"*/}
+                                                {/*       placeholder="Password" required={true}*/}
+                                                {/*/>*/}
+                                            </div>
+
+
+                                            <div className="col-span-2">
+                                                <input type="text" value={password}
+                                                       onChange={(e) => setPassword(e.target.value)}
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       placeholder="Password" required={true}
                                                 />
                                             </div>
 
                                             <div className="col-span-2">
-                                                <input type="number" value={idRole} onChange={(e) => setIdRole(e.target.value)} readOnly={true}
-                                                    className="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5" />
+                                                <input type="number" value={idRole}
+                                                       onChange={(e) => setIdRole(e.target.value)} readOnly={true}
+                                                       className="hidden bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 w-full p-2.5"/>
                                             </div>
 
                                         </div>
-                                        <button  type={"submit"}
-                                            className="text-white inline-flex w-full justify-center bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                        <button type={"submit"}
+                                                className="text-white inline-flex w-full justify-center bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                             Save
                                         </button>
                                     </form>
