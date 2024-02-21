@@ -14,4 +14,6 @@ public interface UserService  {
     public boolean isEmailRegistered(String email);
 
     String forgotPassword(String email);
+
+    void resetPassword(String token, String newPassword);
 }
