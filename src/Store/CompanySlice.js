@@ -1,6 +1,5 @@
-import {createAsyncThunk,createSlice,createAction,} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import api from "../services/URLService";
-import {get} from "axios";
 
 export  const  fetchComapanies  = createAsyncThunk(
    'companies/fetchCompanies',
@@ -14,13 +13,11 @@ export  const  fetchComapanies  = createAsyncThunk(
    }
 );
 
-
-
 export  const  addCompanie = createAsyncThunk(
   'companies/addCompany',
 async  (companyData ) =>{
       try{
-          const   response = await  api.post('companies/addCompany',companyData);
+          const response = await  api.post('/company/addCompany',companyData);
           return response.data;
          }
     catch (e) {
@@ -29,79 +26,39 @@ async  (companyData ) =>{
     }
 );
 
-
-
-export  const  createCompany = createAsyncThunk(
-    'companies/createCompany',
-    async (companyData ) =>{
+export const companyById = createAsyncThunk(
+    'company/companyById',
+    async (idCompany) => {
         try {
-            const  response = await  api.post('companies/createCompany',companyData);
+            const response = await api.get(`/company/listCompany/${idCompany}`);
             return response.data;
-        } catch (e) {
-            throw e;
+        } catch(error) {
+            throw error;
         }
     }
 );
 
-export const  editCompany = createAsyncThunk(
-    'companies/editCompany' ,
-    async ({idCompany,companyData})=>{
-    try {
-        console.log(
-            "aquitoyyyyy")
-        console.log(companyData)
-        console.log(idCompany)
-        const  response = await  api.put(`/company/updateCompany/${idCompany}`,companyData)
-        console.log(companyData+"data")
-        return response.data
-    }catch (e) {
-        throw e;
-    }
-
-}
-
-
-)
-
-
-export  const  fetchCompanyById = createAsyncThunk(
-    'companies/fetchCompanyBy' ,
-    async  (companyData) =>{
+export const updateCompany = createAsyncThunk(
+    'company/updateCompany',
+    async ({ id, companyData }) => {
         try {
-            const  response = await  api.get('companies/createCompani/{'+companyData.idCompany+'}')
-            return response.data
-        } catch (e) {
-            throw  e;
+            const response = await api.put(`/company/updateCompany/${id}`, companyData);
+            return response.data;
+        } catch(error) {
+            throw error;
         }
     }
-
-
-
-
-
 );
 
-
-
-
-export const changeIdCompany = createAction('companies/changeIdCompany');
 
 const  companySlice = createSlice({
     name : "companies",
     initialState:{
-        id:null,
-        companyId:null,
+        loading: false,
+        companyToEdit: null,
         companies:[],
         error : null
 
-    },
-    reducers: {
-        // Add the action handler to the reducers property
-        changeIdCompany: (state, action) => {
-            state.id = action.payload;
-            state.error = null;
-        },
-        // ... other reducers
     },
     extraReducers:(builder)=>{
         builder
@@ -119,46 +76,43 @@ const  companySlice = createSlice({
                   state.error = action.error.message
                 }
         })
+            .addCase(addCompanie.pending, (state) => {
+                state.loading = true;
+                state.companies = null;
+                state.error = null
+            })
             .addCase(addCompanie.fulfilled,(state,action) => {
+                state.loading = true
                 state.companies = action.payload ;
                 state.companies=null;
-            } )
-            .addCase(addCompanie.rejected,(state,action
-                ) =>{
-                 state.companies = action.payload;
-                 state.error = null;
-                }
-                )
-            .addCase(createCompany.fulfilled,(state,action)=>{
-                state.companies = action.payload;
-                state.error = null ;
+
+                window.alert("Solicitud enviada exitosamente");
+                window.location.replace("/companies");
             })
-            .addCase(createCompany.rejected,(state,action)=>
-            {
+            .addCase(addCompanie.rejected,(state,action) =>{
+                state.loading = false
                 state.companies = action.payload;
                 state.error = null;
             })
-            .addCase(fetchCompanyById.fulfilled,(state,action)=>{
-                state.companies = action.payload;
-                state.error = null ;
+
+            .addCase(companyById.fulfilled, (state, action) => {
+                state.companyToEdit = action.payload;
+                state.error = null;
             })
-            .addCase(fetchCompanyById.rejected,(state,action)=>
-            {
+
+            .addCase(updateCompany.fulfilled, (state, action) => {
                 state.companies = action.payload;
                 state.error = null;
+                window.alert("Compañia editada con éxito");
+                window.location.replace("/companies");
+            })
+            .addCase(updateCompany.rejected, (state, action) => {
+                state.companies = [];
+                console.log(action.error.message);
             })
 
 
     }
-
-
-
-
-
-})
-
-export const selectCompanyById = (companyId) => (state) => {
-    return state.company.companies.find(company => company.idCompany === companyId);
-};
+});
 
 export default companySlice.reducer;

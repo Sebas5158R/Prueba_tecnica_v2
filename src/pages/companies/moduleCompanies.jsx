@@ -6,6 +6,7 @@ import NavBar from "../../components/NavBar";
 import Header from "../../components/Header";
 import { RiCloseLine, RiMenu3Fill } from "react-icons/ri";
 import TableCompanies from "../../components/company/tableCompanies";
+import { Link } from "react-router-dom";
 
 const ModuleCompanies = () => {
 
@@ -15,9 +16,9 @@ const ModuleCompanies = () => {
         setSidebar(!sidebar);
     };
 
-    const  dispatch = useDispatch();
-    const   companiesD = useSelector(state => state.company.companies);
-
+    const dispatch = useDispatch();
+    const companiesD = useSelector(state => state.company);
+    const companies = companiesD.companies;
 
 
     useEffect( () =>  {
@@ -34,7 +35,7 @@ const ModuleCompanies = () => {
                     <h1 className="uppercase font-bold tracking-[4px]">Logo</h1>
                 </div>
                 {/* MENU */}
-                <NavBar titulo1={"Dashboard"} ruta1={"/dashboardEmployee"} titulo2={"Modules"} ruta2={"#"} titulo3={"Calendar"}
+                <NavBar titulo1={"Dashboard"} ruta1={"/dashboard"} titulo2={"Modules"} ruta2={"#"} titulo3={"Calendar"}
                     ruta3={"#"} titulo4={"Settings"} ruta4={"#"} />
             </div>
             {/* BTN MENU MOVIL */}
@@ -56,8 +57,10 @@ const ModuleCompanies = () => {
 
                 {/* TABLE */}
                 <div className="rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full justify-center  border-2 border-transparent transition-all mb-6">
-                    <TableCompanies data={companiesD}/>
+                    <TableCompanies data={companies}/>
                 </div>
+
+                <Link to={"/sendRequest"}>Send request for creation company</Link>
             </div>
         </div>
             );

@@ -94,7 +94,7 @@ const EditUser = () => {
                     <h1 className="uppercase font-bold tracking-[4px]">Logo</h1>
                 </div>
                 {/* MENU */}
-                <NavBar titulo1={"Dashboard"} ruta1={"/dashboardEmployee"} titulo2={"Modules"} ruta2={"/dashboardEmployee"} titulo3={"Calendar"}
+                <NavBar titulo1={"Dashboard"} ruta1={"/dashboard"} titulo2={"Modules"} ruta2={"/dashboard"} titulo3={"Calendar"}
                     ruta3={"#"} titulo4={"Settings"} ruta4={"#"} />
             </div>
             {/* BTN MENU MOVIL */}
@@ -110,28 +110,28 @@ const EditUser = () => {
                 <div className="p-4 lg:p-12 bg-gray-100 mb-10">
                     {/* TITLE */}
                     <div>
-                        <h1 className={`text-3xl font-bold text-center transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Edit User: {user.names + " " + user.lastNames}</h1>
+                        <h1 className={`text-3xl font-bold transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Edit User: {user.names + " " + user.lastNames}</h1>
                     </div>
                 </div>
 
                 {/* FORM */}
-                <div className="max-w-lg mx-auto">
+                <div className="max-w-5xl rounded-sm p-5 mx-auto">
                     <form className={`grid grid-cols-2 gap-4 transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`} onSubmit={handleSubmit}>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                            <input type="text" id="name" name="names" value={formData.names} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="text" id="name" name="names" value={formData.names} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="lastNames" className="block text-sm font-medium text-gray-700">Last Names</label>
-                            <input type="text" id="lastNames" name="lastNames" value={formData.lastNames} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="text" id="lastNames" name="lastNames" value={formData.lastNames} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">Document Type</label>
-                            <select id="documentType" name="documentType" value={formData.documentType} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">
+                            <select id="documentType" name="documentType" value={formData.documentType} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent">
                                 <option value="">Select document type</option>
                                 <option value="Cedula de ciudadania">Cedula de ciudadania</option>
                                 <option value="Tarjeta de identidad">Tarjeta de identidad</option>
@@ -140,27 +140,27 @@ const EditUser = () => {
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="documentNumber" className="block text-sm font-medium text-gray-700">Document Number</label>
-                            <input type="number" id="documentNumber" name="documentNumber" value={formData.documentNumber} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="number" id="documentNumber" name="documentNumber" value={formData.documentNumber} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                            <input type="number" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="number" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
                         </div>
-                        <div className="col-span-2 sm:col-span-1">
-                            <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Legal Person</label>
-                            <input type="checkbox" id="legal_person" name="legal_person" value={formData.legal_person} onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                        <div className="flex items-center ps-4 border-2 border-gray-100 rounded-xl">
+                            <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
+                            <label htmlFor="bordered-checkbox-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900">User with company</label>
                         </div>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Password</label>
-                            <input type="text" id="password" name="password" placeholder="New password" onChange={handleChange} className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="text" id="password" name="password" placeholder="New password" onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
                         </div>
                         <div className="col-span-2">
                             <label htmlFor="roles" className="block text-sm font-medium text-gray-700">Roles</label>
-                            <input type="text" id="roles" name="roles" value={user.roles.map(role => role.roleType).join(' - ')} onChange={handleChange} readOnly className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" />
+                            <input type="text" id="roles" name="roles" value={user.roles.map(role => role.roleType).join(' - ')} onChange={handleChange} readOnly className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
                         </div>
                         <div className="col-span-2">
-                            <Link to={"/dashboardEmployee"}><button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">Cancel</button></Link>
-                            <button type="submit" className="bg-purple-500 hover:bg-purple-600 text-white font-medium py-2 px-4 rounded-md float-end">Save</button>
+                            <Link to={"/dashboard"}><button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">Cancel</button></Link>
+                            <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md float-end">Save</button>
                         </div>
                     </form>
                 </div>

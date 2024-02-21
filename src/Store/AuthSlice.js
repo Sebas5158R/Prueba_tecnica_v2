@@ -15,7 +15,6 @@ export const logout = () => ({
     type: 'LOGOUT',
   });
   
-  
 const userSlice = createSlice({
     name: 'user',
     initialState: {

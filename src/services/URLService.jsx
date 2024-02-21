@@ -8,7 +8,7 @@ api.interceptors.request.use(
     (config) => {
         const token = localStorage.getItem('user');
         if (token) {
-            const tokenWithoutQuotesToken = token.replace(/['"]+/g, '')
+            const tokenWithoutQuotesToken = token.replace(/['"]+/g, '');
             config.headers.Authorization = `Bearer ${tokenWithoutQuotesToken}`;
         }
         return config;

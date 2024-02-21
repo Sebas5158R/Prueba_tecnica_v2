@@ -19,7 +19,7 @@ const TableEmployees = ({ data }) => {
       pageNumbers.push(
         <li
           key={i}
-          className={`mx-1 p-2 cursor-pointer ${i === currentPage ? 'bg-purple-600 text-white' : 'bg-gray-200'
+          className={`mx-1 p-2 cursor-pointer ${i === currentPage ? 'bg-blue-600 text-white' : 'bg-gray-200'
             }`}
           onClick={() => setCurrentPage(i)}
         >
@@ -80,7 +80,7 @@ const TableEmployees = ({ data }) => {
               .map((employee, index) => (
                 <tr
                   key={index}
-                  className={'bg-white border-b hover:bg-purple-50'}
+                  className={'bg-white border-b hover:bg-blue-50'}
                 >
                   <th
                     scope="row"
@@ -106,7 +106,7 @@ const TableEmployees = ({ data }) => {
                   <td className="px-6 py-4 text-right">
                     <Link
                       to={`/editUser/${employee.idUser}`}
-                      className="font-medium text-purple-600 hover:underline"
+                      className="font-medium text-blue-600 hover:underline"
                     >
                       Editar
                     </Link>
