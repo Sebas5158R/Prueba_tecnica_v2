@@ -102,7 +102,6 @@ public class codeController {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         String otpAuthURL = GoogleAuthenticatorQRGenerator.getOtpAuthTotpURL("my-demo", email, key);
         try {
-
             BitMatrix bitMatrix = qrCodeWriter.encode(otpAuthURL, BarcodeFormat.QR_CODE, 200, 200);
             BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             for (int x = 0; x < 200; x++) {
@@ -114,6 +113,7 @@ public class codeController {
             OutputStream outputStream = response.getOutputStream();
             ImageIO.write(image, "png", outputStream);
             outputStream.close();
+
 
         } catch (Exception e) {
             e.printStackTrace();
