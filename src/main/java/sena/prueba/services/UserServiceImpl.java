@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService{
         Optional<User> userOptional = userRepository.findByResetToken(token);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
+            System.out.println(newPassword);
             String encryptedPassword = passwordEncoder.encode(newPassword);
             user.setPassword(encryptedPassword);
             user.setResetToken(null);

@@ -48,7 +48,7 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
         File file = path.toFile();
         int validation = splittableRandom.nextInt(1000, 9999);
         System.out.println(validation+"codigo de validacion generado");
-        String message = "Hi here a new request  for create a new company"+companyDTO.getName_company().toUpperCase()+"in this message is the code of validation for the creation :"+validation+"and too the documentation about the company";
+        String message = "Hi here a new request  for create a new company "+companyDTO.getName_company().toUpperCase()+" in this message is the code of validation for the creation :"+validation+" and too the documentation about the company";
         Company company = new Company();
         User usu = userService.findByid(companyDTO.getUser());
         company.setIdCompany(companyDTO.getIdCompany());

@@ -81,7 +81,7 @@ public class UserController {
     }
 
     @PutMapping("/resetPassword")
-    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestBody String newPassword) {
+    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
         userServiceImpl.resetPassword(token, newPassword);
         return ResponseEntity.ok("Password reset successfully");
     }

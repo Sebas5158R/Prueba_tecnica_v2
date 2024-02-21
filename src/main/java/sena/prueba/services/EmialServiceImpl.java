@@ -30,7 +30,7 @@ public class EmialServiceImpl  implements  IEmailService{
     public void SendEmail(String toUser, String subjet, String message) {
         SimpleMailMessage mailMessage =  new SimpleMailMessage();
 
-        mailMessage.setFrom("norepli@gmail.com");
+        mailMessage.setFrom("bsolutions383@gmail.com");
         mailMessage.setTo(toUser);
         mailMessage.setSubject(subjet);
         mailMessage.setText(message);
@@ -45,7 +45,7 @@ public class EmialServiceImpl  implements  IEmailService{
 
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true, StandardCharsets.UTF_8.name());
-       mimeMessageHelper.setFrom("carlosgalindo8090@gmail.com");
+       mimeMessageHelper.setFrom("bsolutions383@gmail.com");
        mimeMessageHelper.setTo(toUser);
        mimeMessageHelper.setSubject(subject);
        mimeMessageHelper.setText(message);
