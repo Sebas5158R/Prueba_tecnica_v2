@@ -1,5 +1,6 @@
 package sena.prueba.services;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -28,6 +29,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private EmialServiceImpl emailService;
 
     @Override
    public List<User> getAllUsers() {
@@ -80,10 +84,35 @@ public class UserServiceImpl implements UserService{
 
     }
 
+    @Override
+    public String forgotPassword(String email) {
+       User user = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found with this email: "+email));
+        System.out.println(user);
+        try {
+            emailService.sendSetPassword(email);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Unable to send set password email please try again");
+        }
+        return "Please check your inbox";
+    }
+
+    @Override
+    public void resetPassword(String token, String newPassword) {
+        Optional<User> userOptional = userRepository.findByResetToken(token);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            String encryptedPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(encryptedPassword);
+            user.setResetToken(null);
+            userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("Invalid token or user not found");
+        }
+
+    }
 
     public User findByid (int id){
-
-        return   userRepository.findByIdUser(id);
+        return userRepository.findByIdUser(id);
 
     }
 

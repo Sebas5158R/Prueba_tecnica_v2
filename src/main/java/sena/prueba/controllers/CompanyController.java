@@ -1,5 +1,6 @@
 package sena.prueba.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.CompanyDTO;
@@ -23,12 +24,8 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/company")
-@CrossOrigin(origins="http://localhost:3000")
-
-
+@CrossOrigin("*")
 public class CompanyController {
-
-
 
 
     @Autowired
@@ -78,20 +75,26 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
 }
 
 
-@PostMapping ( value = "/editcompany")
-public  Company editCompany (@RequestBody Company company){
-    return  this.companyService.saveCompany(company);
+@PutMapping ( value = "/updateCompany/{id}")
+public  Company updateCompany (@PathVariable int id ,@RequestBody Company company){
+    return companyService.updateCompany(id, company);
 }
 
 
-@GetMapping (value = "/company/{id}")
-public Company companyByid (@PathVariable int id){
-    return companyService.findCompany_id(id);
-};
+@GetMapping (value = "/listCompany/{id}")
+public ResponseEntity<?> getCompanyById(@PathVariable int id) {
+    Company company = companyService.findCompanyById(id);
+    if (company != null) {
+        return ResponseEntity.ok(company);
+    } else {
+        String msg = "Company not found";
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+    }
+}
 
 @PostMapping( value = "/createCompany")
 public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
-    Company company = companyService.findCompany_id(companyDTO.getIdCompany());
+    Company company = companyService.findCompanyById(companyDTO.getIdCompany());
     try {
         if (companyDTO.getCodevalidation() == company.getCodeValidation()){
             company.setStateCompany("Created");
@@ -103,12 +106,6 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
    }
     return null;
 };
-
-    @PutMapping("/updateCompany/{id}")
-    public Company updateUser(@PathVariable int id, @RequestBody Company company) {
-        return companyService.updateCompany(id,company);
-    }
-
 
 @GetMapping ( value = "/companies")
         public ArrayList <Company> getCompanies (){

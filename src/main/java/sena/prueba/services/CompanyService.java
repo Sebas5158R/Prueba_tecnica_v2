@@ -3,9 +3,9 @@ package sena.prueba.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sena.prueba.models.Company;
-import sena.prueba.models.User;
 import sena.prueba.repository.CompanyRepository;
 
+import javax.swing.text.html.Option;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,12 +26,8 @@ public  Company saveCompany (Company company){
     return  companyRepository.save(company);
 }
 
-public Optional<Company> findCompanyByid(int id){
-    return  companyRepository.findById(id);
-}
 
-public  Company findCompany_id(int idCompany ){
-
+public  Company findCompanyById(int idCompany ){
     return  companyRepository.findCompanyByIdCompany(idCompany);
 };
 
@@ -45,19 +41,17 @@ public  Company findCompany_id(int idCompany ){
     }
 
 
-
     public Company updateCompany(int id, Company company) {
-        Optional<Company> existingUser = companyRepository.findById(id);
-        if (existingUser.isPresent()) {
+        Optional<Company> existCompany = companyRepository.findById(id);
+        if (existCompany.isPresent()) {
             company.setIdCompany(id);
             return companyRepository.save(company);
         } else {
-            throw new RuntimeException("User not found");
+            throw new RuntimeException("Company not found");
         }
     }
 
-
-    //public String[] documentsConsult  (String path ){
+//public String[] documentsConsult  (String path ){
 //
 //
 //File documents = new File(path);

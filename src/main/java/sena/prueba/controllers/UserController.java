@@ -1,15 +1,19 @@
 package sena.prueba.controllers;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import sena.prueba.models.User;
+import sena.prueba.repository.UserRepository;
+import sena.prueba.services.EmialServiceImpl;
 import sena.prueba.services.UserServiceImpl;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
@@ -18,6 +22,12 @@ public class UserController {
 
     @Autowired
     private UserServiceImpl userServiceImpl;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private EmialServiceImpl emailServiceImpl;
 
     @PostMapping(value = "/addUser")
     public ResponseEntity<?> addUser(@RequestBody User user) {
@@ -56,6 +66,34 @@ public class UserController {
         } else {
             String msg = "The user not found";
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
+        }
+    }
+
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<String> forgotPassword(@RequestParam String email) throws MessagingException {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            emailServiceImpl.sendSetPassword(email);
+            return ResponseEntity.ok("An email has been sent with instructions to reset your password.");
+        } else {
+            return ResponseEntity.badRequest().body("User not found");
+        }
+    }
+
+    @PutMapping("/resetPassword")
+    public ResponseEntity<String> resetPassword(@RequestParam String token, @RequestBody String newPassword) {
+        userServiceImpl.resetPassword(token, newPassword);
+        return ResponseEntity.ok("Password reset successfully");
+    }
+
+    @GetMapping("/getResetPassword")
+    public ResponseEntity<String> getEmailFromToken(@RequestParam String token) {
+        Optional<User> userOptional = userRepository.findByResetToken(token);
+        if (userOptional.isPresent()) {
+            String email = userOptional.get().getEmail();
+            return ResponseEntity.ok(email);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 

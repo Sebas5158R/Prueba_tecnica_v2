@@ -43,6 +43,10 @@ public class User implements UserDetails {
     private String password;
     @Column (name ="legal_person")
     private  Boolean legal_person;
+
+    @Column(name = "reset_token", unique = true)
+    private String resetToken;
+
     @ManyToMany(fetch = FetchType.EAGER , cascade =  CascadeType.MERGE)
     @JoinTable (
              name="usu_rol",
