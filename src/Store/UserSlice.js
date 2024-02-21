@@ -17,10 +17,11 @@ export const fetchUsers = createAsyncThunk(
 
 export const addUser = createAsyncThunk(
     'users/addUsers',
-    async ({userData}) => {
+    async (userData) => {
         try {
             console.log(userData)
             const response = await api.post('/user/addUser', userData);
+            console.log(response.data)
             return response.data;
         } catch (error) {
             throw error;
