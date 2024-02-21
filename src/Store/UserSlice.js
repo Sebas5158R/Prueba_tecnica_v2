@@ -69,8 +69,35 @@ export const forgotPassword = createAsyncThunk(
     'user/forgotPassword',
     async({email, data}) => {
         try {
-            const response = await api.put(`/user/forgotPassword?email=${email}`, data);
+            const response = await api.post(`/user/forgotPassword?email=${email}`, data);
             console.log("Email:"+email)
+            return response.data;
+        } catch(error) {
+            throw error;
+        }
+    }
+);
+
+export const verifyTokenResetPassword = createAsyncThunk(
+    'user/verifyTokenResetPassword',
+    async(token) => {
+        try {
+            const response = await api.get(`/user/getResetPassword?token=${token}`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+);
+
+export const resetPassword = createAsyncThunk(
+    'user/resetPassword',
+    async({token, data}) => {
+        try {
+            console.log(token);
+            console.log(data);
+            const response = await api.put(`/user/resetPassword?token=${token}`, data);
+            console.log(data);
             return response.data;
         } catch(error) {
             throw error;
@@ -81,12 +108,22 @@ export const forgotPassword = createAsyncThunk(
 const userSlice = createSlice({
     name: "users",
     initialState: {
+        loading: false,
         users: [],
         userToEdit: null,
+        emailFromToken: null,
+        msg: null,
         error: null
+    },
+    reducers: {
+        clearMessage: (state) => {
+            state.error = null;
+            state.msg = null;
+        }
     },
     extraReducers: (builder) => {
         builder
+        // Redux list Users
         .addCase(fetchUsers.fulfilled, (state, action) => {
             state.users = action.payload;
             state.error = null;
@@ -100,14 +137,23 @@ const userSlice = createSlice({
                 state.error = action.error.message;
             }
         })
-        .addCase(addUser.fulfilled, (state, action) => {
-            state.users = action.payload;
+        
+
+        // Redux add User
+        .addCase(addUser.pending, (state) => {
+            state.loading = true;
+            state.msg = null;
             state.error = null;
-            window.alert("Empleado registrado exitosamente");
+        })
+        .addCase(addUser.fulfilled, (state, action) => {
+            state.loading = false
+            state.msg = action.payload;
+            state.error = null;
             window.location.reload();
         })
         .addCase(addUser.rejected, (state, action) => {
-            state.users = [];
+            state.loading = false;
+            state.msg = null;
             console.log(action.error.message);
             if(action.error.message === "Request failed with status code 400") {
                 state.error = 'There is already a registered user with that email';
@@ -120,24 +166,31 @@ const userSlice = createSlice({
         })
 
 
-        .addCase(addCustomersForExcel.fulfilled, (state, action) => {
-            state.users = action.payload;
+        // Redux add with Excel
+        .addCase(addCustomersForExcel.pending, (state) => {
+            state.loading = true;
+            state.msg = null;
             state.error = null;
-            alert("Clients were imported successfully");
+        })
+        .addCase(addCustomersForExcel.fulfilled, (state, action) => {
+            state.loading = false;
+            state.msg = action.payload;
+            state.error = null;
             window.location.reload();
         })
         .addCase(addCustomersForExcel.rejected, (state, action) => {
-            state.users = [];
+            state.loading = false;
+            state.msg = null;
             console.log(action.error.message);
             if (action.error.message === 'Request failed with status code 403') {
-                state.error = 'Access denied, you do not have the role to list clients.';
-                alert("User with duplicate data, cannot be imported");
+                state.error = 'User with duplicate data, cannot be imported.';
             } else {
                 state.error = action.error.message;
             }
         })
 
 
+        // Redux Update users
         .addCase(updateUser.fulfilled, (state, action) => {
             state.users = action.payload;
             state.error = null;
@@ -150,18 +203,64 @@ const userSlice = createSlice({
         })
 
 
+        // Redux get data by id of user
         .addCase(userById.fulfilled, (state, action) => {
             state.userToEdit = action.payload;
             state.error = null;
         })
 
-        .addCase(forgotPassword.fulfilled, (state, action) => {
-            state.users = action.payload;
+
+        // Redux case for forgot password
+        .addCase(forgotPassword.pending, (state) => {
+            state.loading = true;
+            state.msg = null;
             state.error = null;
-            window.alert("Please check your inbox");
+        })
+        .addCase(forgotPassword.fulfilled, (state, action) => {
+            state.loading = false;
+            state.msg = action.payload;
+            state.error = null;
+        })
+        .addCase(forgotPassword.rejected, (state, action) => {
+            state.loading = false;
+            state.msg = null;
+            console.log(action.error.message);
+            if(action.error.message === "Request failed with status code 400") {
+                state.error = 'El correo electrónico ingresado no está afiliado a ningún usuario.';
+            } else {
+                state.error = action.error.message;
+            }
+        })
+
+
+        // Redux verify token for reset password
+        .addCase(verifyTokenResetPassword.fulfilled, (state, action) => {
+            state.emailFromToken = action.payload;
+            state.error = null;
+        })
+        .addCase(verifyTokenResetPassword.rejected, (state, action) => {
+            state.emailFromToken = null;
+            state.error = action.error.message;
+        })
+
+        .addCase(resetPassword.pending, (state) => {
+            state.loading = true;
+            state.msg = null;
+            state.error = null;
+        })
+        .addCase(resetPassword.fulfilled, (state, action) => {
+            state.loading = false;
+            state.msg = action.payload;
+            state.error = null;
+        })
+        .addCase(resetPassword.rejected, (state, action) => {
+            state.loading = false;
+            state.msg = null;
+            console.log(action.error.message);
         })
     }
 
 });
 
+export const { clearMessage } = userSlice.actions;
 export default userSlice.reducer;

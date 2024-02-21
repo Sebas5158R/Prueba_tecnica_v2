@@ -10,6 +10,7 @@ import SendCreationRequest from "./components/company/sendCreationRequest";
 import EditCompany from "./pages/companies/editCompany";
 import { Dashboard } from "./components/ProtectedRoute";
 import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 
 const ProtectedDashboard = () => {
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" exact element = {<Login/>}/>
           <Route path="/createAccount" exact element = {<RegisterUser/>}/>
           <Route path="/forgotPassword" exact element = {<ForgotPassword/>}/>
+          <Route path="/resetPassword" exact element = {<ResetPassword/>}/>
 
           <Route path="/dashboard" element={<ProtectedDashboard />} />
 
