@@ -92,12 +92,9 @@ export const verifyTokenResetPassword = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
     'user/resetPassword',
-    async({token, data}) => {
+    async({token, newPassword}) => {
         try {
-            console.log(token);
-            console.log(data);
-            const response = await api.put(`/user/resetPassword?token=${token}`, data);
-            console.log(data);
+            const response = await api.put(`/user/resetPassword?token=${token}&newPassword=${newPassword}`);
             return response.data;
         } catch(error) {
             throw error;
@@ -252,6 +249,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.msg = action.payload;
             state.error = null;
+            setTimeout( function() { window.location.href = "http://localhost:3000/"; }, 5000 );
         })
         .addCase(resetPassword.rejected, (state, action) => {
             state.loading = false;
