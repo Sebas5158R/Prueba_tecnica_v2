@@ -32,7 +32,7 @@ const ResetPassword = () => {
             alert('Las contraseñas no coinciden');
             return;
         }
-        dispatch(resetPassword({ token: location.search.split('=')[1], data: password }));
+        dispatch(resetPassword({ token: location.search.split('=')[1], newPassword: password }));
     };
 
     return(
