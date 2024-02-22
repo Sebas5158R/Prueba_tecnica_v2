@@ -4,8 +4,18 @@ import api from "../services/URLService";
 export const loginUser = createAsyncThunk(
     'user/loginUser',
     async(userCrendentials)=> {
-        console.log(userCrendentials)
         const request = await api.post('/auth/login', userCrendentials);
+        const response = await request.data;
+        console.log(response);
+        localStorage.setItem('user', JSON.stringify(response.token));
+        return response;
+    }
+);
+
+export const loginWithGoogle = createAsyncThunk(
+    'auth/loginWithGoogle',
+    async(userCrendentialsGoogle) => {
+        const request = await api.post('/auth/loginWithGoogle', userCrendentialsGoogle);
         const response = await request.data;
         console.log(response);
         localStorage.setItem('user', JSON.stringify(response.token));
