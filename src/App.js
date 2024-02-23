@@ -11,6 +11,7 @@ import EditCompany from "./pages/companies/editCompany";
 import { Dashboard } from "./components/ProtectedRoute";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import CompleteData from "./pages/loginGoogle";
 
 
 const ProtectedDashboard = () => {
@@ -29,6 +30,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" exact element = {<Login/>}/>
+          <Route path="/completeData" exact element = {<CompleteData/>}/>
           <Route path="/createAccount" exact element = {<RegisterUser/>}/>
           <Route path="/forgotPassword" exact element = {<ForgotPassword/>}/>
           <Route path="/resetPassword" exact element = {<ResetPassword/>}/>
