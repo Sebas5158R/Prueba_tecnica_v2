@@ -5,8 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.ReqRes;
+import sena.prueba.models.User;
+import sena.prueba.repository.UserRepository;
 import sena.prueba.services.AuthService;
 import sena.prueba.services.UserServiceImpl;
+
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/auth")
@@ -15,9 +19,6 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
-
-    @Autowired
-    private UserServiceImpl userServiceImpl;
 
     @PostMapping("/login")
     public ResponseEntity<ReqRes> login(@RequestBody ReqRes signInRequest) {
@@ -36,10 +37,9 @@ public class AuthController {
     }
 
     @PostMapping("/loginWithGoogle")
-    public ResponseEntity<ReqRes> loginWithGoogle(@RequestBody ReqRes googleSignInRequest) {
+    public ResponseEntity<ReqRes> loginWithGoogle(@RequestParam("tokenId") String tokenId) {
         try {
-            String idTokenString = googleSignInRequest.getToken();
-            ReqRes response = authService.signInWithGoogle(idTokenString);
+            ReqRes response = authService.signInWithGoogle(tokenId);
             return ResponseEntity.status(response.getStatusCode()).body(response);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ReqRes());
@@ -47,6 +47,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ReqRes());
         }
     }
+
 
 
 }

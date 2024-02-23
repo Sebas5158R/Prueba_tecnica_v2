@@ -3,6 +3,7 @@ package sena.prueba.services;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -55,6 +56,9 @@ public class AuthService {
     }
 
     public ReqRes signInWithGoogle(String idTokenString) {
+        transport = new com.google.api.client.http.javanet.NetHttpTransport();
+        jsonFactory = new com.google.api.client.json.gson.GsonFactory();
+
         ReqRes response = new ReqRes();
         try {
             GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
@@ -66,12 +70,14 @@ public class AuthService {
                 String userId = payload.getSubject();
                 String email = payload.getEmail();
                 boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-                String names = (String) payload.get("name");
+                String names = (String) payload.get("given_name");
+                String lastNames = (String) payload.get("family_name");
 
-                System.out.println("userId: "+userId+" Email: "+email+" Names: "+names);
+                System.out.println("userId: "+userId+"Email: "+email+" Names:"+names+" LastNames:"+lastNames+ "Email disponible:"+emailVerified);
 
                 var user = userRepository.findByEmail(email).orElseThrow();
                 var jwt = jwtUtils.generateToken(user);
+                System.out.println("Token JWT "+jwt);
                 var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
                 response.setStatusCode(200);
                 response.setToken(jwt);

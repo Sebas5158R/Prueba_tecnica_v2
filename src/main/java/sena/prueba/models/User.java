@@ -40,7 +40,7 @@ public class User implements UserDetails {
     private long documentNumber;
     @Column(name="phone_number", unique = true)
     private  long phoneNumber;
-    @Column(name = "password", length = 120, nullable = false)
+    @Column(name = "password", length = 120)
     private String password;
     @Column (name ="legal_person")
     private  Boolean legal_person;
