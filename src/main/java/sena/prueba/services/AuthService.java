@@ -3,7 +3,6 @@ package sena.prueba.services;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.HttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,9 +13,7 @@ import sena.prueba.dto.ReqRes;
 import sena.prueba.models.User;
 import sena.prueba.repository.UserRepository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
+import java.util.*;
 
 @Service
 public class AuthService {
@@ -91,6 +88,22 @@ public class AuthService {
             response.setStatusCode(500);
             response.setError(e.getMessage());
         }
+        return response;
+    }
+
+    public ReqRes completeData(User user) {
+        ReqRes response = new ReqRes();
+
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+        userRepository.save(user);
+
+        var jwt = jwtUtils.generateToken(user);
+        System.out.println("TOKEN "+jwt);
+        response.setStatusCode(200);
+        response.setToken(jwt);
+        response.setExpirationToken("24Hr");
+        response.setMessage("Successfully Signed In with Google account");
         return response;
     }
 

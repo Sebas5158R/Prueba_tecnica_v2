@@ -6,11 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.ReqRes;
 import sena.prueba.models.User;
-import sena.prueba.repository.UserRepository;
 import sena.prueba.services.AuthService;
 import sena.prueba.services.UserServiceImpl;
-
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,6 +16,9 @@ public class AuthController {
 
     @Autowired
     private AuthService authService;
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
 
     @PostMapping("/login")
     public ResponseEntity<ReqRes> login(@RequestBody ReqRes signInRequest) {
@@ -45,6 +45,16 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ReqRes());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ReqRes());
+        }
+    }
+
+    @PostMapping(value = "/completeData")
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        if (userServiceImpl.isEmailRegistered(user.getEmail())) {
+            return ResponseEntity.badRequest().body("Email already registered");
+        } else {
+            ReqRes addedUser = authService.completeData(user);
+            return ResponseEntity.ok(addedUser);
         }
     }
 
