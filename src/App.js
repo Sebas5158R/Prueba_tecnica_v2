@@ -11,6 +11,7 @@ import EditCompany from "./pages/companies/editCompany";
 import { Dashboard } from "./components/ProtectedRoute";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import Profile from "./components/Profile";
 
 
 const ProtectedDashboard = () => {
@@ -41,6 +42,7 @@ function App() {
           <Route path="/companies" exact element = {<ModuleCompanies/>}/>
           <Route path="/sendRequest" exact element = {<SendCreationRequest/>}/>
           <Route path="/editCompany/:id" exact element = {<EditCompany/>}/>
+          <Route path="/profile" exact element={<Profile/>}/>
         </Routes>
       </Router>
     </Fragment>

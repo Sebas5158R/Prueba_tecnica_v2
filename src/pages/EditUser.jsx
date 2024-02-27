@@ -116,7 +116,10 @@ const EditUser = () => {
 
                 {/* FORM */}
                 <div className="max-w-5xl rounded-sm p-5 mx-auto">
-                    <form className={`grid grid-cols-2 gap-4 transition-opacity ${isVisible ? 'opacity-100' : 'opacity-0'}`} onSubmit={handleSubmit}>
+                    <form className={`grid grid-cols-2 gap-4 transition-opacity 
+                    
+                    
+                    `} onSubmit={handleSubmit}>
                         <div className="col-span-2 sm:col-span-1">
                             <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
                             <input type="text" id="name" name="names" value={formData.names} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />

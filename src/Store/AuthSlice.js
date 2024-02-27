@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../services/URLService";
+import {userByEmail, userById} from "./UserSlice";
+import {useEffect} from "react";
+import {fetchComapanies} from "./CompanySlice";
+import {useDispatch, useSelector} from "react-redux";
 
 export const loginUser = createAsyncThunk(
     'user/loginUser',
@@ -9,16 +13,18 @@ export const loginUser = createAsyncThunk(
         const response = await request.data;
         console.log(response);
         localStorage.setItem('user', JSON.stringify(response.token));
+        localStorage.setItem('email',JSON.stringify(userCrendentials.email))
         return response;
     }
 );
+
 
 export const logout = () => ({
     type: 'LOGOUT',
   });
   
 const userSlice = createSlice({
-    name: 'user',
+    name:'user',
     initialState: {
         loading: false,
         user: null,

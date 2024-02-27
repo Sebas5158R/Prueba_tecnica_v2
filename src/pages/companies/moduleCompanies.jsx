@@ -15,15 +15,14 @@ const ModuleCompanies = () => {
     const handleSidebar = () => {
         setSidebar(!sidebar);
     };
-
     const dispatch = useDispatch();
     const companiesD = useSelector(state => state.company);
     const companies = companiesD.companies;
-
-
     useEffect( () =>  {
         dispatch(fetchComapanies());
     },[dispatch]);
+
+
 
 
     return (

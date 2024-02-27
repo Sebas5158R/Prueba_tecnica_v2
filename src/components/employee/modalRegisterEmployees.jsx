@@ -12,7 +12,7 @@ const ModalRegisterEmployees = () => {
     const [documentNumber, setDocumentNumber] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
-    const  [isUsingFA,setIsUsingFA] = useState(false)
+    const  [isUsingFA,setIsUsingFA] = useState(false);
     const [idRole, setIdRole] = useState(null);
     const dispatch = useDispatch()
     const [step, setStep] = useState(1);
@@ -48,12 +48,10 @@ const ModalRegisterEmployees = () => {
         setPassword("");
         setIdRole("");
         setIsUsingFA(undefined);
-
-
-        window.alert("Empleado registrado exitosamente");
-
-        window.location.reload();
     };
+
+
+    
 
     const nextStep = () => {
         setStep(step + 1);

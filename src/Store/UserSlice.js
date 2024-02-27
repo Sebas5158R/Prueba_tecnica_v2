@@ -67,7 +67,27 @@ export const userById = createAsyncThunk(
     }
 );
 
-export const forgotPassword = createAsyncThunk(
+
+
+export const userByEmail  = createAsyncThunk(
+    'user/userByEmail',
+    async ({email}) => {
+        try {
+            console.log(email+"user by email")
+            const response = await api.get(`/user/findByEmail/${email}`);
+            console.log(response.data)
+            return response.data;
+        } catch(error) {
+            throw error;
+        }
+    }
+);
+
+
+
+
+
+        export const forgotPassword = createAsyncThunk(
     'user/forgotPassword',
     async({email, data}) => {
         try {
@@ -109,6 +129,7 @@ const userSlice = createSlice({
     initialState: {
         loading: false,
         users: [],
+        userLog:null,
         userToEdit: null,
         emailFromToken: null,
         msg: null,
@@ -136,7 +157,17 @@ const userSlice = createSlice({
                 state.error = action.error.message;
             }
         })
-        
+
+
+            .addCase(userByEmail.fulfilled,(state ,action)=>{
+                state.userLog = action.payload;
+                state.error = null
+            })
+            .addCase(userByEmail.rejected,(state  , action)=>{
+                 state.error=  "Algo anda mal"
+                 console.log(action.error.message)
+            })
+
 
         // Redux add User
         .addCase(addUser.pending, (state) => {
@@ -148,6 +179,7 @@ const userSlice = createSlice({
             state.loading = false
             state.msg = action.payload;
             state.error = null;
+            window.alert("User registrado exitosamente");
             window.location.reload();
         })
         .addCase(addUser.rejected, (state, action) => {
@@ -247,17 +279,21 @@ const userSlice = createSlice({
             state.msg = null;
             state.error = null;
         })
+
         .addCase(resetPassword.fulfilled, (state, action) => {
             state.loading = false;
             state.msg = action.payload;
             state.error = null;
             setTimeout( function() { window.location.href = "http://localhost:3000/"; }, 5000 );
         })
+
         .addCase(resetPassword.rejected, (state, action) => {
             state.loading = false;
             state.msg = null;
             console.log(action.error.message);
         })
+
+
     }
 
 });
