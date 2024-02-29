@@ -51,6 +51,10 @@ public class User implements UserDetails {
     @JoinTable (
              name="usu_rol",
             joinColumns =  {
+
+
+
+
                      @JoinColumn (name="fk_user")
             },
             inverseJoinColumns = {

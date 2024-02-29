@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService{
         return "Please check your inbox";
     }
 
-    @Override
+
     public void resetPassword(String token, String newPassword) {
         Optional<User> userOptional = userRepository.findByResetToken(token);
         if (userOptional.isPresent()) {
@@ -112,20 +112,7 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    @Override
-    public void resetPassword(String token, String newPassword) {
-        Optional<User> userOptional = userRepository.findByResetToken(token);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            String encryptedPassword = passwordEncoder.encode(newPassword);
-            user.setPassword(encryptedPassword);
-            user.setResetToken(null);
-            userRepository.save(user);
-        } else {
-            throw new IllegalArgumentException("Invalid token or user not found");
-        }
 
-    }
 
     public User findByid (int id){
         return userRepository.findByIdUser(id);

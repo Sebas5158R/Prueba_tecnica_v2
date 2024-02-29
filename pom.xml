@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<jjwt-version>0.12.3</jjwt-version>
 	</properties>
+
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
 		<dependency>
@@ -24,6 +25,9 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 			<version>3.2.2</version>
 		</dependency>
+
+
+
 		<dependency>
 			<groupId>com.warrenstrange</groupId>
 			<artifactId>googleauth</artifactId>

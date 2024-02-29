@@ -17,7 +17,9 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
-@CrossOrigin("*")
+@CrossOrigin("*"
+
+)
 public class UserController {
 
     @Autowired
@@ -34,9 +36,19 @@ public class UserController {
         if (userServiceImpl.isEmailRegistered(user.getEmail())) {
             return ResponseEntity.badRequest().body("Email already registered");
         } else {
+            System.out.println("estoy registrando");
             String addedUser = userServiceImpl.addUser(user);
             return ResponseEntity.ok(addedUser);
         }
+    }
+
+
+
+
+    @GetMapping (value = "/findByEmail/{email}")
+    public ResponseEntity<?> addUser(@PathVariable String email){
+            Optional<User> user = userRepository.findByEmail(email);
+            return  ResponseEntity.ok(user);
     }
 
 

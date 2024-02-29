@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/user/forgotPassword", "user/getResetPassword", "user/resetPassword").permitAll()
+                        .requestMatchers("/user/forgotPassword", "user/getResetPassword", "user/resetPassword","user/findByEmail/").permitAll()
                         .requestMatchers("/user/**").hasAnyAuthority("ROLE_SUPER_ADMINISTRADOR", "ROLE_ADMINISTRADOR")
                         .requestMatchers("/service/addService").permitAll()
                         .requestMatchers("/email/**","/email/sendEmail","email/sendMessageFile").permitAll()

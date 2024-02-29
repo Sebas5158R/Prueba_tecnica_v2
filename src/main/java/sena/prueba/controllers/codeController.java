@@ -59,7 +59,6 @@ public class codeController {
         userRepository.save(user);
         String otpAuthURL = GoogleAuthenticatorQRGenerator.getOtpAuthTotpURL("Buisness solutions SAS", email, key);
         try {
-
             BitMatrix bitMatrix = qrCodeWriter.encode(otpAuthURL, BarcodeFormat.QR_CODE, 200, 200);
             BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
             for (int x = 0; x < 200; x++) {
@@ -67,11 +66,9 @@ public class codeController {
                     image.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
                 }
             }
-
             OutputStream outputStream = response.getOutputStream();
             ImageIO.write(image, "png", outputStream);
             outputStream.close();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -93,6 +90,7 @@ public class codeController {
 //        return ResponseEntity.accepted().build();
 
 
+
     @SneakyThrows
     @GetMapping("/generate/{email}")
     public  void  generate(@PathVariable String email , HttpServletResponse response){
@@ -109,12 +107,9 @@ public class codeController {
                     image.setRGB(x, y, bitMatrix.get(x, y) ? 0xFF000000 : 0xFFFFFFFF);
                 }
             }
-
             OutputStream outputStream = response.getOutputStream();
             ImageIO.write(image, "png", outputStream);
             outputStream.close();
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -182,8 +177,6 @@ public class codeController {
 
     @PostMapping("/validate/key")
     public Validation validateKey(@RequestBody ValidateCodeDto body) {
-
-
         System.out.println(gAuth.authorizeUser(body.getEmail(), body.getCode()));
         return new Validation(gAuth.authorizeUser(body.getEmail(), body.getCode()));
     }
