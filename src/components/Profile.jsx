@@ -113,12 +113,13 @@ const  Profile =()=>{
                 {/* CONTENT */}
                 <div className="col-span-5">
                     {/* HEADER */}
-                    <Header />
+                    <Header/>
                     {/* CONTENT */}
                     <div className="p-4 lg:p-12 bg-gray-100 mb-10">
                         {/* TITLE */}
                         <div>
-                            <h1 className={`text-3xl font-bold transition-opacity `}>Edit User: {user.names + " " + user.lastNames}</h1>
+                            <h1 className={`text-3xl font-bold transition-opacity `}>Edit
+                                User: {user.names + " " + user.lastNames}</h1>
                         </div>
                     </div>
 
@@ -127,19 +128,28 @@ const  Profile =()=>{
                         <form className={`grid grid-cols-2 gap-4 transition-opacity `} onSubmit={handleSubmit}>
                             <div className="col-span-2 sm:col-span-1">
                                 <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-                                <input type="text" id="name" name="names" value={formData.names} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
+                                <input type="text" id="name" name="names" value={formData.names} onChange={handleChange}
+                                       className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"/>
                             </div>
                             <div className="col-span-2 sm:col-span-1">
-                                <label htmlFor="lastNames" className="block text-sm font-medium text-gray-700">Last Names</label>
-                                <input type="text" id="lastNames" name="lastNames" value={formData.lastNames} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
+                                <label htmlFor="lastNames" className="block text-sm font-medium text-gray-700">Last
+                                    Names</label>
+                                <input type="text" id="lastNames" name="lastNames" value={formData.lastNames}
+                                       onChange={handleChange}
+                                       className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"/>
                             </div>
                             <div className="col-span-2 sm:col-span-1">
                                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-                                <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
+                                <input type="email" id="email" name="email" value={formData.email}
+                                       onChange={handleChange}
+                                       className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"/>
                             </div>
                             <div className="col-span-2 sm:col-span-1">
-                                <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">Document Type</label>
-                                <select id="documentType" name="documentType" value={formData.documentType} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent">
+                                <label htmlFor="documentType" className="block text-sm font-medium text-gray-700">Document
+                                    Type</label>
+                                <select id="documentType" name="documentType" value={formData.documentType}
+                                        onChange={handleChange}
+                                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent">
                                     <option value="">Select document type</option>
                                     <option value="Cedula de ciudadania">Cedula de ciudadania</option>
                                     <option value="Tarjeta de identidad">Tarjeta de identidad</option>
@@ -147,41 +157,66 @@ const  Profile =()=>{
                                 </select>
                             </div>
                             <div className="col-span-2 sm:col-span-1">
-                                <label htmlFor="documentNumber" className="block text-sm font-medium text-gray-700">Document Number</label>
-                                <input type="number" id="documentNumber" name="documentNumber" value={formData.documentNumber} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
+                                <label htmlFor="documentNumber" className="block text-sm font-medium text-gray-700">Document
+                                    Number</label>
+                                <input type="number" id="documentNumber" name="documentNumber"
+                                       value={formData.documentNumber} onChange={handleChange}
+                                       className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"/>
                             </div>
                             <div className="col-span-2 sm:col-span-1">
-                                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone Number</label>
-                                <input type="number" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
+                                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Phone
+                                    Number</label>
+                                <input type="number" id="phoneNumber" name="phoneNumber" value={formData.phoneNumber}
+                                       onChange={handleChange}
+                                       className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"/>
                             </div>
                             <div className="flex items-center ps-4 border-2 border-gray-100 rounded-xl">
-                                <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
-                                <label htmlFor="bordered-checkbox-2" className="w-full py-4 ms-2 text-sm font-medium text-gray-900">User with company</label>
+                                <input id="bordered-checkbox-2" type="checkbox" value="" name="bordered-checkbox"
+                                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"/>
+                                <label htmlFor="bordered-checkbox-2"
+                                       className="w-full py-4 ms-2 text-sm font-medium text-gray-900">User with
+                                    company</label>
                             </div>
                             <div className="col-span-2 sm:col-span-1">
-                                <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">Password</label>
-                                <input type="text" id="password" name="password" placeholder="New password" onChange={handleChange} className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
+                                <label htmlFor="phoneNumber"
+                                       className="block text-sm font-medium text-gray-700">Password</label>
+                                <input type="text" id="password" name="password" placeholder="New password"
+                                       onChange={handleChange}
+                                       className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"/>
                             </div>
                             <div className="col-span-2">
                                 <label htmlFor="roles" className="block text-sm font-medium text-gray-700">Roles</label>
-                                <input type="text" id="roles" name="roles" value={user.roles.map(role => role.roleType).join(' - ')} onChange={handleChange} readOnly className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" />
+                                <input type="text" id="roles" name="roles"
+                                       value={user.roles.map(role => role.roleType).join(' - ')} onChange={handleChange}
+                                       readOnly
+                                       className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"/>
                             </div>
                             <div className="col-span-2">
-                                <Link to={"/dashboard"}><button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">Cancel</button></Link>
-                                <button type="submit" className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md float-end">Save</button>
+                                <Link to={"/dashboard"}>
+                                    <button type="submit"
+                                            className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded-md">Cancel
+                                    </button>
+                                </Link>
+                                <button type="submit"
+                                        className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md float-end">Save
+                                </button>
                             </div>
                         </form>
-                        <UsingFA userData={user} ></UsingFA>
+
+
+                        {/* TITLE */}
+
+
                     </div>
+                    <div>
+                        <UsingFA userData={user}></UsingFA>
 
+                    </div>
                 </div>
-
-
-
 
 
             </div>
 
         );
-    }
-    export  default  Profile;
+}
+export default Profile;
