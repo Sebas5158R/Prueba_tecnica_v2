@@ -10,9 +10,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sena.prueba.dto.ReqRes;
+import sena.prueba.models.LoginSession;
 import sena.prueba.models.User;
 import sena.prueba.repository.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
@@ -37,13 +39,17 @@ public class AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signinRequest.getEmail(), signinRequest.getPassword()));
             var user = userRepository.findByEmail(signinRequest.getEmail()).orElseThrow();
-            System.out.println("USER IS: "+user);
             var jwt = jwtUtils.generateToken(user);
             var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
             response.setStatusCode(200);
             response.setToken(jwt);
             response.setRefreshToken(refreshToken);
             response.setExpirationToken("24Hr");
+            response.setUser(user);
+            LoginSession loginSession = new LoginSession();
+            loginSession.setUserId(user);
+            loginSession.setLoginTime(LocalDateTime.now());
+            response.setLoginSession(loginSession);
             response.setMessage("Successfully Signed In");
         } catch (Exception e) {
             response.setStatusCode(500);
@@ -80,6 +86,7 @@ public class AuthService {
                 response.setToken(jwt);
                 response.setRefreshToken(refreshToken);
                 response.setExpirationToken("24Hr");
+                response.setUser(user);
                 response.setMessage("Successfully Signed In with Google account");
             } else {
                 throw new IllegalArgumentException("Invalid ID token.");

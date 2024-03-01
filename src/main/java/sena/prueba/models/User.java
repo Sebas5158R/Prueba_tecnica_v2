@@ -40,6 +40,7 @@ public class User implements UserDetails {
     private  long phoneNumber;
     @Column(name = "password", length = 120)
     private String password;
+
     @Column (name ="legal_person")
     private  Boolean legal_person;
 

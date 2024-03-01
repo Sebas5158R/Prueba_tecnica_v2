@@ -3,6 +3,7 @@ package sena.prueba.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
+import sena.prueba.models.LoginSession;
 import sena.prueba.models.User;
 
 @Data
@@ -21,5 +22,6 @@ public class ReqRes {
     private String role;
     private String password;
     private User User;
+    private LoginSession loginSession;
 
 }

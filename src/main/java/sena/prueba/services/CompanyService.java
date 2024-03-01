@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sena.prueba.models.Company;
 import sena.prueba.repository.CompanyRepository;
+import sena.prueba.repository.UserRepository;
 
-import javax.swing.text.html.Option;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +16,9 @@ import java.util.Optional;
 public class CompanyService {
 @Autowired
     CompanyRepository companyRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
 public ArrayList<Company>getCompanies(){
     return  (ArrayList<Company> )
@@ -50,6 +53,16 @@ public  Company findCompanyById(int idCompany ){
             throw new RuntimeException("Company not found");
         }
     }
+
+//    public Company getCompanyByUserId(User user, Integer userId) {
+//        Optional<Company> companyOptionalom = companyRepository.findCompanyByUser(user, userId);
+//        if (userOptional.isPresent()) {
+//            Company company = userOptional.get();
+//            return user.getLegal_person();
+//        } else {
+//            throw new EntityNotFoundException("User not found with id: " + userId);
+//        }
+//    }
 
 //public String[] documentsConsult  (String path ){
 //
