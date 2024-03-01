@@ -21,7 +21,7 @@ const HeaderCustomer = () => {
                 </Link>
                 {/* BUTTONS */}
                 <div className="flex items-center gap-6">
-                    <Link className="hover:text-blue-900 transition hover:underline" to={"#"}>Home</Link>
+                    <Link className="hover:text-blue-900 transition hover:underline" to={"/dashboard"}>Home</Link>
                     <Link className="hover:text-blue-900 transition hover:underline" to={"#"}>Settings</Link>
                     <Link className="bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-lg transition" to={"#"} onClick={handlerLogout}>Logout</Link>
                 </div>

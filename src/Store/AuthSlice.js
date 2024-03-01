@@ -34,6 +34,21 @@ export const loginWithGoogle = createAsyncThunk(
     }
 );
 
+export const completeData = createAsyncThunk(
+    'auth/completeData',
+    async (userData) => {
+        try {
+            const request = await api.post('/auth/completeData', userData);
+            console.log(request);
+            const response = await request.data;
+            localStorage.setItem('user', JSON.stringify(response.token));
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+);
+
 export const logout = () => ({
     type: 'LOGOUT',
   });
@@ -44,6 +59,7 @@ const userSlice = createSlice({
         loading: false,
         user: null,
         userFromGoogle: null,
+        msg: null,
         error: null
     },
     extraReducers:(builder) => {
@@ -92,16 +108,44 @@ const userSlice = createSlice({
             console.log(action.error.message);
         })
 
+
+
         .addCase(loginWithGoogle.fulfilled, (state, action) => {
             state.user = action.payload;
             state.error = null;
+            setTimeout( function() { window.location.href = "http://localhost:3000/dashboard"; }, 1000 );
         })
         .addCase(loginWithGoogle.rejected, (state, action) => {
             state.user = null;
             console.log(action.error.message);
             if(action.error.message === "Request failed with status code 500") {
                 alert("Debes de llenar un formulario antes de seguir");
-                window.location.href = "http://localhost:3000/completeData";
+                setTimeout( function() { window.location.href = "http://localhost:3000/completeData"; }, 2000 );
+            }
+        })
+
+        .addCase(completeData.pending, (state) => {
+            state.loading = true;
+            state.msg = null;
+            state.error = null;
+        })
+        .addCase(completeData.fulfilled, (state, action) => {
+            state.loading = false
+            state.msg = action.payload;
+            state.error = null;
+            setTimeout( function() { window.location.href = "http://localhost:3000/dashboard"; }, 2000 );
+        })
+        .addCase(completeData.rejected, (state, action) => {
+            state.loading = false;
+            state.msg = null;
+            console.log(action.error.message);
+            if(action.error.message === "Request failed with status code 400") {
+                state.error = 'There is already a registered user with that email';
+            } else if(action.error.message === "Request failed with status code 403") {
+                state.error = 'There is already a registered user with that document or telephone number';
+            }
+             else {
+                state.error = action.error.message;
             }
         })
     }

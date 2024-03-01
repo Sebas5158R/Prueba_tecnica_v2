@@ -50,6 +50,30 @@ export const updateCompany = createAsyncThunk(
     }
 );
 
+export const companyByUser = createAsyncThunk(
+    'company/companyByUser',
+    async (email) => {
+        try {
+            const response = await api.get(`/company/companyFrom?email=${email}`);
+            return response.data;
+        } catch(error) {
+            throw error;
+        }
+    }
+);
+
+export const fileByNameCompany = createAsyncThunk(
+    'company/fileByNameCompany',
+    async (nameCompany) => {
+        try {
+            const response = await api.get(`/company/files/${nameCompany}`);
+            return response.data;
+        } catch(error) {
+            throw error;
+        }
+    }
+);
+
 
 const  companySlice = createSlice({
     name : "companies",
@@ -57,6 +81,7 @@ const  companySlice = createSlice({
         loading: false,
         companyToEdit: null,
         companies:[],
+        file: null,
         error : null
 
     },
@@ -108,6 +133,24 @@ const  companySlice = createSlice({
             })
             .addCase(updateCompany.rejected, (state, action) => {
                 state.companies = [];
+                console.log(action.error.message);
+            })
+
+            .addCase(companyByUser.fulfilled, (state, action) => {
+                state.companies = action.payload;
+                state.error = null;
+            })
+            .addCase(companyByUser.rejected, (state, action) => {
+                state.companies = null;
+                console.log(action.error.message);
+            })
+
+            .addCase(fileByNameCompany.fulfilled, (state, action) => {
+                state.file = action.payload;
+                state.error = null;
+            })
+            .addCase(fileByNameCompany.rejected, (state, action) => {
+                state.file = null;
                 console.log(action.error.message);
             })
 

@@ -184,7 +184,7 @@ const ModalRegisterEmployees = () => {
                                     <h3 className="text-lg font-semibold text-gray-900">
                                         Register a new Employee
                                     </h3>
-                                    <button onClick={() => setIsOpen(false)} type="button"
+                                    <button onClick={() => {setIsOpen(false); setStep(1)}} type="button"
                                         className="text-gray-400 bg-transparent hover:bg-blue-200 hover:text-blue-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center"
                                         data-modal-toggle="select-modal">
                                         <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
