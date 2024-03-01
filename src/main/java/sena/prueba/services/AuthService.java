@@ -10,12 +10,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sena.prueba.dto.ReqRes;
+import sena.prueba.models.LoginSession;
 import sena.prueba.models.User;
 import sena.prueba.repository.UserRepository;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @Service
 public class AuthService {
@@ -39,13 +39,17 @@ public class AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(signinRequest.getEmail(), signinRequest.getPassword()));
             var user = userRepository.findByEmail(signinRequest.getEmail()).orElseThrow();
-            System.out.println("USER IS: "+user);
             var jwt = jwtUtils.generateToken(user);
             var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
             response.setStatusCode(200);
             response.setToken(jwt);
             response.setRefreshToken(refreshToken);
             response.setExpirationToken("24Hr");
+            response.setUser(user);
+            LoginSession loginSession = new LoginSession();
+            loginSession.setUserId(user);
+            loginSession.setLoginTime(LocalDateTime.now());
+            response.setLoginSession(loginSession);
             response.setMessage("Successfully Signed In");
         } catch (Exception e) {
             response.setStatusCode(500);
@@ -55,6 +59,9 @@ public class AuthService {
     }
 
     public ReqRes signInWithGoogle(String idTokenString) {
+        transport = new com.google.api.client.http.javanet.NetHttpTransport();
+        jsonFactory = new com.google.api.client.json.gson.GsonFactory();
+
         ReqRes response = new ReqRes();
         try {
             GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
@@ -66,17 +73,20 @@ public class AuthService {
                 String userId = payload.getSubject();
                 String email = payload.getEmail();
                 boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-                String names = (String) payload.get("name");
+                String names = (String) payload.get("given_name");
+                String lastNames = (String) payload.get("family_name");
 
-                System.out.println("userId: "+userId+" Email: "+email+" Names: "+names);
+                System.out.println("userId: "+userId+"Email: "+email+" Names:"+names+" LastNames:"+lastNames+ "Email disponible:"+emailVerified);
 
                 var user = userRepository.findByEmail(email).orElseThrow();
                 var jwt = jwtUtils.generateToken(user);
+                System.out.println("Token JWT "+jwt);
                 var refreshToken = jwtUtils.generateRefreshToken(new HashMap<>(), user);
                 response.setStatusCode(200);
                 response.setToken(jwt);
                 response.setRefreshToken(refreshToken);
                 response.setExpirationToken("24Hr");
+                response.setUser(user);
                 response.setMessage("Successfully Signed In with Google account");
             } else {
                 throw new IllegalArgumentException("Invalid ID token.");
@@ -85,6 +95,22 @@ public class AuthService {
             response.setStatusCode(500);
             response.setError(e.getMessage());
         }
+        return response;
+    }
+
+    public ReqRes completeData(User user) {
+        ReqRes response = new ReqRes();
+
+        String encryptedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
+        userRepository.save(user);
+
+        var jwt = jwtUtils.generateToken(user);
+        System.out.println("TOKEN "+jwt);
+        response.setStatusCode(200);
+        response.setToken(jwt);
+        response.setExpirationToken("24Hr");
+        response.setMessage("Successfully Signed In with Google account");
         return response;
     }
 

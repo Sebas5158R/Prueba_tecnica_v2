@@ -40,12 +40,11 @@ public class codeController {
     Auth_Service service;
     @Autowired
     UserRepository userRepository;
-  @Autowired
-  TwoFactorAuthenticationService twoFactorAuthenticationService;
+    @Autowired
+    TwoFactorAuthenticationService twoFactorAuthenticationService;
 
-
-@Autowired
- Auth_Service services;
+    @Autowired
+    Auth_Service services;
 
     @PostMapping("/register")
     public void  register(
@@ -96,7 +95,9 @@ public class codeController {
     public  void  generate(@PathVariable String email , HttpServletResponse response){
         final GoogleAuthenticatorKey key = gAuth.createCredentials(email);
         System.out.println(key);
-        Optional<User> user= userRepository.findByEmail(email);
+        User user= userRepository.findUserByEmail(email);
+        user.setSecret(key.getKey());
+        userRepository.save(user);
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         String otpAuthURL = GoogleAuthenticatorQRGenerator.getOtpAuthTotpURL("my-demo", email, key);
         try {

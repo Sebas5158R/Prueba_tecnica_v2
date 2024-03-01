@@ -5,7 +5,14 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+
+
 import lombok.NoArgsConstructor;
+
+
+import sena.prueba.models.LoginSession;
+
+
 import sena.prueba.models.User;
 
 @Builder
@@ -29,5 +36,7 @@ public class ReqRes {
     private User User;
     private boolean isUsing2FA;
     private String secretImageUri;
+    private LoginSession loginSession;
+
 
 }

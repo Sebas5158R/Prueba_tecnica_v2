@@ -7,7 +7,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,8 +38,9 @@ public class User implements UserDetails {
     private long documentNumber;
     @Column(name="phone_number", unique = true)
     private  long phoneNumber;
-    @Column(name = "password", length = 120, nullable = false)
+    @Column(name = "password", length = 120)
     private String password;
+
     @Column (name ="legal_person")
     private  Boolean legal_person;
 
