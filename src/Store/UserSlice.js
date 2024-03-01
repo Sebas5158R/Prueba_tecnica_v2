@@ -84,6 +84,20 @@ export const userByEmail  = createAsyncThunk(
 );
 
 
+export const  veryfyCode = createAsyncThunk (
+    'code/validate',
+    async  ({validateDTO}) =>{
+     try {
+         console.log(validateDTO)
+         const  response = await api.post('/code/validate/key',validateDTO)
+         console.log("this is response")
+         console.log(response.data)
+         return response.data;
+     } catch (error){
+         throw  error;
+     }
+    }
+);
 
 
 
