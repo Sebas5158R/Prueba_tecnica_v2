@@ -3,6 +3,7 @@ package sena.prueba.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sena.prueba.models.Company;
+import sena.prueba.models.User;
 import sena.prueba.repository.CompanyRepository;
 import sena.prueba.repository.UserRepository;
 
@@ -54,15 +55,9 @@ public  Company findCompanyById(int idCompany ){
         }
     }
 
-//    public Company getCompanyByUserId(User user, Integer userId) {
-//        Optional<Company> companyOptionalom = companyRepository.findCompanyByUser(user, userId);
-//        if (userOptional.isPresent()) {
-//            Company company = userOptional.get();
-//            return user.getLegal_person();
-//        } else {
-//            throw new EntityNotFoundException("User not found with id: " + userId);
-//        }
-//    }
+    public Company getCompanyByUserEmail(String email) {
+        return companyRepository.findByUserEmail(email);
+    }
 
 //public String[] documentsConsult  (String path ){
 //

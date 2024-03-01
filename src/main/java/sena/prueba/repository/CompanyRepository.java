@@ -10,7 +10,7 @@ public interface CompanyRepository extends JpaRepository <Company,Integer> {
 
     Company findCompanyByIdCompany(int idCompany);
 
-//    Company findCompanyByUser(User user, Integer idUser);
+    Company findByUserEmail(String email);
 
 
 }

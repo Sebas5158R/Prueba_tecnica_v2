@@ -1,13 +1,14 @@
 package sena.prueba.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.CompanyDTO;
 import sena.prueba.dto.FileDTO;
 import sena.prueba.models.Company;
-import sena.prueba.models.Record;
 import sena.prueba.models.User;
+import sena.prueba.repository.UserRepository;
 import sena.prueba.services.CompanyService;
 import sena.prueba.services.IEmailService;
 import sena.prueba.services.UserServiceImpl;
@@ -36,6 +37,12 @@ public class CompanyController {
     SplittableRandom splittableRandom = new SplittableRandom();
     @Autowired
     IEmailService emailService;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Value("src/mail/resources/files")
+    private String companyFilesDirectory;
 
 
 @PostMapping(value ="/addCompany")
@@ -116,6 +123,62 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
     public List<File> listarArchivos(@RequestBody FileDTO fileDTO) {
         return companyService.getFilesInDirectory(fileDTO.getDescripcion());
     }
+
+    @GetMapping("/companyFrom")
+    public ResponseEntity<Company> getCompanyByUserEmail(@RequestParam String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Company company = companyService.getCompanyByUserEmail(user.getEmail());
+            return ResponseEntity.ok().body(company);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/files")
+    public List<String> getCompanyFiles() {
+        List<String> companyFiles = new ArrayList<>();
+        File directory = new File(companyFilesDirectory);
+
+        if (directory.exists() && directory.isDirectory()) {
+            File[] companyDirectories = directory.listFiles(File::isDirectory);
+            if (companyDirectories != null) {
+                for (File companyDirectory : companyDirectories) {
+                    File[] files = companyDirectory.listFiles();
+                    if (files != null) {
+                        for (File file : files) {
+                            String companyDirectoryName = companyDirectory.getName().replace(" ", "%20");
+                            String filePath = companyDirectoryName + "/" + file.getName().replace(" ", "%20");
+                            companyFiles.add(filePath);
+                        }
+                    }
+                }
+            }
+        }
+
+        return companyFiles;
+    }
+
+    @GetMapping("/files/{nameCompany}")
+    public List<String> getCompanyFiles(@PathVariable String nameCompany) {
+        List<String> companyFiles = new ArrayList<>();
+        File companyDirectory = new File(companyFilesDirectory + File.separator + nameCompany);
+
+        if (companyDirectory.exists() && companyDirectory.isDirectory()) {
+            File[] files = companyDirectory.listFiles();
+            if (files != null) {
+                for (File file : files) {
+                    String filePath = companyFilesDirectory + "/" + nameCompany + "/" + file.getName().replace(" ", "%20");
+                    companyFiles.add(filePath);
+                }
+            }
+        }
+
+        return companyFiles;
+    }
+
+
 
 
 }
