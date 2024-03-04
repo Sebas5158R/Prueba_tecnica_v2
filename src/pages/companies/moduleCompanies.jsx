@@ -17,6 +17,7 @@ const ModuleCompanies = () => {
     const dispatch = useDispatch();
     const companies = useSelector(state => state.company.companies);
     const files = useSelector(state => state.company.file);
+    const [pdfUrl, setPdfUrl] = useState('');
 
     useEffect(() => {
     const token = localStorage.getItem('user');
@@ -35,13 +36,17 @@ const ModuleCompanies = () => {
     }
     }, [dispatch, companies.nameCompany]);
 
+    useEffect(() => {
+        if (files) {
+            const url = `http://localhost:8090/company/files/${companies.nameCompany}/${files}`;
+            setPdfUrl(url);
+        }
+    }, [files, companies.nameCompany]);
+
     const handleSidebar = () => {
     setSidebar(!sidebar);
     };
 
-    if (!companies) {
-        return <div>Loading...</div>;
-    }
 
 
     return (
@@ -131,12 +136,12 @@ const ModuleCompanies = () => {
                                         <div className="w-full sm:w-1/2">
                                             <label className="mb-3 block text-sm font-medium text-black dark:text-white"
                                                 htmlFor="phoneNumber">
-                                                Respresentative Phone Number
+                                                Phone Number Company
                                             </label>
                                             <input
                                                 className="w-full rounded border border-stroke bg-gray-100 py-3 px-5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                                 type="text" name="phoneNumber" id="phoneNumber"
-                                                placeholder="+990 3343 7865" value={companies && companies.user && companies.user.phoneNumber ? companies.user.phoneNumber : ''} readOnly/>
+                                                placeholder="+990 3343 7865" value={companies.phone} readOnly/>
                                         </div>
                                     </div>
 
@@ -194,12 +199,17 @@ const ModuleCompanies = () => {
                         <div className="rounded-sm border border-stroke bg-white shadow-default">
                             <div className="border-b border-stroke py-4 px-7">
                                 <h3 className="font-medium text-black">
-                                    Company Files
+                                    Company File
                                 </h3>
                             </div>
-                            <div className="p-7">
-                                <input type="text" value={files} readOnly/>
-                                <pre src="http://localhost:8090/files/Prueba/archivo.txt" title="Archivo" width="508" height="280"></pre>
+                            <div className="p-7">                                
+                                {pdfUrl && (
+                                    <embed src={pdfUrl} type="application/pdf" width="100%" height="500px" />
+                                )}
+                                <br />
+                                <Link to={`http://localhost:8090/company/files/${companies.nameCompany}/${files}`} target="_blank" rel="noopener noreferrer">
+                                    <button className='bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-lg transition'>Open in new tab</button>
+                                </Link>
                                 {/* <form action="#">
                                     <div id="FileUpload"
                                         className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray py-4 px-4 dark:bg-meta-4 sm:py-7.5">
