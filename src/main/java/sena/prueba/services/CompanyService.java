@@ -3,6 +3,7 @@ package sena.prueba.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sena.prueba.models.Company;
+import sena.prueba.models.User;
 import sena.prueba.repository.CompanyRepository;
 import sena.prueba.repository.UserRepository;
 
@@ -44,6 +45,7 @@ public  Company findCompanyById(int idCompany ){
     }
 
 
+
     public Company updateCompany(int id, Company company) {
         Optional<Company> existCompany = companyRepository.findById(id);
         if (existCompany.isPresent()) {
@@ -65,6 +67,13 @@ public  Company findCompanyById(int idCompany ){
 //    }
 
 //public String[] documentsConsult  (String path ){
+
+
+
+
+
+    //public String[] documentsConsult  (String path ){
+
 //
 //
 //File documents = new File(path);

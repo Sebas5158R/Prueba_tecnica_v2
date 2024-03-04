@@ -34,8 +34,10 @@ public class PruebaApplication {
 			 Role role3 = roleRepository.save(new Role(3,"EMPLEADO"));
 			 Role role4 = roleRepository.save(new Role(4, "CLIENTE"));
 
+
 			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","CarlosGalindo8090@gmail.com","Cedula de ciudadania",1212121,33424,"PASSWORD",false,null,null,false,null));
 			 User user2 = userRepository.save( new User(2,"ARNOld","Galindo","sebas@gmail.com","Cedula de ciudadania",12121210,334245,passwordEncoder.encode("sebas1"),false,null,null,false,null));
+
 
 
 

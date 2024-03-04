@@ -41,6 +41,7 @@ public class AuthController {
     public ResponseEntity<ReqRes> login(@RequestBody ReqRes signInRequest, HttpServletRequest httpServletRequest) {
         ReqRes response = authService.signIn(signInRequest);
 
+
         User userId = response.getUser();
         System.out.println(authService.signIn(signInRequest).getUser());
 
