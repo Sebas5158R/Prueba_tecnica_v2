@@ -52,7 +52,7 @@ let i = 1
     const handleSetFalse = () => {
         setIsFA(prevIsFA => false); // Invertir el valor de is
 
-
+ handleRenderButton()
     };
     const handleSetTrue = () => {
         setIsFA(prevIsFA => true); // Invertir el valor de is
@@ -65,27 +65,39 @@ let i = 1
         console.log("00000")
         console.log(formData.using2FA)
         console.log("00000")
+        enable2FA()
 console.log(formData)
     }
 
+ const  [button ,setButton] = useState(false)
 
-const change  = () => {
-        try {
-           handleSetFalse()
-
-
-        }  catch (e ){
+    const  handleRenderButton = () =>{
+        setButton(prevState => !prevState)
+    }
 
 
+// const change  = () => {
+//         try {
+//            handleSetFalse()
+//
+//
+//         }  catch (e ){
+//
+//
+//
+//         }
+//
+//
+//
+// }
+    const  disable2FA  = async ()=>{
+  try {
+      dispatch(updateUser({id: user.idUser, userData: formData}));
+  }catch (e) {
+      throw  e}
+    }
 
-        }
-
-
-
-}
-
-
-    const envio = async ()=>{
+    const enable2FA = async ()=>{
     try {
         console.log(formData)
         const validateCodeDTO = {
@@ -104,6 +116,9 @@ const change  = () => {
         throw  e
     }
     }
+
+
+
 
     return (
         <div>
@@ -174,6 +189,18 @@ const change  = () => {
                                 </form>
                             </div>
                         </div>
+                    )
+
+                }
+                {
+                  button &&(
+                    <div className={"flex flex-col "}>
+                        <div className={"flex  justify-center "}>
+                            <button type={"button"} onClick={() => disable2FA()}
+                                    className="flex flex-col text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-4 focus:ring-green-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"> Update
+                            </button>
+                        </div>
+                    </div>
                     )
 
                 }

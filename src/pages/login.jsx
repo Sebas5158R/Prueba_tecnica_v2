@@ -20,13 +20,20 @@ const Login = () => {
         let userCredentials = {
             email, password
         }
-        dispatch(loginUser(userCredentials)).then((result) => {
-            if(result.payload) {
-                setEmail('');
-                setPassword('');
-                navigate('/dashboard')
-            }
-        }) 
+        dispatch(loginUser(userCredentials))
+        // .then((result) => {
+        //   console.log("estoy aca")
+        //     if (result.payload.user.using2FA===true){
+        //         navigate('/form2FA')
+        //
+        //     }
+        //
+        //   else  if (result.payload.user.using2FA===false) {
+        //         setEmail('');
+        //         setPassword('');
+        //         navigate('/dashboard')
+        //     }
+        // })
     }
 
     return(

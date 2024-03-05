@@ -12,6 +12,7 @@ import { Dashboard } from "./components/ProtectedRoute";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import Profile from "./components/Profile";
+import Form2FA from "./components/Form2FA";
 
 
 const ProtectedDashboard = () => {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/sendRequest" exact element = {<SendCreationRequest/>}/>
           <Route path="/editCompany/:id" exact element = {<EditCompany/>}/>
           <Route path="/profile" exact element={<Profile/>}/>
+          <Route path={"/form2FA"} exact element={ <Form2FA/>}> </Route>
         </Routes>
       </Router>
     </Fragment>

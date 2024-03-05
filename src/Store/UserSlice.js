@@ -88,6 +88,7 @@ export const  veryfyCode = createAsyncThunk (
     'code/validate',
     async  ({validateDTO}) =>{
      try {
+         console.log("validate Dto")
          console.log(validateDTO)
          const  response = await api.post('/code/validate/key',validateDTO)
          console.log("this is response")
