@@ -1,7 +1,11 @@
 package sena.prueba.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.CompanyDTO;
@@ -15,6 +19,8 @@ import sena.prueba.services.UserServiceImpl;
 
 
 import java.io.File;
+import java.io.FilenameFilter;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -166,17 +172,46 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
         File companyDirectory = new File(companyFilesDirectory + File.separator + nameCompany);
 
         if (companyDirectory.exists() && companyDirectory.isDirectory()) {
-            File[] files = companyDirectory.listFiles();
+            File[] files = companyDirectory.listFiles(new FilenameFilter() {
+                @Override
+                public boolean accept(File dir, String name) {
+                    return name.toLowerCase().endsWith(".pdf");
+                }
+            });
+
             if (files != null) {
                 for (File file : files) {
-                    String filePath = companyFilesDirectory + "/" + nameCompany + "/" + file.getName().replace(" ", "%20");
-                    companyFiles.add(filePath);
+                    System.out.println(file);
+                    companyFiles.add(file.getName());
                 }
             }
         }
 
+        System.out.println(companyFiles);
         return companyFiles;
     }
+
+    @GetMapping("/files/{companyName}/{fileName:.+}")
+    public ResponseEntity<Resource> getCompanyFile(@PathVariable String companyName, @PathVariable String fileName) {
+        String companyDirectory = "src/mail/resources/files/" + companyName + "/" + fileName;
+        try {
+            Path filePath = Paths.get(companyDirectory);
+            File file = filePath.toFile();
+
+            if (file.exists() && file.isFile()) {
+                FileSystemResource resource = new FileSystemResource(file);
+                return ResponseEntity.ok()
+                        .contentType(MediaType.parseMediaType("application/pdf"))
+                        .body(resource);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+
 
 
 

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 @Data
@@ -27,7 +28,7 @@ public class Company {
     @Column (name = "active")
         private  Boolean active;
     @Column( name ="phone")
-        private  int phone;
+        private  long phone;
     @Column ( name = "address")
         private  String address;
     @Column (name ="date_creation")
@@ -36,6 +37,18 @@ public class Company {
         private  LocalDate dateEndProcess;
     @Column (name = "path_documentation")
         private  String pathDocumentation;
+
+    @ManyToMany(fetch = FetchType.EAGER , cascade =  CascadeType.MERGE)
+    @JoinTable (
+            name="company_service",
+            joinColumns =  {
+                    @JoinColumn (name="fk_company")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn (name = "fk_service")
+            }
+    )
+    private Set<Service> services;
 
     /**/
 
