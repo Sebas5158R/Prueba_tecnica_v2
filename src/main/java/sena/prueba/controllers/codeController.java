@@ -30,12 +30,10 @@ import java.util.Optional;
 @Slf4j
 @RestController
 @AllArgsConstructor
+@CrossOrigin("*")
 @RequestMapping("/code")
 public class codeController {
-
     private final GoogleAuthenticator gAuth;
-
-
     @Autowired
     Auth_Service service;
     @Autowired
@@ -178,7 +176,11 @@ public class codeController {
 
     @PostMapping("/validate/key")
     public Validation validateKey(@RequestBody ValidateCodeDto body) {
+        System.out.println("estoy validando el codigo");
+        System.out.println(body.getEmail());
+        System.out.println(body.getCode());
         System.out.println(gAuth.authorizeUser(body.getEmail(), body.getCode()));
+
         return new Validation(gAuth.authorizeUser(body.getEmail(), body.getCode()));
     }
 

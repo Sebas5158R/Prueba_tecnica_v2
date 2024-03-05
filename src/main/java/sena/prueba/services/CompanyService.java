@@ -54,6 +54,22 @@ public  Company findCompanyById(int idCompany ){
         }
     }
 
+
+
+    public Boolean validationCode (int code  , int idCompany ){
+        Company  company  = companyRepository.findCompanyByIdCompany(idCompany);
+        if (company.getCodeValidation()==code){
+            System.out.println("codigo valido");
+            return true ;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+
+
 //    public Company getCompanyByUserId(User user, Integer userId) {
 //        Optional<Company> companyOptionalom = companyRepository.findCompanyByUser(user, userId);
 //        if (userOptional.isPresent()) {

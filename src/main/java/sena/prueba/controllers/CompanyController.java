@@ -5,14 +5,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.CompanyDTO;
 import sena.prueba.dto.FileDTO;
+import sena.prueba.dto.ValidateCodeCompanyDTO;
 import sena.prueba.models.Company;
 import sena.prueba.models.Record;
 import sena.prueba.models.User;
 import sena.prueba.services.CompanyService;
 import sena.prueba.services.IEmailService;
 import sena.prueba.services.UserServiceImpl;
-
-
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -81,6 +80,8 @@ public  Company updateCompany (@PathVariable int id ,@RequestBody Company compan
 }
 
 
+
+
 @GetMapping (value = "/listCompany/{id}")
 public ResponseEntity<?> getCompanyById(@PathVariable int id) {
     Company company = companyService.findCompanyById(id);
@@ -116,6 +117,13 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
     public List<File> listarArchivos(@RequestBody FileDTO fileDTO) {
         return companyService.getFilesInDirectory(fileDTO.getDescripcion());
     }
+
+
+    @PostMapping (value =  "/validateCodeCompany")
+    public  Boolean validateCodeCompany  (@RequestBody ValidateCodeCompanyDTO validateCodeCompanyDTO){
+    return  companyService.validationCode(validateCodeCompanyDTO.getCode(), validateCodeCompanyDTO.getIdCompany());
+    }
+
 
 
 }

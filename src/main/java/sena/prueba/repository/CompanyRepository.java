@@ -8,6 +8,7 @@ import sena.prueba.models.User;
 @Repository
 public interface CompanyRepository extends JpaRepository <Company,Integer> {
 
+
     Company findCompanyByIdCompany(int idCompany);
 
 //    Company findCompanyByUser(User user, Integer idUser);
