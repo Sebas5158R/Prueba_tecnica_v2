@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../Store/AuthSlice";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { GoogleLoginButton } from "./loginGoogle";
 
 const Login = () => {
 
@@ -65,9 +66,7 @@ const Login = () => {
                         </div>
                         <div className="mt-8 flex flex-col gap-y-4">
                             <button type="submit" className="active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all py-3 rounded-xl bg-blue-500 text-white font-lg, font-bold">{loading ? 'Loading...': 'Iniciar sesión'}</button>
-                            <button className="flex rounded-xl border-2 py-3 border-gray-100 items-center justify-center gap-2 active:scale-[.98] active:duration-75 hover:scale-[1.01] ease-in-out transition-all">
-                                Sign in with Google
-                            </button>
+                            <GoogleLoginButton/>
                             {error && (
                                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                                     <span className="block sm:inline">{error}</span>

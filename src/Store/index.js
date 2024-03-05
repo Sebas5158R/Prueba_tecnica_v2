@@ -8,6 +8,7 @@ const preloadedState = {
     user: {
       user: JSON.parse(localStorage.getItem('user')) || null,
       loading: false,
+      userFromGoogle: JSON.parse(localStorage.getItem('userWithGoogle')) || null,
       error: null
     }
   };

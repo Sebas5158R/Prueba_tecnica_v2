@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from '../assets/img/company.jpg';
+import { Link } from 'react-router-dom';
 
 const BannerCustomers = () => {
     return(
@@ -11,7 +12,9 @@ const BannerCustomers = () => {
                     </h1>
                     <p className='max-w-[480px] mb-8'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea debitis illum quos a et explicabo incidunt ducimus fugiat, corrupti consequuntur fuga iusto voluptatibus recusandae architecto totam aperiam quibusdam iste numquam.</p>
                     <div>
-                    <button className='underline-effect text-blue-500 bg-blue-50 text-base font-medium ml-2 px-4 py-3 rounded-lg transition border-2 border-blue-600 hover:bg-blue-200 hover:text-blue-600'>Create my company</button>
+                    <Link to={"/companies"}>
+                        <button className='underline-effect text-blue-500 bg-blue-50 text-base font-medium ml-2 px-4 py-3 rounded-lg transition border-2 border-blue-600 hover:bg-blue-200 hover:text-blue-600'>Create my company</button>
+                    </Link>
                     </div>
                 </div>
                 {/* IMAGE */}

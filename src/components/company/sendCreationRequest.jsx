@@ -37,6 +37,7 @@ const SendCreationRequest = () => {
     formData.append("documents", documents);
     formData.append("phone", phoneNumber);
     formData.append("address", address);
+    formData.append("documents", documents);
 
     dispatch(addCompanie(formData));
 
@@ -47,6 +48,7 @@ const SendCreationRequest = () => {
     setDocuments("");
     setPhoneNumber("");
     setAddress("");
+    setDocuments(null);
     };
 
 
@@ -108,7 +110,7 @@ const SendCreationRequest = () => {
                                 <p>Please fill out all the fields.</p>
                             </div>
 
-                            <form onSubmit={handleSubmit} className="lg:col-span-2">
+                            <form onSubmit={handleSubmit} className="lg:col-span-2" encType="multipart/form-data">
                                 <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                                     <div className="md:col-span-5">
                                         <label htmlFor="nit">Nit company</label>
