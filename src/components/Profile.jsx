@@ -1,7 +1,7 @@
-import {Link, useParams} from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {updateUser, userByEmail, userById} from "../Store/UserSlice";
+import {updateUser, userByEmail} from "../Store/UserSlice";
 import NavBar from "./NavBar";
 import {RiCloseLine, RiMenu3Fill} from "react-icons/ri";
 import Header from "./Header";
@@ -42,7 +42,6 @@ const  Profile =()=>{
             const  decodedToken = jwtDecode(token)
             const emailS = decodedToken.sub;
             console.log(emailS)
-            const  email = localStorage.getItem("email")
             dispatch(userByEmail({email:emailS}))
         }, [dispatch]);
 
@@ -103,7 +102,7 @@ const  Profile =()=>{
                     </div>
                     {/* MENU */}
                     <NavBar titulo1={"Dashboard"} ruta1={"/dashboard"} titulo2={"Modules"} ruta2={"/dashboard"} titulo3={"Calendar"}
-                            ruta3={"#"} titulo4={"Settings"} ruta4={"#"} />
+                            ruta3={"#"} titulo4={"Settings"} ruta4={"/Profile"} />
                 </div>
                 {/* BTN MENU MOVIL */}
                 <button onClick={handleSidebar} className="block lg:hidden fixed bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl z-40">

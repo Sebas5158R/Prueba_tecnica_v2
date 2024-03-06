@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../Store/AuthSlice";
-import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { GoogleLoginButton } from "./loginGoogle";
 
@@ -14,7 +13,6 @@ const Login = () => {
     // Redux states
     const {loading, error} = useSelector((state) => state.user);
     const dispatch = useDispatch()
-    const navigate = useNavigate();
 
     const handleLoginEvent = (e) => {
         e.preventDefault();

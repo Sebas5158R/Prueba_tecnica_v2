@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {jwtDecode} from "jwt-decode";
-import {updateUser, userByEmail, veryfyCode} from "../Store/UserSlice";
+import {updateUser, veryfyCode} from "../Store/UserSlice";
 import {useDispatch, useSelector} from "react-redux";
 import QRCode from "./employee/QRcode";
 
@@ -13,6 +12,7 @@ const UsingFA= ()=>{
 
     const  [renderQR,setRenderQR ]= useState(false)
     const [iState , setIState] = useState(user.using2FA)
+    console.log(setIState);
 
     const [formData, setFormData] = useState({
         names: user.names,

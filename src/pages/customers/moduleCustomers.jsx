@@ -31,7 +31,7 @@ const ModuleCustomers = () => {
                 </div>
                 {/* MENU */}
                 <NavBar titulo1={"Dashboard"} ruta1={"/dashboard"} titulo2={"Modules"} ruta2={"#"} titulo3={"Calendar"}
-                    ruta3={"#"} titulo4={"Settings"} ruta4={"#"} />
+                    ruta3={"#"} titulo4={"Settings"} ruta4={"/Profile"} />
             </div>
             {/* BTN MENU MOVIL */}
             <button onClick={handleSidebar} className="block lg:hidden fixed bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl z-40">

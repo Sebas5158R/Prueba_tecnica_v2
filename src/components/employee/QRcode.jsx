@@ -6,7 +6,7 @@ const QRCode = ({email}) => {
     const [qrCodeUrl, setQrCodeUrl] = useState('');
 
 
-    ; // Dependencia en 'data' para regenerar el QR si cambia
+    // Dependencia en 'data' para regenerar el QR si cambia
 
     useEffect(() => {
         generateQRCode();
@@ -14,7 +14,7 @@ const QRCode = ({email}) => {
 
     const generateQRCode = async () => {
         try {
-            const response = await fetch(`http://localhost:8080/code/generate/${email}`, {
+            const response = await fetch(`http://localhost:8090/code/generate/${email}`, {
                 method: 'get',
                 headers: {
                     'Content-Type': 'application/json',

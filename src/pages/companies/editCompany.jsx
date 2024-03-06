@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import NavBar from "../../components/NavBar";
@@ -17,7 +18,7 @@ const EditCompany = () => {
 
     const handleSidebar = () => {
         setSidebar(!sidebar);
-    }; 
+    };
 
     const [formData, setFormData] = useState({
         nameCompany: "",
@@ -88,7 +89,7 @@ const EditCompany = () => {
                 </div>
                 {/* MENU */}
                 <NavBar titulo1={"Dashboard"} ruta1={"/dashboard"} titulo2={"Modules"} ruta2={"/dashboard"} titulo3={"Calendar"}
-                    ruta3={"#"} titulo4={"Settings"} ruta4={"#"} />
+                    ruta3={"#"} titulo4={"Settings"} ruta4={"/Profile"} />
             </div>
             {/* BTN MENU MOVIL */}
             <button onClick={handleSidebar} className="block lg:hidden fixed bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl z-40">
@@ -100,73 +101,95 @@ const EditCompany = () => {
                 {/* HEADER */}
                 <Header />
                 {/* CONTENT */}
-                <div className="p-4 lg:p-12 bg-gray-100 mb-10">
+                <div className="p-4 lg:p-12 bg-gray-100 mb-2">
                     {/* TITLE */}
                     <div>
-                        <h1 className={`text-3xl font-bold transition-opacity`}>Edit company with Nit#{id}</h1>
+                        <h1 className={`text-3xl font-bold transition-opacity`}>Edit Company</h1>
                     </div>
                 </div>
 
-                <form onSubmit={handleSubmit}>
-                    <div>
-                        <label htmlFor="name">Name company:</label>
-                        <input type="text" name="nameCompany" value={formData.nameCompany} onChange={handleChange} />
-                    </div>
+                <div className="container max-w-screen-lg mx-auto">
+                    <div className="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+                        <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                            <div className="text-gray-600">
+                                <p className="font-medium text-lg">Company Details</p>
+                                <p>Please correct the information that is wrong.</p>
+                            </div>
+                                <form onSubmit={handleSubmit} className="lg:col-span-2">
+                                    <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                                        <div className="md:col-span-5">
+                                            <label htmlFor="nit">Nit company</label>
+                                            <input type="text" name="name" id="name"
+                                                className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={id} onChange={handleChange}
+                                                placeholder="10122012334-5" readOnly/>
+                                        </div>
+                                        <div className="md:col-span-5">
+                                            <label htmlFor="name">Name company:</label>
+                                            <input type="text" name="nameCompany" value={formData.nameCompany} onChange={handleChange} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                                        </div>
 
-                    <div>
-                        <label htmlFor="description">Description</label>
-                        <input type="text" name="descriptionCompany" value={formData.descriptionCompany}/>
-                    </div>
+                                        <div className="md:col-span-5">
+                                            <label htmlFor="description">Description</label>
+                                            <input type="text" name="descriptionCompany" value={formData.descriptionCompany} onChange={handleChange} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                                        </div>
 
-                    <div>
-                        <label htmlFor="state">State of process</label>
-                        <input type="text" name="stateCompany" value={formData.stateCompany}/>
-                    </div>
+                                        <div className="md:col-span-5">
+                                            <label htmlFor="state">State of process</label>
+                                            <input type="text" name="stateCompany" value={formData.stateCompany} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                                        </div>
 
-                    <div>
-                        <label htmlFor="code">Code from validation</label>
-                        <input type="number" name="codeValidation" value={formData.codeValidation}/>
-                    </div>
+                                        <div className="md:col-span-5">
+                                            <label htmlFor="code">Code from validation</label>
+                                            <input type="number" name="codeValidation" value={formData.codeValidation} onChange={handleChange} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                        </div>
 
-                    <div>
-                        <label htmlFor="user">Id user</label>
-                        <input type="text" name="user" value={formData.user.idUser} onChange={handleChange} />
-                    </div>
+                                        <div className="md:col-span-5">
+                                            <label htmlFor="user">Id user</label>
+                                            <input type="text" name="user" value={formData.user.idUser} onChange={handleChange}  className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                        </div>
 
-                    <div>
-                        <label htmlFor="active">Active</label>
-                        <input type="checkbox" name="active" value={formData.active}/>
-                    </div>
+                                        <div className="md:col-span-1">
+                                            <label htmlFor="active">Active</label>
+                                            <input type="checkbox" name="active" value={formData.active} onChange={handleChange} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                        </div>
 
-                    <div>
-                        <label htmlFor="phone">Phone company</label>
-                        <input type="number" name="phone" value={formData.phone}/>
-                    </div>
+                                        <div className="md:col-span-1">
+                                            <label htmlFor="phone">Phone company</label>
+                                            <input type="number" name="phone" value={formData.phone} onChange={handleChange} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                        </div>
 
-                    <div>
-                        <label htmlFor="address">Address</label>
-                        <input type="text" name="address" value={formData.address}/>
-                    </div>
+                                        <div className="md:col-span-1">
+                                            <label htmlFor="address">Address</label>
+                                            <input type="text" name="address" value={formData.address} onChange={handleChange} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                        </div>
 
-                    <div>
-                        <label htmlFor="dateCreation">Date of creation</label>
-                        <input type="text" name="descriptionCompany" value={formData.dateCreation} readOnly/>
-                    </div>
+                                        <div className="md:col-span-1">
+                                            <label htmlFor="dateCreation">Date of creation</label>
+                                            <input type="text" name="descriptionCompany" value={formData.dateCreation} readOnly className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                        </div>
 
-                    <div>
-                        <label htmlFor="dateEndProcess">Date end process</label>
-                        <input type="text" name="dateEndProcess" value={formData.dateEndProcess}/>
-                    </div>
+                                        <div className="md:col-span-1">
+                                            <label htmlFor="dateEndProcess">Date end process</label>
+                                            <input type="text" name="dateEndProcess" value={formData.dateEndProcess} readOnly className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                        </div>
 
-                    <div>
-                        <label htmlFor="documents">Documents</label>
-                        <input type="text" name="documents" multiple={true} value={formData.documents}/>
-                    </div>
+                                        <div className="md:col-span-5">
+                                            <label htmlFor="documents">Documents</label>
+                                            <input type="text" name="documents" multiple={true} value={formData.documents} readOnly className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                        </div>
 
-                    <div>
-                        <button type="submit">Save</button>
+                                        <div className="md:col-span-5 text-right">
+                                            <Link to={"/companies"} className="float-start">
+                                                <button type="button"
+                                                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
+                                            </Link>
+                                            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                        </div>
                     </div>
-                </form>
+            </div>
                 
                 </div>
                 </div>
