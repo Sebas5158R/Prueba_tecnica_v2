@@ -1,36 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import  {Link} from "react-router-dom";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
+import { useSelector } from "react-redux";
 
 
 const TableCompanies = ({ data }) => {
     
     const currentItems = data.slice();
-    let items = document.querySelectorAll('#accordion .item');
+    const [activeIndex, setActiveIndex] = useState(null);
+    const files = useSelector(state => state.company.companies.pathDocumentation);
+    console.log(files)
+    const [pdfUrl, setPdfUrl] = useState('');
 
-    items.forEach((item) => {
-        item.addEventListener('click', (e) => {
-            items.forEach((header) => {
-                header.closest('.item').classList.remove('active');
-            });
-            e.currentTarget.closest('.item').classList.toggle('active');
+    useEffect(() => {
+        if (files) {
+            const url = `http://localhost:8090/company/files/${data.nameCompany}/${files}`;
+            setPdfUrl(url);
+        }
+    }, [files, data.nameCompany]);
+
+    useEffect(() => {
+        let items = document.querySelectorAll('#accordion .item');
+    
+        items.forEach((item) => {
+            item.addEventListener('click', (e) => {
+                items.forEach((header) => {
+                    header.closest('.item').classList.remove('active');
+                });
+                e.currentTarget.closest('.item').classList.toggle('active');
+            })
         })
-    })
+        if (!items) {
+            return <div>Loading...</div>;
+        }
+    }, []);
+
+    
+
+    
     
     return (
 
-        <div id="accordion" className="w-[50%] rounded-md overflow-hidden bg-blue-200 flex flex-col gap-[1px]">
+        <div id="accordion" className="w-full rounded-md overflow-hidden bg-blue-200 flex flex-col gap-[1px]">
             {currentItems.map((company, index) => (
-                <div key={index} className="item">
-                    <div className="header p-6 bg-blue-100 font-bold flex justify-between items-center cursor-pointer" onClick={(e) => {
-                        let items = document.querySelectorAll('#accordion .item');
-                        items.forEach((item) => {
-                            if (item !== e.currentTarget.closest('.item')) {
-                                item.classList.remove('active');
-                            }
-                        });
-                        e.currentTarget.closest('.item').classList.toggle('active');
-                    }}>
+                <div key={index} className={`item ${activeIndex === index ? 'active' : ''}`}>
+                    <div className="header p-6 bg-gray-300 font-bold flex justify-between items-center relative z-10 overflow-visible cursor-pointer"
+                    onClick={() => {setActiveIndex(activeIndex === index ? null : index)}}>
                         <div>
                             <div>Name: {company.nameCompany}</div>
                             <div>Nit: {company.idCompany}</div>
@@ -38,26 +53,33 @@ const TableCompanies = ({ data }) => {
                         <RiArrowUpSLine className="text-xl activeIcon"/>
                         <RiArrowDownSLine className="text-xl inactiveIcon"/>
                     </div>
-                    <div className="content bg-blue-200 text-xl transition-all duration-500">
+                    <div className="content bg-gray-100 text-xl transition-all duration-500">
                         <div className="flex items-center justify-center w-full h-full ">
                             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                                <table className="w-full text-sm text-left rtl:text-right text-gray-500 table-auto">
-                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700">
+                                <table className="w-[1000px] text-sm text-left rtl:text-right text-gray-500 table-auto">
+                                    <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                         <tr>
+                                            <th scope="col" className="px-6 py-3">Represent  company</th>
                                             <th scope="col" className="px-6 py-3">Description Company</th>
                                             <th scope="col" className="px-6 py-3">Estate company</th>
-                                            <th scope="col" className="px-6 py-3">Represent  company</th>
+                                            <th scope="col" className="px-6 py-3">Address</th>
+                                            <th scope="col" className="px-6 py-3">Date creation</th>
                                             <th scope="col" className="px-6 py-3"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr className='bg-white border-b hover:hover:bg-blue-50'>
+                                        <td className="px-6 py-4">{company.user.names}</td>
                                             <td className="px-6 py-4">{company.descriptionCompany}</td>
                                             <td className="px-6 py-4">{company.stateCompany}</td>
-                                            <td className="px-6 py-4">{company.user.names}</td>
+                                            <td className="px-6 py-4">{company.address}</td>
+                                            <td className="px-6 py-4">{company.dateCreation}</td>
                                             <td className="px-6 py-4 text-right">
                                                 <Link to={`/editCompany/${company.idCompany}`}>
-                                                    Edit
+                                                    <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Edit</button>
+                                                </Link>
+                                                <Link to={`http://localhost:8090/company/files/${company.nameCompany}/${files}`} target="_blank" rel="noopener noreferrer">
+                                                    <button className='bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-lg transition'>Open in new tab</button>
                                                 </Link>
                                             </td>
                                         </tr>

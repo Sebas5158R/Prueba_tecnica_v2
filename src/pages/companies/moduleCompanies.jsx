@@ -48,8 +48,6 @@ const ModuleCompanies = () => {
     };
 
 
-    const companiesD = useSelector(state => state.company);
-    const companies1 = companiesD.companies;
     useEffect( () =>  {
         dispatch(fetchComapanies());
     },[dispatch]);
@@ -73,7 +71,7 @@ const ModuleCompanies = () => {
                 </div>
                 {/* MENU */}
                 <NavBar titulo1={"Dashboard"} ruta1={"/dashboard"} titulo2={"Modules"} ruta2={"#"} titulo3={"Calendar"}
-                    ruta3={"#"} titulo4={"Settings"} ruta4={"#"} />
+                    ruta3={"#"} titulo4={"Settings"} ruta4={"/Profile"} />
             </div>
             {/* BTN MENU MOVIL */}
             <button onClick={handleSidebar}
@@ -99,10 +97,6 @@ const ModuleCompanies = () => {
                 <div
                     className="rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full justify-center  border-2 border-transparent transition-all mb-6">
                     <TableCompanies data={companies} />
-                </div>
-
-                <div className="flex justify-center">
-                    <Link to={"/sendRequest"}>Send request for creation company</Link>
                 </div>
             </div>
         </div>

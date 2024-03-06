@@ -1,9 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../services/URLService";
-import {userByEmail, userById} from "./UserSlice";
-import {useEffect} from "react";
-import {fetchComapanies} from "./CompanySlice";
-import {useDispatch, useSelector} from "react-redux";
 
 export const loginUser = createAsyncThunk(
     'user/loginUser',
