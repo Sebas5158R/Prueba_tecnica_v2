@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { companyByUser, fetchComapanies, fileByNameCompany } from "../../Store/CompanySlice";
 import NavBar from "../../components/NavBar";
 import Header from "../../components/Header";
-import { RiCloseLine, RiMenu3Fill } from "react-icons/ri";
+import {RiCheckboxBlankCircleFill, RiCloseLine, RiMenu3Fill, RiNotification2Line} from "react-icons/ri";
 import TableCompanies from "../../components/company/tableCompanies";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -55,15 +55,24 @@ const ModuleCompanies = () => {
     },[dispatch]);
 
 
+    const  handleValidationcode = ()=>{
 
+        window.location.replace('/formValidateCode')
+    }
+    const company = useSelector(state => state.company.companies)
+    const companyDisable = company.filter(compania => !compania.active);
 
+    console.log("oeee")
+ console.log(companyDisable.length)
 
-
-
+    const  notify = companyDisable.length
     return (
     <div>
         { (userRole.includes('SUPER_ADMINISTRADOR') || userRole.includes('ADMINISTRADOR')) &&(
-        <div className="min-h-screen grid grid-col-1 lg:grid-cols-6">
+
+
+
+       <div className="min-h-screen grid grid-col-1 lg:grid-cols-6">
             {/* SIDEBAR */}
             <div className={`fixed lg:static w-[80%] md:w-[40%] lg:w-full top-0 z-50 bg-white transition-all ${sidebar
                 ? "-left-0" : "-left-full" } h-full overflow-y-scroll col-span-1 p-8 border-r`}>
@@ -96,6 +105,23 @@ const ModuleCompanies = () => {
                 </div>
 
                 {/* TABLE */}
+
+                <div>
+
+
+                    <button
+                        className={"flex gap-2.5 items-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}
+                        onClick={handleValidationcode}>
+                        creation authorization
+
+                       <div className="flex">
+                        <RiNotification2Line className="text-xl"/>
+                        <RiCheckboxBlankCircleFill className="absolute -right-1 -top-1 text-xs text-red-500 animate-pulse"/>
+                           <p className="flex align-bottom">{notify} </p>
+                       </div>
+
+                    </button>
+                </div>
                 <div
                     className="rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full justify-center  border-2 border-transparent transition-all mb-6">
                     <TableCompanies data={companies} />

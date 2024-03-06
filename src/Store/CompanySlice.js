@@ -74,6 +74,26 @@ export const fileByNameCompany = createAsyncThunk(
     }
 );
 
+export  const validateCodeCompany  = createAsyncThunk (
+  'company/ValidateCode',
+  async (validateCode) =>{
+
+      try{
+      const validateCodeDTO = {
+          idCompany:validateCode.companyOption,
+          code:validateCode.code
+      }
+
+      console.log(validateCode)
+      const  response  = await  api.post('company/validateCodeCompany', validateCodeDTO)
+   console.log(response)
+          return response
+  }
+catch (e) {
+    throw e;
+  }
+  }
+  );
 
 const  companySlice = createSlice({
     name : "companies",
@@ -101,6 +121,21 @@ const  companySlice = createSlice({
                   state.error = action.error.message
                 }
         })
+            .addCase(validateCodeCompany.fulfilled,(state,action)=>{
+
+                console.log("response")
+              const  response1=action.payload
+console.log(response1)
+                console.log(action.payload.data)
+                if (action.payload.data){
+                    window.location.replace('/companies')
+                }
+                else{
+                    window.alert("Ups incorrect code ")
+                    window.location.replace('/formValidateCode')
+
+                }
+            })
             .addCase(addCompanie.pending, (state) => {
                 state.loading = true;
                 state.companies = null;
@@ -149,10 +184,13 @@ const  companySlice = createSlice({
                 state.file = action.payload;
                 state.error = null;
             })
+
+
             .addCase(fileByNameCompany.rejected, (state, action) => {
                 state.file = null;
                 console.log(action.error.message);
             })
+
 
 
     }

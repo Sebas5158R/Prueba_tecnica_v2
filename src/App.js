@@ -16,6 +16,7 @@ import Profile from "./components/Profile";
 import Form2FA from "./components/Form2FA";
 
 import CompleteData from "./pages/loginGoogle";
+import FormValidateCompany from "./components/company/validateCodeCompany";
 
 
 
@@ -50,6 +51,8 @@ function App() {
           <Route path="/editCompany/:id" exact element = {<EditCompany/>}/>
           <Route path="/profile" exact element={<Profile/>}/>
           <Route path={"/form2FA"} exact element={ <Form2FA/>}> </Route>
+        <Route path={"/formValidateCode"}  exact element={<FormValidateCompany/>}></Route>
+
         </Routes>
       </Router>
     </Fragment>
