@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import  {Link} from "react-router-dom";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {changeState} from "../../Store/CompanySlice";
 
 
 const TableCompanies = ({ data }) => {
-    
+
+     const  dispatch  = useDispatch();
     const currentItems = data.slice();
     const [activeIndex, setActiveIndex] = useState(null);
     const files = useSelector(state => state.company.companies.pathDocumentation);
@@ -36,7 +38,10 @@ const TableCompanies = ({ data }) => {
     }, []);
 
     
-
+ const  handleMark = (idCompany)=>{
+     console.log("aqui toy")
+  dispatch(changeState(idCompany))
+ }
     
     
     return (
@@ -74,7 +79,24 @@ const TableCompanies = ({ data }) => {
                                             <td className="px-6 py-4">{company.stateCompany}</td>
                                             <td className="px-6 py-4">{company.address}</td>
                                             <td className="px-6 py-4">{company.dateCreation}</td>
-                                           <td className={"px-6 py-4"}> <button  className={"text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"} > Revisado   </button>     </td>
+                                           <td className={"px-6 py-4"}>
+                                               {
+                                                company.stateCompany==="pending"&&(
+                                            <div>
+                                               <button type={"submit"} onClick={handleMark(company.idCompany)}  className={"text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"} > ¿Mark Reviewed? </button>
+                                            </div>)
+                                               }
+                                               {
+                                                   company.stateCompany!=="pending"&&(
+                                                       <div>
+                                                           <button   className={"text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"} > {company.stateCompany}  </button>
+                                                       </div>)
+                                               }
+
+                                           </td>
+
+
+
                                             <td className="px-6 py-4 text-right">
                                                 <Link to={`/editCompany/${company.idCompany}`}>
                                                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Edit</button>

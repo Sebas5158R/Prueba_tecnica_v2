@@ -95,6 +95,22 @@ catch (e) {
   }
   );
 
+export  const  changeState  = createAsyncThunk(
+  'company/ changeState',
+  async  (idCompany)=>{
+      try {
+       const id = idCompany
+          console.log(id)
+          const  response = await api.post(`company/changeState/${idCompany}`)
+  console.log(response);
+          return response
+      }catch (e) {
+          throw e
+      }
+  }
+
+);
+
 const  companySlice = createSlice({
     name : "companies",
     initialState:{
