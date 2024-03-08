@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import { RiDashboardLine, RiBriefcase3Line, RiCalendar2Line, RiChatSettingsFill, RiLogoutBoxRLine } from
 "react-icons/ri";
 import { useDispatch } from "react-redux";
-import { logout } from "../Store/AuthSlice";
+import { deleteSession, logout } from "../Store/AuthSlice";
 
 const NavBar = ({ titulo1, titulo2, titulo3, titulo4, ruta1, ruta2, ruta3, ruta4 }) => {
 
     const dispatch = useDispatch();
+    const sessionId = localStorage.getItem('sessionId');
 
     const handlerLogout = () => {
+        dispatch(deleteSession(sessionId));
         dispatch(logout());
     }
 

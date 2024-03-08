@@ -1,23 +1,12 @@
 import React, { useEffect, useState } from "react";
 import  {Link} from "react-router-dom";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
-import { useSelector } from "react-redux";
 
 
 const TableCompanies = ({ data }) => {
     
     const currentItems = data.slice();
     const [activeIndex, setActiveIndex] = useState(null);
-    const files = useSelector(state => state.company.companies.pathDocumentation);
-    console.log(files)
-    const [pdfUrl, setPdfUrl] = useState('');
-
-    useEffect(() => {
-        if (files) {
-            const url = `http://localhost:8090/company/files/${data.nameCompany}/${files}`;
-            setPdfUrl(url);
-        }
-    }, [files, data.nameCompany]);
 
     useEffect(() => {
         let items = document.querySelectorAll('#accordion .item');
@@ -41,7 +30,7 @@ const TableCompanies = ({ data }) => {
     
     return (
 
-        <div id="accordion" className="w-full rounded-md overflow-hidden bg-blue-200 flex flex-col gap-[1px]">
+        <div id="accordion" className="w-full rounded-md overflow-hidde flex flex-col gap-[1px]">
             {currentItems.map((company, index) => (
                 <div key={index} className={`item ${activeIndex === index ? 'active' : ''}`}>
                     <div className="header p-6 bg-gray-300 font-bold flex justify-between items-center relative z-10 overflow-visible cursor-pointer"
@@ -64,22 +53,25 @@ const TableCompanies = ({ data }) => {
                                             <th scope="col" className="px-6 py-3">Estate company</th>
                                             <th scope="col" className="px-6 py-3">Address</th>
                                             <th scope="col" className="px-6 py-3">Date creation</th>
+                                            <th scope="col" className="px-6 py-3">Document</th>
                                             <th scope="col" className="px-6 py-3"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr className='bg-white border-b hover:hover:bg-blue-50'>
-                                        <td className="px-6 py-4">{company.user.names}</td>
+                                        <td className="px-6 py-4">{company.user.names} {company.user.lastNames}</td>
                                             <td className="px-6 py-4">{company.descriptionCompany}</td>
                                             <td className="px-6 py-4">{company.stateCompany}</td>
                                             <td className="px-6 py-4">{company.address}</td>
                                             <td className="px-6 py-4">{company.dateCreation}</td>
+                                            <td className="px-6 py-4">
+                                                <Link to={`http://localhost:8090/company/files?pathPdf=${company.pathDocumentation}`} target="_blank" rel="noopener noreferrer">
+                                                    <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full'>Open</button>
+                                                </Link>
+                                            </td>
                                             <td className="px-6 py-4 text-right">
                                                 <Link to={`/editCompany/${company.idCompany}`}>
                                                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Edit</button>
-                                                </Link>
-                                                <Link to={`http://localhost:8090/company/files/${company.nameCompany}/${files}`} target="_blank" rel="noopener noreferrer">
-                                                    <button className='bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-lg transition'>Open in new tab</button>
                                                 </Link>
                                             </td>
                                         </tr>

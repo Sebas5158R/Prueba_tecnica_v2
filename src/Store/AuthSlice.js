@@ -12,6 +12,7 @@ export const loginUser = createAsyncThunk(
         const response = await request.data;
         console.log(response);
         localStorage.setItem('user', JSON.stringify(response.token));
+        localStorage.setItem('sessionId', JSON.stringify(response.loginSession.sessionId));
         localStorage.setItem('email',JSON.stringify(userCrendentials.email))
         if (response.user.using2FA===true){
             console.log(" esta usuando 2fa")
@@ -56,6 +57,7 @@ export const  veryfyCodeLog = createAsyncThunk (
                     const request = await api.post(`/auth/loginWithGoogle?tokenId=${googleToken}`);
                     const response = await request.data;
                     localStorage.setItem('user', JSON.stringify(response.token));
+                    localStorage.setItem('sessionId', JSON.stringify(response.loginSession.sessionId));
                     console.log(response);
 
                     return response;
@@ -78,6 +80,18 @@ export const  veryfyCodeLog = createAsyncThunk (
                 }
             );
 
+            export const deleteSession = createAsyncThunk(
+                'auth/logout',
+                async (sessionId) => {
+                    try {
+                        console.log(sessionId);
+                        const response = await api.delete(`/auth/logout?sessionId=${sessionId}`);
+                        return response.data;
+                    } catch(error) {
+                        throw error;
+                    }
+                }
+            )
 
             export const logout = () => ({
                 type: 'LOGOUT',
@@ -128,6 +142,8 @@ export const  veryfyCodeLog = createAsyncThunk (
                         .addCase('LOGOUT', (state) => {
                             localStorage.removeItem("user");
                             localStorage.removeItem("userWithGoogle");
+                            localStorage.removeItem("sessionId");
+                            localStorage.removeItem("email");
                             window.location.replace("/");
                             return {
                                 ...state,
