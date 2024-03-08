@@ -4,14 +4,14 @@ import ModalRegisterEmployees from "./modalRegisterEmployees";
 
 const TableEmployees = ({ data }) => {
 
-  const itemsPerPage = 6;
-  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPageEmployees = 5;
+  const [currentPageEmployees, setCurrentPageEmployees] = useState(1);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
+  const indexOfLastItemEmployees = currentPageEmployees * itemsPerPageEmployees;
+  const indexOfFirstItemEmployees = indexOfLastItemEmployees - itemsPerPageEmployees;
+  const currentItemsEmployees = data.slice(indexOfFirstItemEmployees, indexOfLastItemEmployees);
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math.ceil(data.length / itemsPerPageEmployees);
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
@@ -19,9 +19,9 @@ const TableEmployees = ({ data }) => {
       pageNumbers.push(
         <li
           key={i}
-          className={`mx-1 p-2 cursor-pointer ${i === currentPage ? 'bg-blue-600 text-white' : 'bg-gray-200'
+          className={`mx-1 p-2 cursor-pointer ${i === currentPageEmployees ? 'bg-blue-600 text-white' : 'bg-gray-200'
             }`}
-          onClick={() => setCurrentPage(i)}
+          onClick={() => setCurrentPageEmployees(i)}
         >
           {i}
         </li>
@@ -42,7 +42,7 @@ const TableEmployees = ({ data }) => {
           <h1 className="text-2xl font-bold">Employee Management</h1>
           <ModalRegisterEmployees />
         </div>
-        {currentItems.length === 0 && (
+        {currentItemsEmployees.length === 0 && (
           <p className="text-gray-500">No hay datos disponibles.</p>
         )}
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 table-auto">
@@ -75,7 +75,7 @@ const TableEmployees = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {currentItems
+            {currentItemsEmployees
               .filter((employee) => [1, 2, 3].includes(employee.roles[0].idRole))
               .map((employee, index) => (
                 <tr
