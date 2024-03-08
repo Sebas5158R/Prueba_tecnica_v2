@@ -1,14 +1,16 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { logout } from "../Store/AuthSlice";
+import { deleteSession, logout } from "../Store/AuthSlice";
 
 const HeaderCustomer = () => {
 
     const dispatch = useDispatch();
+    const sessionId = localStorage.getItem('sessionId');
 
     const handlerLogout = () => {
-        dispatch(logout());
+        dispatch(deleteSession(sessionId));
+        dispatch(logout(sessionId));
     }
 
     return(

@@ -4,7 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { companyByUser, fetchComapanies, fileByNameCompany } from "../../Store/CompanySlice";
 import NavBar from "../../components/NavBar";
 import Header from "../../components/Header";
+
 import {RiCheckboxBlankCircleFill, RiCloseLine, RiMenu3Fill, RiNotification2Line} from "react-icons/ri";
+
+import { RiCheckLine } from "react-icons/ri";
+
 import TableCompanies from "../../components/company/tableCompanies";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -15,8 +19,8 @@ const ModuleCompanies = () => {
     const [sidebar, setSidebar] = useState(false);
     const [userRole, setUserRole] = useState('');
     const dispatch = useDispatch();
-    const companies = useSelector(state => state.company.companies);
-    const files = useSelector(state => state.company.file);
+    const companies = useSelector(state => state.company.userCompany);
+    const files = companies.pathDocumentation;
     const [pdfUrl, setPdfUrl] = useState('');
 
     useEffect(() => {
@@ -38,7 +42,7 @@ const ModuleCompanies = () => {
 
     useEffect(() => {
         if (files) {
-            const url = `http://localhost:8090/company/files/${companies.nameCompany}/${files}`;
+            const url = `http://localhost:8090/company/files?pathPdf=${files}`;
             setPdfUrl(url);
         }
     }, [files, companies.nameCompany]);
@@ -80,7 +84,7 @@ const ModuleCompanies = () => {
                 </div>
                 {/* MENU */}
                 <NavBar titulo1={"Dashboard"} ruta1={"/dashboard"} titulo2={"Modules"} ruta2={"#"} titulo3={"Calendar"}
-                    ruta3={"#"} titulo4={"Settings"} ruta4={"/Profile"} />
+                    ruta3={"#"} titulo4={"Settings"} ruta4={"/profile"} />
             </div>
             {/* BTN MENU MOVIL */}
             <button onClick={handleSidebar}
@@ -225,6 +229,106 @@ const ModuleCompanies = () => {
                                 </form>
                             </div>
                         </div>
+                        <br />
+                        <div className="border border-stroke px-7 py-4">
+                            <h3 className="font-medium text-black">Progress Bar</h3>
+                        </div>
+                        <br />
+                        <div className="max-w-xl mx-auto my-4 border-b-2 pb-4">	
+                            <div className="flex pb-3">
+
+                                {/* STATE 1: REQUEST SENT */}
+                                <div className="flex-1">
+                                </div>
+
+                                <div className="flex-1">
+                                    <div className="w-10 h-10 bg-green-400 mx-auto rounded-full text-lg text-white flex items-center">
+                                        <span className="text-white text-center w-full"><RiCheckLine className="w-full fill-current white"/></span>
+                                    </div>
+                                </div>
+
+
+                                {/* STATE 2: PENDING */}
+                                <div className="w-1/6 align-center items-center align-middle content-center flex">
+                                    <div className="w-full bg-grey-light rounded items-center align-middle align-center flex-1">
+                                        <div className="bg-green-500 text-xs leading-none py-1 text-center text-gray-100 rounded " style={{width: 100+'%'}}></div>
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <div className={`w-10 h-10 ${companies.stateCompany === 'pending' || companies.stateCompany === 'Reviewed' || companies.stateCompany === 'Finalized' ?  'bg-green-400 mx-auto rounded-full' : ''} text-lg text-white flex items-center`}>
+                                        <span className="text-white text-center w-full"><RiCheckLine className="w-full fill-current white"/></span>
+                                    </div>
+                                </div>
+                            
+
+                                {/* STATE 3: REVIEWED */}
+                                <div className="w-1/6 align-center items-center align-middle content-center flex">
+                                    <div className="w-full bg-grey-light rounded items-center align-middle align-center flex-1">
+                                        {(companies.stateCompany === 'Reviewed' || companies.stateCompany === 'Finalized') && (
+                                            <div className="bg-green-500 text-xs leading-none py-1 text-center text-gray-100 rounded " style={{width: 100+'%'}}></div>
+                                        )}
+                                        {(companies.stateCompany === 'pending') && (
+                                            <div className="bg-green-500 text-xs leading-none py-1 text-center text-gray-100 rounded " style={{width: 0+'%'}}></div>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <div className={`w-10 h-10 ${companies.stateCompany === 'Reviewed' || companies.stateCompany === 'Finalized' ? 'bg-green-400 mx-auto rounded-full' : ''} bg-white border-2 border-grey-light mx-auto rounded-full text-lg text-white flex items-center`}>
+                                        {(companies.stateCompany === 'Reviewed' || companies.stateCompany === 'Finalized')&&(
+                                                <span className="text-white text-center w-full"><RiCheckLine className="w-full fill-current white"/></span>
+                                        )}
+                                        {(companies.stateCompany === 'pending') && (
+                                            <span className="text-black text-center w-full">3</span>
+                                        )}
+                                    </div>
+                                </div>
+                            
+                            
+                                {/* STATE 4: FINALIZED */}
+                                <div className="w-1/6 align-center items-center align-middle content-center flex">
+                                    <div className="w-full bg-grey-light rounded items-center align-middle align-center flex-1">
+                                        {(companies.stateCompany === 'Finalized') && (
+                                                <div className="bg-green-500 text-xs leading-none py-1 text-center text-grey-darkest rounded " style={{width: 100+'%'}}></div>
+                                        )}
+                                        {(companies.stateCompany === 'Reviewed') && (
+                                                <div className="bg-green-500 text-xs leading-none py-1 text-center text-gray-100 rounded " style={{width: 0+'%'}}></div>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <div className={`w-10 h-10 ${companies.stateCompany === 'Finalized' ? 'bg-green-400 mx-auto rounded-full' : ''} bg-white border-2 border-grey-light mx-auto rounded-full text-lg text-white flex items-center`}>
+                                        {(companies.stateCompany === 'Finalized')&&(
+                                                <span className="text-white text-center w-full"><RiCheckLine classNameName="w-full fill-current white"/></span>
+                                        )}
+                                        {(companies.stateCompany === 'Reviewed' || companies.stateCompany === 'pending') && (
+                                            <span className="text-black text-center w-full">4</span>
+                                        )}
+                                    </div>
+                                </div>
+                            
+                            
+                                <div className="flex-1">
+                                </div>		
+                            </div>
+                            
+                            <div className="flex text-xs content-center text-center">
+                                <div className="w-1/4">
+                                    Request sent
+                                </div>
+                                
+                                <div className="w-1/4">
+                                    Pending
+                                </div>
+                                
+                                <div className="w-1/4">
+                                    Reviewed
+                                </div>
+                                
+                                <div className="w-1/4">
+                                    Finalized
+                                </div>			
+                            </div>
+                        </div>
                     </div>
                     <div className="col-span-5 xl:col-span-2">
                         <div className="rounded-sm border border-stroke bg-white shadow-default">
@@ -238,7 +342,7 @@ const ModuleCompanies = () => {
                                     <embed src={pdfUrl} type="application/pdf" width="100%" height="500px" />
                                 )}
                                 <br />
-                                <Link to={`http://localhost:8090/company/files/${companies.nameCompany}/${files}`} target="_blank" rel="noopener noreferrer">
+                                <Link to={`http://localhost:8090/company/files?pathPdf=${files}`} target="_blank" rel="noopener noreferrer">
                                     <button className='bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-lg transition'>Open in new tab</button>
                                 </Link>
                                 {/* <form action="#">

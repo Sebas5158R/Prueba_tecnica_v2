@@ -4,7 +4,9 @@ import api from "../services/URLService";
 export  const  fetchComapanies  = createAsyncThunk(
    'companies/fetchCompanies',
    async (companyData) =>{
-       try {
+       try {{
+
+       }
            const  response = await api.get('/company/companies',companyData);
          return response.data ;
        }catch (e) {
@@ -117,7 +119,7 @@ const  companySlice = createSlice({
         loading: false,
         companyToEdit: null,
         companies:[],
-        file: null,
+        userCompany: [],
         error : null
 
     },
@@ -188,10 +190,11 @@ console.log(response1)
             })
 
             .addCase(companyByUser.fulfilled, (state, action) => {
-                state.companies = action.payload;
+                state.userCompany = action.payload;
                 state.error = null;
             })
             .addCase(companyByUser.rejected, (state, action) => {
+
                 state.companies = null;
                 console.log(action.error.message);
             })
@@ -204,6 +207,8 @@ console.log(response1)
 
             .addCase(fileByNameCompany.rejected, (state, action) => {
                 state.file = null;
+
+                state.userCompany = [];
                 console.log(action.error.message);
             })
 
