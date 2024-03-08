@@ -5,6 +5,6 @@ import sena.prueba.models.LoginSession;
 
 public interface LoginSessionRepository extends JpaRepository<LoginSession, Integer> {
 
-    LoginSession findLoginSessionById(Integer id);
+    LoginSession findLoginSessionBySessionId(Integer id);
 
 }

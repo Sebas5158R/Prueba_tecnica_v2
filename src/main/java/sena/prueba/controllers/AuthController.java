@@ -25,7 +25,6 @@ import java.util.Map;
 @RequestMapping("/auth")
 @CrossOrigin("*")
 public class AuthController {
-
     @Autowired
     private AuthService authService;
 
@@ -42,6 +41,7 @@ public class AuthController {
     public ResponseEntity<ReqRes> login(@RequestBody ReqRes signInRequest, HttpServletRequest httpServletRequest) {
         ReqRes response = authService.signIn(signInRequest);
         User userId = response.getUser();
+        LoginSession loginSession = response.getLoginSession();
         System.out.println(authService.signIn(signInRequest).getUser());
 
         if (response.getStatusCode() == 200) {
@@ -59,11 +59,10 @@ public class AuthController {
                 String postal = cityResponse.getPostal().getCode();
                 String state = cityResponse.getLeastSpecificSubdivision().getName();
                 System.out.println("Country "+countryName+" City "+cityName+" Postal "+postal+" State "+state);
-                loginSessionServiceImpl.registerLoginSession(userId, ip, countryName, cityName);
+                loginSessionServiceImpl.registerLoginSession(userId, ip, countryName, cityName, loginSession.getSessionId());
             } catch (IOException | GeoIp2Exception e) {
                 System.err.println("Error al obtener la ubicación geográfica: " + e.getMessage());
             }
-
             return ResponseEntity.ok(response);
         } else {
             return ResponseEntity.status(response.getStatusCode()).body(response);
@@ -81,6 +80,7 @@ public class AuthController {
         try {
             ReqRes response = authService.signInWithGoogle(tokenId);
             User user = response.getUser();
+            LoginSession loginSession = response.getLoginSession();
             if (response.getStatusCode() == 200) {
                 String ip = "190.25.33.5";
                 String dbLocation = "src/main/resources/static/GeoLite2-City.mmdb";
@@ -95,7 +95,7 @@ public class AuthController {
                     String postal = cityResponse.getPostal().getCode();
                     String state = cityResponse.getLeastSpecificSubdivision().getName();
                     System.out.println("Country "+countryName+" City "+cityName+" Postal "+postal+" State "+state);
-                    loginSessionServiceImpl.registerLoginSession(user, ip, countryName, cityName);
+                    loginSessionServiceImpl.registerLoginSession(user, ip, countryName, cityName, loginSession.getSessionId());
                 } catch (IOException | GeoIp2Exception e) {
                     System.err.println("Error al obtener la ubicación geográfica: " + e.getMessage());
                 }
@@ -121,18 +121,15 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestBody Map<String, Object> requestBody) {
-        Object sessionIdObj = requestBody.get("sessionId");
+    @DeleteMapping("/logout")
+    public ResponseEntity<String> logout(@RequestParam Integer sessionId) {
 
-        if (sessionIdObj == null) {
+        if (sessionId == null) {
             return ResponseEntity.badRequest().body("Session ID is required");
         }
 
         try {
-            int sessionId = Integer.parseInt(sessionIdObj.toString());
-            System.out.println("sessionId " + sessionId);
-            LoginSession loginSession = loginSessionRepository.findLoginSessionById(sessionId);
+            LoginSession loginSession = loginSessionRepository.findLoginSessionBySessionId(sessionId);
 
             if (loginSession != null) {
                 loginSessionServiceImpl.deleteLoginSession(sessionId);

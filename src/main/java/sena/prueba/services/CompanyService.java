@@ -45,6 +45,7 @@ public  Company findCompanyById(int idCompany ){
     }
 
 
+
     public Company updateCompany(int id, Company company) {
         Optional<Company> existCompany = companyRepository.findById(id);
         if (existCompany.isPresent()) {
@@ -60,6 +61,13 @@ public  Company findCompanyById(int idCompany ){
     }
 
 //public String[] documentsConsult  (String path ){
+
+
+
+
+
+    //public String[] documentsConsult  (String path ){
+
 //
 //
 //File documents = new File(path);

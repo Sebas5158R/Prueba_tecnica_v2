@@ -51,6 +51,10 @@ public class User implements UserDetails {
     @JoinTable (
              name="usu_rol",
             joinColumns =  {
+
+
+
+
                      @JoinColumn (name="fk_user")
             },
             inverseJoinColumns = {
@@ -58,6 +62,12 @@ public class User implements UserDetails {
             }
     )
     private Set<Role> roles;
+
+    @Column (name ="isUsing2FA")
+    private boolean isUsing2FA;
+
+    private String secret;
+
 
 
     @Override

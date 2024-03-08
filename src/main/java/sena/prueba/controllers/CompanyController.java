@@ -31,8 +31,12 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/company")
-@CrossOrigin("*")
+@CrossOrigin(origins="http://localhost:3000")
+
+
 public class CompanyController {
+
+
 
 
     @Autowired
@@ -88,11 +92,12 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
 }
 
 
-@PutMapping ( value = "/updateCompany/{id}")
-public  Company updateCompany (@PathVariable int id ,@RequestBody Company company){
-    return companyService.updateCompany(id, company);
-}
 
+@PutMapping ( value = "/updateCompany/{id}")
+public  Company updateCompany (@PathVariable int id ,@RequestBody Company company) {
+    return companyService.updateCompany(id, company);
+
+}
 
 @GetMapping (value = "/listCompany/{id}")
 public ResponseEntity<?> getCompanyById(@PathVariable int id) {
@@ -120,6 +125,7 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
     return null;
 };
 
+
 @GetMapping ( value = "/companies")
         public ArrayList <Company> getCompanies (){
         return companyService.getCompanies();
@@ -140,30 +146,6 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
         } else {
             return ResponseEntity.notFound().build();
         }
-    }
-
-    @GetMapping("/files")
-    public List<String> getCompanyFiles() {
-        List<String> companyFiles = new ArrayList<>();
-        File directory = new File(companyFilesDirectory);
-
-        if (directory.exists() && directory.isDirectory()) {
-            File[] companyDirectories = directory.listFiles(File::isDirectory);
-            if (companyDirectories != null) {
-                for (File companyDirectory : companyDirectories) {
-                    File[] files = companyDirectory.listFiles();
-                    if (files != null) {
-                        for (File file : files) {
-                            String companyDirectoryName = companyDirectory.getName().replace(" ", "%20");
-                            String filePath = companyDirectoryName + "/" + file.getName().replace(" ", "%20");
-                            companyFiles.add(filePath);
-                        }
-                    }
-                }
-            }
-        }
-
-        return companyFiles;
     }
 
     @GetMapping("/files/{nameCompany}")
@@ -191,11 +173,11 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
         return companyFiles;
     }
 
-    @GetMapping("/files/{companyName}/{fileName:.+}")
-    public ResponseEntity<Resource> getCompanyFile(@PathVariable String companyName, @PathVariable String fileName) {
-        String companyDirectory = "src/mail/resources/files/" + companyName + "/" + fileName;
+    @GetMapping("/files")
+    public ResponseEntity<Resource> getCompanyFile(@RequestParam String pathPdf) {
+        System.out.println("PATH "+pathPdf);
         try {
-            Path filePath = Paths.get(companyDirectory);
+            Path filePath = Paths.get(pathPdf);
             File file = filePath.toFile();
 
             if (file.exists() && file.isFile()) {

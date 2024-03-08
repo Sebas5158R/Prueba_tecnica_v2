@@ -17,6 +17,8 @@ public class LoginSession {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private Integer sessionId;
+
     @ManyToOne
     private User userId;
 

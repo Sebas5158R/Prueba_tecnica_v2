@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.server.header.XFrameOptionsServerHttpHeadersWriter;
 import sena.prueba.services.OurUserDetailsService;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -41,6 +40,12 @@ public class SecurityConfig {
                         .requestMatchers("/service/addService").permitAll()
                         .requestMatchers("/email/**","/email/sendEmail","email/sendMessageFile").permitAll()
                         .requestMatchers("/company/**", "/company/files/**").permitAll()
+                        .requestMatchers("/user/forgotPassword", "user/getResetPassword", "user/resetPassword","user/findByEmail/").permitAll()
+                        .requestMatchers("/user/**").hasAnyAuthority("ROLE_SUPER_ADMINISTRADOR", "ROLE_ADMINISTRADOR")
+                        .requestMatchers("/service/addService").permitAll()
+                        .requestMatchers("/email/**","/email/sendEmail","email/sendMessageFile").permitAll()
+                        .requestMatchers("/company/**","company/addCompany","company/companiesDocument","company/createCompany","company/companies","company/company/","company/updateCompany/").permitAll()
+                        .requestMatchers("code/**","code/","code/verify","code/register").permitAll()
                         .anyRequest().authenticated())
                 .oauth2Login(withDefaults())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
