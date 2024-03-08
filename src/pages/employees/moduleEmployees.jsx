@@ -14,7 +14,7 @@ const ModuleEmployees = () => {
     };
 
     const dispatch = useDispatch();
-    const employees = useSelector((state) => state.users_from_db.users);
+    const employees = useSelector((state) => state.users_from_db.employees);
 
     useEffect(() => {
       dispatch(fetchUsers());

@@ -25,10 +25,6 @@ const Header = () => {
             <nav className="w-full md:[60%] lg:w-[70%] flex justify-center md:justify-end">
                 <ul className="flex items-center gap-4">
                     <li>
-
-                    </li>
-
-                    <li>
                         <Link to={"#"} className="flex items-center gap-1">
                             {email} <RiArrowDropDownLine />
                         </Link>

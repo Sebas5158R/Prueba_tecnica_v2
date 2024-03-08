@@ -15,7 +15,7 @@ const ModuleCustomers = () => {
     };
 
     const dispatch = useDispatch();
-    const customers = useSelector(state => state.users_from_db.users);
+    const customers = useSelector(state => state.users_from_db.customers);
 
     useEffect(() => {
         dispatch(fetchUsers());

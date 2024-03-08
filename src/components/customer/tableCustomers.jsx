@@ -32,7 +32,7 @@ const TableCustomers = ({ data }) => {
 
     return (
 
-            <div className="flex items-center justify-center w-full h-full ">
+            <div className="flex items-center justify-center w-full h-full">
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <div className="flex items-center justify-between mb-4 self-center">
                         <input
@@ -49,8 +49,7 @@ const TableCustomers = ({ data }) => {
                     {currentItems.length === 0 && (
                         <p className="text-gray-500">No hay datos disponibles.</p>
                     )}
-                    <table
-                        className="w-full text-sm text-left rtl:text-right text-gray-500 table-auto">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 table-auto">
                         <thead
                             className="text-xs text-gray-700 uppercase bg-gray-50">
                         <tr>
@@ -102,7 +101,7 @@ const TableCustomers = ({ data }) => {
                                     <td className="px-6 py-4">{customer.documentType}</td>
                                     <td className="px-6 py-4">{customer.documentNumber}</td>
                                     <td className="px-6 py-4">{customer.phoneNumber}</td>
-                                    <td className="px-6 py-4">{customer.legal_person}</td>
+                                    <td className="px-6 py-4">{customer.legal_person ? 'Sí' : 'No'}</td>
                                     {customer.roles.length > 0 ? (
                                         <td className="px-6 py-4">
                                             {customer.roles.map((role, index) => (

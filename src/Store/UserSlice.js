@@ -144,6 +144,8 @@ const userSlice = createSlice({
     initialState: {
         loading: false,
         users: [],
+        employees: [],
+        customers: [],
         userLog:null,
         userToEdit: null,
         emailFromToken: null,
@@ -160,11 +162,24 @@ const userSlice = createSlice({
         builder
         // Redux list Users
         .addCase(fetchUsers.fulfilled, (state, action) => {
-            state.users = action.payload;
+            action.payload.forEach(user => {
+                const isSuperAdmin = user.roles.some(role => role.roleType === 'SUPER_ADMINISTRADOR' || role.roleType === 'ADMINISTRADOR' || role.roleType === 'EMPLEADO');
+                const isClient = user.roles.some(role => role.roleType === 'CLIENTE');
+                const isAlreadyAdded = state.employees.some(emp => emp.idUser === user.idUser);
+                const isAlreadyAddedClient = state.customers.some(cli => cli.idUser === user.idUser);
+                if (isSuperAdmin && !isAlreadyAdded) {
+                    state.employees.push(user);
+                } else if (isClient && !isAlreadyAddedClient) {
+                    state.customers.push(user);
+                }
+            });
             state.error = null;
         })
+        
         .addCase(fetchUsers.rejected, (state, action) => {
             state.users = [];
+            state.employees = [];
+            state.customers = [];
             console.log(action.error.message);
             if(action.error.message === 'Request failed with status code 500') {
                 state.error = 'Access Denied';
@@ -194,8 +209,7 @@ const userSlice = createSlice({
             state.loading = false
             state.msg = action.payload;
             state.error = null;
-            window.alert("User registrado exitosamente");
-            window.location.reload();
+            setTimeout( function() { window.location.reload(); }, 2000 );
         })
         .addCase(addUser.rejected, (state, action) => {
             state.loading = false;
@@ -203,8 +217,8 @@ const userSlice = createSlice({
             console.log(action.error.message);
             if(action.error.message === "Request failed with status code 400") {
                 state.error = 'There is already a registered user with that email';
-            } else if(action.error.message === "Request failed with status code 403") {
-                state.error = 'There is already a registered user with that document or telephone number';
+            } else if(action.error.message === "Network Error") {
+                state.error = 'There is already a registered user with document or telephone number';
             }
              else {
                 state.error = action.error.message;
@@ -222,13 +236,13 @@ const userSlice = createSlice({
             state.loading = false;
             state.msg = action.payload;
             state.error = null;
-            window.location.reload();
+            setTimeout( function() { window.location.reload(); }, 2000 );
         })
         .addCase(addCustomersForExcel.rejected, (state, action) => {
             state.loading = false;
             state.msg = null;
             console.log(action.error.message);
-            if (action.error.message === 'Request failed with status code 403') {
+            if (action.error.message === 'Network Error') {
                 state.error = 'User with duplicate data, cannot be imported.';
             } else {
                 state.error = action.error.message;

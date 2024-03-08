@@ -49,7 +49,7 @@ const TableCompanies = ({ data }) => {
                     <div className="content bg-gray-100 text-xl transition-all duration-500">
                         <div className="flex items-center justify-center w-full h-full ">
                             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                                <table className="w-[1000px] text-sm text-left rtl:text-right text-gray-500 table-auto">
+                                <table className="w-auto text-sm text-left rtl:text-right text-gray-500 table-auto">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                         <tr>
                                             <th scope="col" className="px-6 py-3">Represent  company</th>
@@ -57,6 +57,7 @@ const TableCompanies = ({ data }) => {
                                             <th scope="col" className="px-6 py-3">Estate company</th>
                                             <th scope="col" className="px-6 py-3">Address</th>
                                             <th scope="col" className="px-6 py-3">Date creation</th>
+                                            <th scope="col" className="px-6 py-3">State</th>
                                             <th scope="col" className="px-6 py-3">Document</th>
                                             <th scope="col" className="px-6 py-3"></th>
                                         </tr>

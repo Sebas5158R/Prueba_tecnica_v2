@@ -5,7 +5,7 @@ import { companyByUser, fetchComapanies, fileByNameCompany } from "../../Store/C
 import NavBar from "../../components/NavBar";
 import Header from "../../components/Header";
 
-import {RiCheckboxBlankCircleFill, RiCloseLine, RiMenu3Fill, RiNotification2Line} from "react-icons/ri";
+import { RiCloseLine, RiMenu3Fill, RiNotification2Line } from "react-icons/ri";
 
 import { RiCheckLine } from "react-icons/ri";
 
@@ -109,17 +109,14 @@ const ModuleCompanies = () => {
 
                 {/* TABLE */}
 
-                <div>
-
-
+                <div className="float-end mr-6">
                     <button
                         className={"flex gap-2.5 items-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}
                         onClick={handleValidationcode}>
                         creation authorization
 
                        <div className="flex">
-                        <RiNotification2Line className="text-xl"/>
-                        <RiCheckboxBlankCircleFill className="absolute -right-1 -top-1 text-xs text-red-500 animate-pulse"/>
+                            <RiNotification2Line className="text-xl"/>
                            <p className="flex align-bottom">{notify} </p>
                        </div>
 
@@ -165,7 +162,7 @@ const ModuleCompanies = () => {
                                                 <input
                                                     className="w-full rounded border border-stroke bg-gray py-3 pl-11 pr-4.5 text-black focus:border-primary focus-visible:outline-none"
                                                     type="text" name="fullName" id="fullName" placeholder="Name company"
-                                                    value={companies.nameCompany} readOnly/>
+                                                    value={companiesUser.nameCompany} readOnly/>
                                             </div>
                                         </div>
 
@@ -177,7 +174,7 @@ const ModuleCompanies = () => {
                                             <input
                                                 className="w-full rounded border border-stroke bg-gray-100 py-3 px-5 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
                                                 type="text" name="phoneNumber" id="phoneNumber"
-                                                placeholder="+990 3343 7865" value={companies.phone} readOnly/>
+                                                placeholder="+990 3343 7865" value={companiesUser.phone} readOnly/>
                                         </div>
                                     </div>
 
@@ -198,7 +195,7 @@ const ModuleCompanies = () => {
                                             <input
                                                 className="w-full rounded border border-stroke bg-gray-100 py-3 pl-11 pr-5 text-black focus:border-primary focus-visible:outline-none"
                                                 type="email" name="emailAddress" id="emailAddress"
-                                                placeholder="devidjond45@gmail.com" value={companies && companies.user && companies.user.email ? companies.user.email : ''} readOnly/>
+                                                placeholder="devidjond45@gmail.com" value={companiesUser && companiesUser.user && companiesUser.user.email ? companiesUser.user.email : ''} readOnly/>
                                         </div>
                                     </div>
 
@@ -224,7 +221,7 @@ const ModuleCompanies = () => {
                                             <input
                                                 className="w-full rounded border border-stroke bg-gray py-3 pl-11 pr-5 text-black focus:border-primary focus-visible:outline-none"
                                                 type="text" name="description" id="description"
-                                                value={companies.descriptionCompany} readOnly/>
+                                                value={companiesUser.descriptionCompany} readOnly/>
                                         </div>
                                     </div>
                                 </form>

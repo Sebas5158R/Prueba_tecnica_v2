@@ -12,7 +12,6 @@ const ModalRegisterEmployees = () => {
     const [documentNumber, setDocumentNumber] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [password, setPassword] = useState("");
-    const  [isUsingFA,setIsUsingFA] = useState(false);
     const [idRole, setIdRole] = useState(null);
     const {loading, error, msg} = useSelector((state) => state.users_from_db);
     const dispatch = useDispatch();
@@ -31,7 +30,6 @@ const ModalRegisterEmployees = () => {
             documentNumber,
             phoneNumber,
             password,
-            isUsingFA,
             roles: [
                 {
                     idRole
@@ -39,7 +37,6 @@ const ModalRegisterEmployees = () => {
             ]
         };
 
-        console.log(newEmployee);
         dispatch(addUser(newEmployee));
         setNames("");
         setLastNames("");
@@ -49,11 +46,7 @@ const ModalRegisterEmployees = () => {
         setPhoneNumber("");
         setPassword("");
         setIdRole("");
-        setIsUsingFA(undefined);
     };
-
-
-    
 
     const nextStep = () => {
         setStep(step + 1);
@@ -64,19 +57,11 @@ const ModalRegisterEmployees = () => {
         nextStep();
     }
 
-    const  handleCheckboxChange = (event)=> {
-        console.log(isUsingFA+" after")
-
-        setIsUsingFA(event.target.checked);
-
-        console.log(isUsingFA+" later")
-    }
-
     return (
         <div>
 
             <button onClick={() => setIsOpen(true)} data-modal-target="select-modal" data-modal-toggle="select-modal"
-                    className="block text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                    className="block text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                     type="button">
                 Add Employee
             </button>
@@ -88,12 +73,12 @@ const ModalRegisterEmployees = () => {
                         <div className="relative p-4 w-full max-w-md max-h-full">
                             <div className="relative bg-white rounded-lg shadow-2xl">
                                 <div
-                                    className="flex items-center justify-between p-4 md:p-5 border-b border-purple-300 rounded-t">
+                                    className="flex items-center justify-between p-4 md:p-5 border-b border-blue-300 rounded-t">
                                     <h3 className="text-lg font-semibold text-gray-900">
                                         Register a new Employee
                                     </h3>
                                     <button onClick={() => setIsOpen(false)} type="button"
-                                            className="text-gray-400 bg-transparent hover:bg-purple-200 hover:text-purple-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center"
+                                            className="text-gray-400 bg-transparent hover:bg-blue-200 hover:text-blue-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center"
                                             data-modal-toggle="select-modal">
                                         <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                              fill="none" viewBox="0 0 14 14">
@@ -113,7 +98,7 @@ const ModalRegisterEmployees = () => {
                                                    onChange={() => handleRoleSelection(1)}
                                                    required />
                                             <label htmlFor="role-1"
-                                                   className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-purple-100">
+                                                   className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-100">
                                                 <div className="block">
                                                     <div className="w-full text-lg font-semibold">SUPER ADMINISTRADOR
                                                     </div>
@@ -137,7 +122,7 @@ const ModalRegisterEmployees = () => {
                                                    onChange={() => handleRoleSelection(2)}
                                                    required />
                                             <label htmlFor="role-2"
-                                                   className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-purple-100">
+                                                   className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-100">
                                                 <div className="block">
                                                     <div className="w-full text-lg font-semibold">ADMINISTRADOR</div>
                                                     <div className="w-full text-gray-500">Full access
@@ -160,7 +145,7 @@ const ModalRegisterEmployees = () => {
                                                    onChange={() => handleRoleSelection(3)}
                                                    required />
                                             <label htmlFor="role-3"
-                                                   className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-purple-100">
+                                                   className="inline-flex items-center justify-between w-full p-5 text-gray-900 bg-white border border-gray-200 rounded-lg cursor-pointer hover:bg-blue-100">
                                                 <div className="block">
                                                     <div className="w-full text-lg font-semibold">USER REGULAR</div>
                                                     <div className="w-full text-gray-500">Access only
@@ -191,14 +176,10 @@ const ModalRegisterEmployees = () => {
                         <div className="relative p-4 w-full max-w-md max-h-full">
                             <div className="relative bg-white rounded-lg shadow">
                                 <div
-                                    className="flex items-center justify-between p-4 md:p-5 border-b border-purple-300 rounded-t">
+                                    className="flex items-center justify-between p-4 md:p-5 border-b border-blue-300 rounded-t">
                                     <h3 className="text-lg font-semibold text-gray-900">
                                         Register a new Employee
                                     </h3>
-
-                                    <button onClick={() => setIsOpen(false)} type="button"
-                                            className="text-gray-400 bg-transparent hover:bg-purple-200 hover:text-purple-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center"
-                                            data-modal-toggle="select-modal" />
 
                                     <button onClick={() => {setIsOpen(false); setStep(1)}} type="button"
                                         className="text-gray-400 bg-transparent hover:bg-blue-200 hover:text-blue-900 rounded-lg text-sm h-8 w-8 ms-auto inline-flex justify-center items-center"
@@ -221,7 +202,7 @@ const ModalRegisterEmployees = () => {
                                     </div>
                                 )}
                                 {msg && (
-                                    <div className="bg-red-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                                    <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
                                         <span className="block sm:inline">{msg}</span>
                                         <span className="absolute top-0 bottom-0 right-0 px-4 py-3">
                                             <svg className="fill-current h-6 w-6 text-green-500" role="button" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" onClick={handleClose}><title>Close</title><path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z"/></svg>
@@ -236,7 +217,7 @@ const ModalRegisterEmployees = () => {
                                                        className="block mb-2 text-sm font-medium text-gray-900">Names</label>
                                                 <input type="text" value={names}
                                                        onChange={(e) => setNames(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                                                        placeholder="John" required={true}/>
 
                                             </div>
@@ -247,7 +228,7 @@ const ModalRegisterEmployees = () => {
                                                     names</label>
                                                 <input type="text" value={lastNames}
                                                        onChange={(e) => setLastNames(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                                                        placeholder="Doe" required={true}/>
                                             </div>
 
@@ -256,7 +237,7 @@ const ModalRegisterEmployees = () => {
                                                        className="block mb-2 text-sm font-medium text-gray-900">Email</label>
                                                 <input type="email" value={email}
                                                        onChange={(e) => setEmail(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                                                        placeholder="johnDoe@example.com" required={true}/>
                                             </div>
 
@@ -266,7 +247,7 @@ const ModalRegisterEmployees = () => {
                                                     type</label>
                                                 <select value={documentType}
                                                         onChange={(e) => setDocumentType(e.target.value)}
-                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                                                         required={true}>
                                                     <option value="">Select document type</option>
                                                     <option value="Cedula de ciudadania">Cedula de ciudadania</option>
@@ -281,7 +262,7 @@ const ModalRegisterEmployees = () => {
                                                     number</label>
                                                 <input type="number" value={documentNumber}
                                                        onChange={(e) => setDocumentNumber(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                                                        placeholder="104354343" required={true}/>
                                             </div>
 
@@ -291,33 +272,16 @@ const ModalRegisterEmployees = () => {
                                                     number</label>
                                                 <input type="number" value={phoneNumber}
                                                        onChange={(e) => setPhoneNumber(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                                                        placeholder="31409092890" required={true}/>
                                             </div>
 
                                             <div className="col-span-2">
-                                                <label htmlFor="isUsing2FA"
-                                                       className="block mb-2 text-sm font-medium text-gray-900">
-                                                    Do You want use Authentication in two steps ?
-                                                </label>
-                                                <input id="link-checkbox" name="isUsing2FA" type={"checkbox"}
-                                                       checked={isUsingFA}
-                                                       className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                                                       onChange={handleCheckboxChange}
-                                                />
-
-                                                {/*<input type="text" value={password}*/}
-                                                {/*       onChange={(e) => setPassword(e.target.value)}*/}
-                                                {/*       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"*/}
-                                                {/*       placeholder="Password" required={true}*/}
-                                                {/*/>*/}
-                                            </div>
-
-
-                                            <div className="col-span-2">
-                                                <input type="text" value={password}
+                                                <label htmlFor="password"
+                                                        className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                                                <input type="password" value={password}
                                                        onChange={(e) => setPassword(e.target.value)}
-                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 block w-full p-2.5"
+                                                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 block w-full p-2.5"
                                                        placeholder="Password" required={true}
                                                 />
                                             </div>
@@ -330,7 +294,7 @@ const ModalRegisterEmployees = () => {
 
                                         </div>
                                         <button type={"submit"}
-                                                className="text-white inline-flex w-full justify-center bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                className="text-white inline-flex w-full justify-center bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                             {loading ? 'Loading...': 'Save'}
                                         </button>
                                     </form>
