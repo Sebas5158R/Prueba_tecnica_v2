@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import  {Link} from "react-router-dom";
 import { RiArrowUpSLine, RiArrowDownSLine } from "react-icons/ri";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {changeState} from "../../Store/CompanySlice";
 const TableCompanies = ({ data }) => {
 
@@ -85,7 +85,7 @@ const TableCompanies = ({ data }) => {
 
                                            </td>
                                             <td className="px-6 py-4">
-                                                <Link to={`http://localhost:8080/company/files?pathPdf=${company.pathDocumentation}`} target="_blank" rel="noopener noreferrer">
+                                                <Link to={`http://localhost:8090/company/files?pathPdf=${company.pathDocumentation}`} target="_blank" rel="noopener noreferrer">
                                                     <button className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full'>Open</button>
                                                 </Link>
                                             </td>

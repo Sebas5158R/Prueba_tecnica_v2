@@ -4,11 +4,9 @@ import api from "../services/URLService";
 export  const  fetchComapanies  = createAsyncThunk(
    'companies/fetchCompanies',
    async (companyData) =>{
-       try {{
-
-       }
-           const  response = await api.get('/company/companies',companyData);
-         return response.data ;
+       try {
+        const  response = await api.get('/company/companies',companyData);
+        return response.data ;
        }catch (e) {
            throw e;
        }
@@ -140,11 +138,7 @@ const  companySlice = createSlice({
                 }
         })
             .addCase(validateCodeCompany.fulfilled,(state,action)=>{
-
                 console.log("response")
-              const  response1=action.payload
-console.log(response1)
-                console.log(action.payload.data)
                 if (action.payload.data){
                     window.location.replace('/companies')
                 }

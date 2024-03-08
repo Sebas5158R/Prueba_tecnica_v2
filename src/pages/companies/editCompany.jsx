@@ -14,8 +14,6 @@ const EditCompany = () => {
     const company = useSelector((state) => state.company.companyToEdit);
     const [sidebar, setSidebar] = useState(false);
 
-
-
     const handleSidebar = () => {
         setSidebar(!sidebar);
     };

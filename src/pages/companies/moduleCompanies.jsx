@@ -135,7 +135,7 @@ const ModuleCompanies = () => {
         {userRole.includes('CLIENTE') && (
         <div>
             <HeaderCustomer />
-            {companies ? (
+            {companiesUser ? (
             <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
                 <h1 className="text-center text-xl mb-8">Information from your company</h1>
                 <div className="grid grid-cols-5 gap-8">

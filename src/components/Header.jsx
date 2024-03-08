@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { RiNotification2Line, RiArrowDropDownLine, RiSearchLine, RiCheckboxBlankCircleFill } from "react-icons/ri";
+import { RiArrowDropDownLine, RiSearchLine } from "react-icons/ri";
 import { jwtDecode } from "jwt-decode";
 
 const Header = () => {
