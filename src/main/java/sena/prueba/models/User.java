@@ -66,6 +66,9 @@ public class User implements UserDetails {
     @Column (name ="isUsing2FA")
     private boolean isUsing2FA;
 
+
+
+
     private String secret;
 
 

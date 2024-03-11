@@ -41,6 +41,8 @@ public class CompanyController {
     @Autowired
     CompanyService companyService ;
 
+
+
     @Autowired
     UserServiceImpl userService;
     SplittableRandom splittableRandom = new SplittableRandom();
@@ -59,6 +61,8 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
     try {
         String fileName = companyDTO.getDocuments().getOriginalFilename();
         Path path = Paths.get("src/mail/resources/files/"+companyDTO.getName_company()+"/"+fileName);
+        String pathNormalized = String.valueOf(path);
+        String pant2=pathNormalized.replace("\\", "/");
         Files.createDirectories(path.getParent());
         Files.copy(companyDTO.getDocuments().getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
         File file = path.toFile();
@@ -76,12 +80,14 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
         company.setActive(false);
         company.setAddress(companyDTO.getAddres());
         company.setPhone(companyDTO.getPhone());
+        System.out.println("________");
+        System.out.println(company.getUserAuthorization());
         LocalDate  initialdate = LocalDate.now();
         company.setDateCreation(initialdate);
         company.setDateEndProcess(initialdate.plus(Period.ofDays(15)));
         System.out.println(file.getPath()+"esta es la direccion de el archivo");
-        company.setPathDocumentation(file.getPath());
-        emailService.sendEmailwhitFile("carlosgalindo8090l@gmail.com","request creation company",message,file);
+        company.setPathDocumentation(pant2);
+        emailService.sendEmailwhitFile("carlosgalindo8090l@gmail.com","request creation company ",message,file);
         String messageUsu = " Hi"+usu.getNames()+"the application for  cretion company in our sistem was send  in:"+company.getDateCreation()+"you will have an answer approximately in:"+company.getDateEndProcess()+"thank you";
         emailService.SendEmail(usu.getEmail(),"start company creation process",messageUsu);
         return    this.companyService.saveCompany(company);
@@ -97,9 +103,6 @@ public  Company updateCompany (@PathVariable int id ,@RequestBody Company compan
     return companyService.updateCompany(id, company);
 
 }
-
-
-
 @GetMapping (value = "/listCompany/{id}")
 public ResponseEntity<?> getCompanyById(@PathVariable int id) {
     Company company = companyService.findCompanyById(id);
@@ -110,7 +113,6 @@ public ResponseEntity<?> getCompanyById(@PathVariable int id) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(msg);
     }
 }
-
 @PostMapping( value = "/createCompany")
 public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
     Company company = companyService.findCompanyById(companyDTO.getIdCompany());
@@ -125,14 +127,12 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
    }
     return null;
 };
-
-
 @GetMapping ( value = "/companies")
         public ArrayList <Company> getCompanies (){
         return companyService.getCompanies();
 }
 
-    @PostMapping("/companiesDocument")
+@PostMapping("/companiesDocument")
     public List<File> listarArchivos(@RequestBody FileDTO fileDTO) {
         return companyService.getFilesInDirectory(fileDTO.getDescripcion());
     }
@@ -193,13 +193,6 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
             return ResponseEntity.badRequest().build();
         }
     }
-
-
-
-
-//    company/changeState/${idCompany}
-
-
     @PostMapping(value = "company/changeState/{idCompany}")
     public ResponseEntity <Resource>  changeStateCompany   (@PathVariable int idCompany){
     try {
@@ -212,23 +205,21 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
          return  ResponseEntity.badRequest().build();
         }
     };
-
     @PostMapping (value =  "/validateCodeCompany")
     public  ResponseEntity<Resource> validateCodeCompany  (@RequestBody ValidateCodeCompanyDTO validateCodeCompanyDTO){
     Boolean  response  = companyService.validationCode(validateCodeCompanyDTO.getCode(), validateCodeCompanyDTO.getIdCompany());
     if (response){
     Company company =  companyService.findCompanyById(validateCodeCompanyDTO.getIdCompany());
+    User userAuthorization  = userRepository.findUserByEmail(validateCodeCompanyDTO.getUserAuthorization());
+     company.setUserAuthorization(userAuthorization);
      company.setStateCompany("Finalized");
      company.setActive(true);
      companyService.saveCompany(company);
      return  ResponseEntity.ok().build();
+    }else {
+        System.out.println("mal");
+        return ResponseEntity.badRequest().build();
     }
-    return ResponseEntity.badRequest().build();
     }
-
-
-
-
-
 }
 

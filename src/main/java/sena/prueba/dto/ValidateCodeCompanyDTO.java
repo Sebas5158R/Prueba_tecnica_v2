@@ -11,5 +11,6 @@ import lombok.*;
 public class ValidateCodeCompanyDTO {
 
     private  int idCompany ;
+    private String userAuthorization;
     private int code;
 }
