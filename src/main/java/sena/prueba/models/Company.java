@@ -25,6 +25,8 @@ public class Company {
         private  int codeValidation;
     @OneToOne
         private User user;
+    @ManyToOne
+     private  User  userAuthorization;
     @Column (name = "active")
         private  Boolean active;
     @Column( name ="phone")

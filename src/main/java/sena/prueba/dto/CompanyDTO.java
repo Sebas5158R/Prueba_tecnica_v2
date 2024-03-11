@@ -16,6 +16,7 @@ public class CompanyDTO {
     private   int codevalidation;
     private  long phone ;
     private String addres;
+    private String userAuthorization;
     private  Boolean active;
     private MultipartFile documents;
 }
