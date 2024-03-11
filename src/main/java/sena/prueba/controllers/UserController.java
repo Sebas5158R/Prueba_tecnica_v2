@@ -46,9 +46,10 @@ public class UserController {
 
 
     @GetMapping (value = "/findByEmail/{email}")
-    public ResponseEntity<?> addUser(@PathVariable String email){
-            Optional<User> user = userRepository.findByEmail(email);
-            return  ResponseEntity.ok(user);
+    public ResponseEntity<?> findByEmail(@PathVariable String email){
+        System.out.println(email);
+        Optional<User> user = userRepository.findByEmail(email);
+        return  ResponseEntity.ok(user);
     }
 
 
