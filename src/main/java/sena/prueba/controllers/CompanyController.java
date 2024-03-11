@@ -205,6 +205,12 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
          return  ResponseEntity.badRequest().build();
         }
     };
+
+
+
+
+
+
     @PostMapping (value =  "/validateCodeCompany")
     public  ResponseEntity<Resource> validateCodeCompany  (@RequestBody ValidateCodeCompanyDTO validateCodeCompanyDTO){
     Boolean  response  = companyService.validationCode(validateCodeCompanyDTO.getCode(), validateCodeCompanyDTO.getIdCompany());
