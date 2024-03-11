@@ -38,11 +38,11 @@ public class PruebaApplication {
 			 Role role4 = roleRepository.save(new Role(4, "CLIENTE"));
 
 
-			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","CarlosGalindo8090@gmail.com","Cedula de ciudadania",1212121,33424,"PASSWORD",false,null,null,false,null));
+			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","sdfsdfsdfsddf8090@gmail.com","Cedula de ciudadania",1212121,33424,"PASSWORD",false,null,null,false,null));
 			 User user2 = userRepository.save( new User(2,"Sebastian","Rivera","sebastianriveraaviles4@gmail.com","Cedula de ciudadania",12121210,334245,passwordEncoder.encode("sebas1"),false,null,null,false,null));
 
-			 Service service1 = serviceRepository.save(new Service(1, "Suscripciones a platafomas de streaming", 150000, true));
-			 Service service2 = serviceRepository.save(new Service(2, "Suscripciones a juegos", 50000, true));
+//			 Service service1 = serviceRepository.save(new Service(1, "Suscripciones a platafomas de streaming", 150000, true));
+//			 Service service2 = serviceRepository.save(new Service(2, "Suscripciones a juegos", 50000, true));
 
 			 user1.setRoles(Set.of(role1));
 			 user2.setRoles(Set.of(role1, role2));

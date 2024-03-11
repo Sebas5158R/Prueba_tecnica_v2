@@ -38,6 +38,7 @@ public class Company {
     @Column (name = "path_documentation")
         private  String pathDocumentation;
 
+
     @ManyToMany(fetch = FetchType.EAGER , cascade =  CascadeType.MERGE)
     @JoinTable (
             name="company_service",
@@ -49,6 +50,9 @@ public class Company {
             }
     )
     private Set<Service> services;
+
+
+
 
     /**/
 

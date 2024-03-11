@@ -56,9 +56,37 @@ public  Company findCompanyById(int idCompany ){
         }
     }
 
+
     public Company getCompanyByUserEmail(String email) {
         return companyRepository.findByUserEmail(email);
     }
+
+
+
+    public Boolean validationCode (int code  , int idCompany ){
+        Company  company  = companyRepository.findCompanyByIdCompany(idCompany);
+        if (company.getCodeValidation()==code){
+            System.out.println("codigo valido");
+            return true ;
+        }
+        else {
+            return false;
+        }
+
+    }
+
+
+
+//    public Company getCompanyByUserId(User user, Integer userId) {
+//        Optional<Company> companyOptionalom = companyRepository.findCompanyByUser(user, userId);
+//        if (userOptional.isPresent()) {
+//            Company company = userOptional.get();
+//            return user.getLegal_person();
+//        } else {
+//            throw new EntityNotFoundException("User not found with id: " + userId);
+//        }
+//    }
+
 
 //public String[] documentsConsult  (String path ){
 

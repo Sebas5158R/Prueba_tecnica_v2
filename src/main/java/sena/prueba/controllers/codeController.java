@@ -25,17 +25,15 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Optional;
+
 
 @Slf4j
 @RestController
 @AllArgsConstructor
+@CrossOrigin("*")
 @RequestMapping("/code")
 public class codeController {
-
     private final GoogleAuthenticator gAuth;
-
-
     @Autowired
     Auth_Service service;
     @Autowired
@@ -172,7 +170,7 @@ public class codeController {
 //            try {
 //
 //
-//                BitMatrix bitMatrix = qrCodeWriter.encode(otpAuthURL, BarcodeFormat.QR_CODE, 200, 200);
+//                BitMatrix = qrCodeWriter.encode(otpAuthURL, BarcodeFormat.QR_CODE, 200, 200);
 //                BufferedImage image = new BufferedImage(200, 200, BufferedImage.TYPE_INT_RGB);
 //                for (int x = 0; x < 200; x++) {
 //                    for (int y = 0; y < 200; y++) {
@@ -198,8 +196,10 @@ public class codeController {
     @PostMapping("/validate/key")
     public Validation validateKey(@RequestBody ValidateCodeDto body) {
 
+        System.out.println("estoy validando el codigo");
+        System.out.println(body.getEmail());
+        System.out.println(body.getCode());
         System.out.println(gAuth.authorizeUser(body.getEmail(), body.getCode()));
-
         return new Validation(gAuth.authorizeUser(body.getEmail(), body.getCode()));
     }
 

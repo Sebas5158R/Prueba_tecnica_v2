@@ -10,14 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.CompanyDTO;
 import sena.prueba.dto.FileDTO;
+import sena.prueba.dto.ValidateCodeCompanyDTO;
 import sena.prueba.models.Company;
 import sena.prueba.models.User;
 import sena.prueba.repository.UserRepository;
 import sena.prueba.services.CompanyService;
 import sena.prueba.services.IEmailService;
 import sena.prueba.services.UserServiceImpl;
-
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.net.MalformedURLException;
@@ -98,6 +97,8 @@ public  Company updateCompany (@PathVariable int id ,@RequestBody Company compan
     return companyService.updateCompany(id, company);
 
 }
+
+
 
 @GetMapping (value = "/listCompany/{id}")
 public ResponseEntity<?> getCompanyById(@PathVariable int id) {
@@ -196,6 +197,38 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
 
 
 
+//    company/changeState/${idCompany}
+
+
+    @PostMapping(value = "company/changeState/{idCompany}")
+    public ResponseEntity <Resource>  changeStateCompany   (@PathVariable int idCompany){
+    try {
+       Company company = companyService.findCompanyById(idCompany);
+       company.setStateCompany("Reviewed");
+       companyService.saveCompany(company);
+      return  ResponseEntity.ok().build();
+   }catch (Exception e)
+        {
+         return  ResponseEntity.badRequest().build();
+        }
+    };
+
+    @PostMapping (value =  "/validateCodeCompany")
+    public  ResponseEntity<Resource> validateCodeCompany  (@RequestBody ValidateCodeCompanyDTO validateCodeCompanyDTO){
+    Boolean  response  = companyService.validationCode(validateCodeCompanyDTO.getCode(), validateCodeCompanyDTO.getIdCompany());
+    if (response){
+    Company company =  companyService.findCompanyById(validateCodeCompanyDTO.getIdCompany());
+     company.setStateCompany("Finalized");
+     company.setActive(true);
+     companyService.saveCompany(company);
+     return  ResponseEntity.ok().build();
+    }
+    return ResponseEntity.badRequest().build();
+    }
+
+
+
 
 
 }
+

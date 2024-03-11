@@ -8,7 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class ValidateCodeDto {
-
 private   String  email  ;
 private  int code;
 }
