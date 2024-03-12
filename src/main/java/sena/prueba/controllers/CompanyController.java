@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sena.prueba.dto.CompanyDTO;
 import sena.prueba.dto.FileDTO;
+import sena.prueba.dto.ResponseCompanyDTO;
 import sena.prueba.dto.ValidateCodeCompanyDTO;
 import sena.prueba.models.Company;
 import sena.prueba.models.User;
@@ -132,6 +133,11 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
         return companyService.getCompanies();
 }
 
+
+
+
+
+
 @PostMapping("/companiesDocument")
     public List<File> listarArchivos(@RequestBody FileDTO fileDTO) {
         return companyService.getFilesInDirectory(fileDTO.getDescripcion());
@@ -148,12 +154,10 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
             return ResponseEntity.notFound().build();
         }
     }
-
     @GetMapping("/files/{nameCompany}")
     public List<String> getCompanyFiles(@PathVariable String nameCompany) {
         List<String> companyFiles = new ArrayList<>();
         File companyDirectory = new File(companyFilesDirectory + File.separator + nameCompany);
-
         if (companyDirectory.exists() && companyDirectory.isDirectory()) {
             File[] files = companyDirectory.listFiles(new FilenameFilter() {
                 @Override
@@ -161,7 +165,6 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
                     return name.toLowerCase().endsWith(".pdf");
                 }
             });
-
             if (files != null) {
                 for (File file : files) {
                     System.out.println(file);
@@ -169,7 +172,6 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
                 }
             }
         }
-
         System.out.println(companyFiles);
         return companyFiles;
     }
@@ -193,7 +195,7 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping(value = "company/changeState/{idCompany}")
+    @PostMapping(value = "/changeState/{idCompany}")
     public ResponseEntity <Resource>  changeStateCompany   (@PathVariable int idCompany){
     try {
        Company company = companyService.findCompanyById(idCompany);
@@ -205,6 +207,26 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
          return  ResponseEntity.badRequest().build();
         }
     };
+
+
+
+@PostMapping( value = "/response" )
+public  ResponseEntity <Resource> responseCompany (@RequestBody ResponseCompanyDTO  responseCompanyDTO){
+    Company company = companyService.findCompanyById(responseCompanyDTO.getIdCompany());
+    User user = userRepository.findUserByEmail(responseCompanyDTO.getEmail());
+    if (responseCompanyDTO.getResponse()){
+        company.setActive(true);
+        company.setStateCompany("Finalized");
+        company.setUserAuthorization(user);
+        companyService.saveCompany(company);
+       return ResponseEntity.ok().build();
+    }
+
+
+
+};
+
+
 
 
 
