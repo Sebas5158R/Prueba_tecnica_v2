@@ -168,7 +168,7 @@ const Modaleditcompany =({idCompanyE}) =>{
                                         </button>
                                     </Link>
                                     <button type={"submit"}
-                                            className="bg-purple-500 hover:bg-purple-600 text-white font-medium py-2 px-4 rounded-md float-end">Save
+                                            className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md float-end">Save
                                     </button>
                                 </div>
                             </form>

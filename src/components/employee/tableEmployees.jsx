@@ -4,6 +4,7 @@ import ModalRegisterEmployees from "./modalRegisterEmployees";
 
 const TableEmployees = ({ data }) => {
 
+  const [searchTerm, setSearchTerm] = useState('');
   const itemsPerPageEmployees = 5;
   const [currentPageEmployees, setCurrentPageEmployees] = useState(1);
 
@@ -30,6 +31,11 @@ const TableEmployees = ({ data }) => {
     return pageNumbers;
   };
 
+
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value);
+  };
+
   return (
     <div className="flex items-center justify-center w-full h-full ">
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -38,11 +44,13 @@ const TableEmployees = ({ data }) => {
             type="text"
             placeholder="Search..."
             className="p-2 border border-gray-300 rounded-md"
+            value={searchTerm}
+            onChange={handleInputChange}
           />
           <h1 className="text-2xl font-bold">Employee Management</h1>
           <ModalRegisterEmployees />
         </div>
-        {currentItemsEmployees.length === 0 && (
+        {(currentItemsEmployees.length === 0) && (
           <p className="text-gray-500">No hay datos disponibles.</p>
         )}
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 table-auto">
@@ -77,6 +85,13 @@ const TableEmployees = ({ data }) => {
           <tbody>
             {currentItemsEmployees
               .filter((employee) => [1, 2, 3].includes(employee.roles[0].idRole))
+              .filter((employee) => (
+                (employee.names && employee.names.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (employee.lastNames && employee.lastNames.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                (employee.email && employee.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                employee.phoneNumber.toString().includes(searchTerm) ||
+                employee.documentNumber.toString().includes(searchTerm) 
+              ))
               .map((employee, index) => (
                 <tr
                   key={index}

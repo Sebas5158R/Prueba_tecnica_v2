@@ -27,7 +27,6 @@ const TableCompanies = ({ data }) => {
 
     
  const  handleMark = (idCompany)=>{
-     console.log("aqui toy")
   dispatch(changeState(idCompany))
  }
     
