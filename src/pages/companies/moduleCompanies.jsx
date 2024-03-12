@@ -59,7 +59,6 @@ const ModuleCompanies = () => {
 
 
     const  handleValidationcode = ()=>{
-
         window.location.replace('/formValidateCode')
     }
     const company = useSelector(state => state.company.companies)
