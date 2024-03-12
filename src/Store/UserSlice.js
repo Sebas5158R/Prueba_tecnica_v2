@@ -71,11 +71,9 @@ export const userById = createAsyncThunk(
 
 export const userByEmail  = createAsyncThunk(
     'user/userByEmail',
-    async ({email}) => {
+    async (email) => {
         try {
-            console.log(email+"user by email")
             const response = await api.get(`/user/findByEmail/${email}`);
-            console.log(response.data)
             return response.data;
         } catch(error) {
             throw error;
@@ -217,7 +215,7 @@ const userSlice = createSlice({
             console.log(action.error.message);
             if(action.error.message === "Request failed with status code 400") {
                 state.error = 'There is already a registered user with that email';
-            } else if(action.error.message === "Network Error") {
+            } else if(action.error.message === "Request failed with status code 403") {
                 state.error = 'There is already a registered user with document or telephone number';
             }
              else {
@@ -242,7 +240,7 @@ const userSlice = createSlice({
             state.loading = false;
             state.msg = null;
             console.log(action.error.message);
-            if (action.error.message === 'Network Error') {
+            if (action.error.message === 'Request failed with status code 403') {
                 state.error = 'User with duplicate data, cannot be imported.';
             } else {
                 state.error = action.error.message;

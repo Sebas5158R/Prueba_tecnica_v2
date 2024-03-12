@@ -5,6 +5,7 @@ import ModalRegisterCustomers from "./modalRegisterCustomers";
 
 const TableCustomers = ({ data }) => {
 
+    const [searchTerm, setSearchTerm] = useState('');
     const itemsPerPage = 6;
     const [currentPage, setCurrentPage] = useState(1);
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -30,6 +31,10 @@ const TableCustomers = ({ data }) => {
         return pageNumbers;
     };
 
+    const handleInputChange = (event) => {
+        setSearchTerm(event.target.value);
+      };
+
     return (
 
             <div className="flex items-center justify-center w-full h-full">
@@ -39,6 +44,8 @@ const TableCustomers = ({ data }) => {
                             type="text"
                             placeholder="Search..."
                             className="p-2 border border-gray-300 rounded-md"
+                            value={searchTerm}
+                            onChange={handleInputChange}
                         />
                         <h1 className="text-2xl font-bold">Customers Management</h1>
                         <div className="flex gap-5">
@@ -85,6 +92,13 @@ const TableCustomers = ({ data }) => {
                         <tbody>
                         {currentItems
                             .filter((customer) => [4].includes(customer.roles[0].idRole))
+                            .filter((customer) => (
+                                (customer.names && customer.names.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                (customer.lastNames && customer.lastNames.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                (customer.email && customer.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+                                customer.phoneNumber.toString().includes(searchTerm) ||
+                                customer.documentNumber.toString().includes(searchTerm) 
+                              ))
                             .map((customer, index) => (
                                 <tr
                                     key={index}

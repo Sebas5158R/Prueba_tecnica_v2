@@ -64,11 +64,9 @@ const ModuleCompanies = () => {
     }
     const company = useSelector(state => state.company.companies)
     const companyDisable = company.filter(compania => !compania.active);
-
-    console.log("oeee")
- console.log(companyDisable.length)
-
     const  notify = companyDisable.length
+
+
     return (
     <div>
         { (userRole.includes('SUPER_ADMINISTRADOR') || userRole.includes('ADMINISTRADOR')) &&(
@@ -89,7 +87,7 @@ const ModuleCompanies = () => {
             </div>
             {/* BTN MENU MOVIL */}
             <button onClick={handleSidebar}
-                className="block lg:hidden fixed bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl z-40">
+                className="block lg:hidden fixed bottom-4 right-4 bg-blue-600 p-2 text-white rounded-full text-2xl z-40">
                 {sidebar ?
                 <RiCloseLine /> :
                 <RiMenu3Fill />}

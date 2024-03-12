@@ -31,7 +31,7 @@ const EditCompany = () => {
         address: "",
         dateCreation: "",
         dateEndProcess: "",
-        documents: ""
+        pathDocumentation: ""
     });
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const EditCompany = () => {
                 address: company.address,
                 dateCreation: company.dateCreation,
                 dateEndProcess: company.dateEndProcess,
-                documents: company.pathDocumentation
+                pathDocumentation: company.pathDocumentation
             })
         }
     }, [company]);
@@ -90,7 +90,7 @@ const EditCompany = () => {
                     ruta3={"#"} titulo4={"Settings"} ruta4={"/Profile"} />
             </div>
             {/* BTN MENU MOVIL */}
-            <button onClick={handleSidebar} className="block lg:hidden fixed bottom-4 right-4 bg-purple-600 p-2 text-white rounded-full text-2xl z-40">
+            <button onClick={handleSidebar} className="block lg:hidden fixed bottom-4 right-4 bg-blue-600 p-2 text-white rounded-full text-2xl z-40">
                 {sidebar ? <RiCloseLine /> : <RiMenu3Fill />}
             </button>
 
@@ -133,12 +133,16 @@ const EditCompany = () => {
 
                                         <div className="md:col-span-5">
                                             <label htmlFor="state">State of process</label>
-                                            <input type="text" name="stateCompany" value={formData.stateCompany} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                                            <select name="stateCompany" value={formData.stateCompany} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" onChange={handleChange}>
+                                                <option value="pending">Pending</option>
+                                                <option value="Reviewed">Reviewed</option>
+                                                <option value="Finalized">Finalized</option>
+                                            </select>
                                         </div>
 
                                         <div className="md:col-span-5">
                                             <label htmlFor="code">Code from validation</label>
-                                            <input type="number" name="codeValidation" value={formData.codeValidation} onChange={handleChange} className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                            <input type="number" name="codeValidation" value={formData.codeValidation} onChange={handleChange} readOnly className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                         </div>
 
                                         <div className="md:col-span-5">
@@ -173,7 +177,7 @@ const EditCompany = () => {
 
                                         <div className="md:col-span-5">
                                             <label htmlFor="documents">Documents</label>
-                                            <input type="text" name="documents" multiple={true} value={formData.documents} readOnly className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
+                                            <input type="text" name="documents" value={formData.pathDocumentation} readOnly className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"/>
                                         </div>
 
                                         <div className="md:col-span-5 text-right">
