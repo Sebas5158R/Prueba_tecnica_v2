@@ -10,9 +10,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import sena.prueba.models.Role;
 import sena.prueba.models.Service;
 import sena.prueba.models.User;
+import sena.prueba.repository.CompanyRepository;
 import sena.prueba.repository.RoleRepository;
 import sena.prueba.repository.ServiceRepository;
 import sena.prueba.repository.UserRepository;
+import sena.prueba.services.CompanyService;
 
 
 import java.io.File;
@@ -29,7 +31,10 @@ public class PruebaApplication {
 			UserRepository userRepository,
 	        RoleRepository roleRepository,
 			PasswordEncoder passwordEncoder,
-			ServiceRepository serviceRepository
+			ServiceRepository serviceRepository,
+			CompanyRepository companyRepository,
+			CompanyService companyService
+
 	 ){
 		 return args ->  {
 			 Role role1 = roleRepository.save(new Role(1,"SUPER_ADMINISTRADOR"));
@@ -41,8 +46,7 @@ public class PruebaApplication {
 			 User user1 = userRepository.save( new User(1,"Luis Carlos","Galindo","sdfsdfsdfsddf8090@gmail.com","Cedula de ciudadania",1212121,33424,"PASSWORD",false,null,null,false,null));
 			 User user2 = userRepository.save( new User(2,"Sebastian","Rivera","sebastianriveraaviles4@gmail.com","Cedula de ciudadania",12121210,334245,passwordEncoder.encode("sebas1"),false,null,null,false,null));
 
-//			 Service service1 = serviceRepository.save(new Service(1, "Suscripciones a platafomas de streaming", 150000, true));
-//			 Service service2 = serviceRepository.save(new Service(2, "Suscripciones a juegos", 50000, true));
+//
 
 			 user1.setRoles(Set.of(role1));
 			 user2.setRoles(Set.of(role1, role2));

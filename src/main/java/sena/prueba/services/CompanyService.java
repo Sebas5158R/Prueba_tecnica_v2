@@ -26,6 +26,9 @@ public ArrayList<Company>getCompanies(){
             companyRepository.findAll();
 }
 
+
+
+
 public  Company saveCompany (Company company){
     return  companyRepository.save(company);
 }
@@ -43,6 +46,21 @@ public  Company findCompanyById(int idCompany ){
 
 
     }
+
+
+
+
+    public  boolean  findCode  ( int code){
+        Company company = companyRepository.findCompanyByCodeValidation(code);
+        if(company==null){
+            return  false;
+        }
+        else {
+            return true;
+        }
+    }
+
+
 
 
 

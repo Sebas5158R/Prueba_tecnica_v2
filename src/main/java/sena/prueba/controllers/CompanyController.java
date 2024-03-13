@@ -67,9 +67,9 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
         Files.createDirectories(path.getParent());
         Files.copy(companyDTO.getDocuments().getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
         File file = path.toFile();
-        int validation = splittableRandom.nextInt(1000, 9999);
-        System.out.println(validation+"codigo de validacion generado");
-        String message = "Hi here a new request  for create a new company "+companyDTO.getName_company().toUpperCase()+" in this message is the code of validation for the creation :"+validation+" and too the documentation about the company";
+
+
+        String message = "Hi here a new request  for create a new company "+companyDTO.getName_company().toUpperCase()+" in this message the documentation about the company";
         Company company = new Company();
         User usu = userService.findByid(companyDTO.getUser());
         company.setIdCompany(companyDTO.getIdCompany());
@@ -77,7 +77,6 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
         company.setDescriptionCompany(companyDTO.getDescription_company());
         company.setStateCompany("pending");
         company.setUser(usu);
-        company.setCodeValidation(validation);
         company.setActive(false);
         company.setAddress(companyDTO.getAddres());
         company.setPhone(companyDTO.getPhone());
@@ -127,11 +126,15 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
         System.out.println(e);
    }
     return null;
-};
-@GetMapping ( value = "/companies")
+}
+
+    @GetMapping ( value = "/companies")
         public ArrayList <Company> getCompanies (){
         return companyService.getCompanies();
 }
+
+
+
 
 
 
@@ -206,11 +209,10 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
         {
          return  ResponseEntity.badRequest().build();
         }
-    };
+    }
 
 
-
-@PostMapping( value = "/response")
+    @PostMapping( value = "/response")
 public  ResponseEntity <Resource> responseCompany (@RequestBody ResponseCompanyDTO  responseCompanyDTO){
     Company company = companyService.findCompanyById(responseCompanyDTO.getIdCompany());
     User user = userRepository.findUserByEmail(responseCompanyDTO.getEmail());
@@ -220,8 +222,24 @@ public  ResponseEntity <Resource> responseCompany (@RequestBody ResponseCompanyD
           company.setActive(true);
           company.setStateCompany("Finalized");
           company.setUserAuthorization(user);
+          for (int i=0;i<1;i++) {
+              int validation = splittableRandom.nextInt(1000, 9999);
+              Boolean codeExist = companyService.findCode(validation);
+              if (codeExist==false){
+                  company.setCodeValidation(validation);
+                  System.out.println("oeeee");
+                  i=10;
+              }
+              else{
+                  i=0;
+              }
+              System.out.println(codeExist);
+              System.out.println(validation);
+          }
+
           companyService.saveCompany(company);
           return ResponseEntity.ok().build();
+
       } else {
           company.setUserAuthorization(user);
           company.setStateCompany("Rejected");
@@ -232,8 +250,7 @@ public  ResponseEntity <Resource> responseCompany (@RequestBody ResponseCompanyD
   }catch (Exception e ){
       return  ResponseEntity.badRequest().build();
   }
-};
-
+}
 
 
     @PostMapping (value =  "/validateCodeCompany")
