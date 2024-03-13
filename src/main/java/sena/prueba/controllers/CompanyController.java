@@ -210,26 +210,29 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
 
 
 
-@PostMapping( value = "/response" )
+@PostMapping( value = "/response")
 public  ResponseEntity <Resource> responseCompany (@RequestBody ResponseCompanyDTO  responseCompanyDTO){
     Company company = companyService.findCompanyById(responseCompanyDTO.getIdCompany());
     User user = userRepository.findUserByEmail(responseCompanyDTO.getEmail());
-    if (responseCompanyDTO.getResponse()){
-        company.setActive(true);
-        company.setStateCompany("Finalized");
-        company.setUserAuthorization(user);
-        companyService.saveCompany(company);
-       return ResponseEntity.ok().build();
-    }
-
-
-
+  try {
+      if (responseCompanyDTO.getResponse()){
+          System.out.println("request enable");
+          company.setActive(true);
+          company.setStateCompany("Finalized");
+          company.setUserAuthorization(user);
+          companyService.saveCompany(company);
+          return ResponseEntity.ok().build();
+      } else {
+          company.setUserAuthorization(user);
+          company.setStateCompany("Rejected");
+          companyService.saveCompany(company);
+          System.out.println("request disable");
+          return ResponseEntity.status(201).build();
+      }
+  }catch (Exception e ){
+      return  ResponseEntity.badRequest().build();
+  }
 };
-
-
-
-
-
 
 
 
