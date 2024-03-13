@@ -102,13 +102,26 @@ export  const  changeState  = createAsyncThunk(
        const id = idCompany
           console.log(id)
           const  response = await api.post(`company/changeState/${idCompany}`)
-  console.log(response);
+          console.log(response);
           return response
       }catch (e) {
           throw e
       }
   }
 
+);
+
+export  const  responseCompany  = createAsyncThunk (
+    'company/responseCompany',
+  async  (responseCompany)=>{
+    try{
+        console.log(responseCompany)
+        const  response = await  api.post('company/response',responseCompany)
+        console.log(response)
+    }catch (e) {
+     throw  e
+    }
+    }
 );
 
 const  companySlice = createSlice({
@@ -147,6 +160,9 @@ const  companySlice = createSlice({
                     window.location.replace('/formValidateCode')
 
                 }
+            })
+            .addCase(responseCompany.fulfilled,(state,action)=>{
+                window.location.replace("/responseCompany")
             })
             .addCase(addCompanie.pending, (state) => {
                 state.loading = true;

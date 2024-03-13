@@ -43,7 +43,7 @@ const ModuleCompanies = () => {
 
     useEffect(() => {
         if (filesUser) {
-            const url = `http://localhost:8090/company/files?pathPdf=${filesUser}`;
+            const url = `http://localhost:8080/company/files?pathPdf=${filesUser}`;
             setPdfUrl(url);
         }
     }, [filesUser, companies.nameCompany]);
@@ -60,6 +60,14 @@ const ModuleCompanies = () => {
 
     const  handleValidationcode = ()=>{
         window.location.replace('/formValidateCode')
+    }
+
+    const  handleResponseCompany = () =>{
+        window.location.replace("/responseCompany")
+    }
+
+    const  handlereview = ()=>{
+        window.location.replace('/reviewCompany')
     }
     const company = useSelector(state => state.company.companies)
     const companyDisable = company.filter(compania => !compania.active);
@@ -106,35 +114,48 @@ const ModuleCompanies = () => {
 
                 {/* TABLE */}
 
-                <div className="float-end mr-6">
+                <div className="float-end mr-6 flex flex-row">
+                    <button
+                        className={"flex gap-2.5 items-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}
+                        onClick={handlereview}>
+                        Review Company
+                    </button>
+
+                    <button
+                        className={"flex gap-2.5 items-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}
+                        onClick={handleResponseCompany}>
+                        Response Company
+                    </button>
+
                     <button
                         className={"flex gap-2.5 items-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}
                         onClick={handleValidationcode}>
                         creation authorization
 
-                       <div className="flex">
+                        <div className="flex">
                             <RiNotification2Line className="text-xl"/>
-                           <p className="flex align-bottom">{notify} </p>
-                       </div>
-
+                            <p className="flex align-bottom">{notify} </p>
+                        </div>
                     </button>
+
+
                 </div>
                 <div
                     className="rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full justify-center  border-2 border-transparent transition-all mb-6">
-                    <TableCompanies data={companies} />
+                    <TableCompanies data={companies}/>
                 </div>
             </div>
-        </div>
+       </div>
         )}
         {userRole.includes('CLIENTE') && (
-        <div>
-            <HeaderCustomer />
-            {companiesUser ? (
-            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-                <h1 className="text-center text-xl mb-8">Information from your company</h1>
-                <div className="grid grid-cols-5 gap-8">
-                    <div className="col-span-5 xl:col-span-3">
-                        <div className="rounded-sm border border-stroke bg-white shadow-default">
+            <div>
+                <HeaderCustomer/>
+                {companiesUser ? (
+                    <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+                        <h1 className="text-center text-xl mb-8">Information from your company</h1>
+                        <div className="grid grid-cols-5 gap-8">
+                            <div className="col-span-5 xl:col-span-3">
+                                <div className="rounded-sm border border-stroke bg-white shadow-default">
                                 <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
                                     <h3 className="font-medium text-black dark:text-white">Company Data</h3>
                                 </div>
@@ -337,7 +358,7 @@ const ModuleCompanies = () => {
                                     <embed src={pdfUrl} type="application/pdf" width="100%" height="500px" />
                                 )}
                                 <br />
-                                <Link to={`http://localhost:8090/company/files?pathPdf=${filesUser}`} target="_blank" rel="noopener noreferrer">
+                                <Link to={`http://localhost:8080/company/files?pathPdf=${filesUser}`} target="_blank" rel="noopener noreferrer">
                                     <button className='bg-blue-700 hover:bg-blue-800 text-white px-4 py-3 rounded-lg transition'>Open in new tab</button>
                                 </Link>
                                 {/* <form action="#">
