@@ -76,6 +76,7 @@ public Company addCompany (@ModelAttribute CompanyDTO companyDTO  ){
         company.setDescriptionCompany(companyDTO.getDescription_company());
         company.setStateCompany("pending");
         company.setUser(usu);
+        usu.setLegal_person(true);
         company.setCodeValidation(validation);
         company.setActive(false);
         company.setAddress(companyDTO.getAddres());
@@ -193,7 +194,7 @@ public Optional<Company> createCompany  (@RequestBody CompanyDTO companyDTO){
             return ResponseEntity.badRequest().build();
         }
     }
-    @PostMapping(value = "company/changeState/{idCompany}")
+    @PostMapping(value = "/changeState/{idCompany}")
     public ResponseEntity <Resource>  changeStateCompany   (@PathVariable int idCompany){
     try {
        Company company = companyService.findCompanyById(idCompany);
