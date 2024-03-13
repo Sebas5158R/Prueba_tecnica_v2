@@ -77,6 +77,9 @@ const TableCompanies = ({ data }) => {
                                 <table className="w-auto text-sm text-left rtl:text-right text-gray-500 table-auto">
                                     <thead className="text-xs text-gray-700 uppercase bg-gray-50">
                                     <tr>
+                                        { company.codeValidation>0 && (
+                                            <th scope="col" className="px-6 py-3">Code Validation </th>
+                                        )}
                                         <th scope="col" className="px-6 py-3">Represent company</th>
                                         <th scope="col" className="px-6 py-3">Description Company</th>
                                         <th scope="col" className="px-6 py-3">Estate company</th>
@@ -90,7 +93,10 @@ const TableCompanies = ({ data }) => {
                                     </thead>
                                     <tbody>
                                         <tr className='bg-white border-b hover:hover:bg-blue-50'>
-                                        <td className="px-6 py-4">{company.user.names} {company.user.lastNames}</td>
+                                            { company.codeValidation>0 &&(
+                                            <td className="px-6 py-4">{company.descriptionCompany}</td>
+                                            )}
+                                            <td className="px-6 py-4">{company.user.names} {company.user.lastNames}</td>
                                             <td className="px-6 py-4">{company.descriptionCompany}</td>
                                             <td className="px-6 py-4">{company.stateCompany}</td>
                                             <td className="px-6 py-4">{company.address}</td>
