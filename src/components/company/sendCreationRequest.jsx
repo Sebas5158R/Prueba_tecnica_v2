@@ -32,7 +32,6 @@ const SendCreationRequest = () => {
     formData.append("documents", documents);
     formData.append("phone", phoneNumber);
     formData.append("address", address);
-    formData.append("documents", documents);
 
     dispatch(addCompanie(formData));
 
@@ -40,10 +39,9 @@ const SendCreationRequest = () => {
     setName("");
     setDescription("");
     setUser("");
-    setDocuments("");
+    setDocuments(null);
     setPhoneNumber("");
     setAddress("");
-    setDocuments(null);
     };
 
 

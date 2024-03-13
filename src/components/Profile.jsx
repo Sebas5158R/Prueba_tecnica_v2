@@ -41,8 +41,7 @@ const  Profile =()=>{
             const token = localStorage.getItem('user')
             const  decodedToken = jwtDecode(token)
             const emailS = decodedToken.sub;
-            console.log(emailS)
-            dispatch(userByEmail({email:emailS}))
+            dispatch(userByEmail(emailS))
         }, [dispatch]);
 
         useEffect(() => {

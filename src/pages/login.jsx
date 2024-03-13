@@ -45,12 +45,12 @@ const Login = () => {
                     <div className="mt-8">
                         <div>
                             <label className="text-lg font-medium">Email</label>
-                            <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" placeholder="Enter your email"/>
+                            <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" required className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" placeholder="Enter your email"/>
                         </div>
 
                         <div>
                             <label className="text-lg font-medium">Password</label>
-                            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" placeholder="Enter your password"/>
+                            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" required className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent" placeholder="Enter your password"/>
                         </div>
 
                         <div className="mt-8 flex justify-between items-center">
