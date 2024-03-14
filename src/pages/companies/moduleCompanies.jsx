@@ -5,7 +5,7 @@ import { companyByUser, fetchComapanies, fileByNameCompany } from "../../Store/C
 import NavBar from "../../components/NavBar";
 import Header from "../../components/Header";
 
-import { RiCloseLine, RiMenu3Fill, RiNotification2Line } from "react-icons/ri";
+import { RiCloseLine, RiMenu3Fill, RiCloseFill } from "react-icons/ri";
 
 import { RiCheckLine } from "react-icons/ri";
 
@@ -57,15 +57,13 @@ const ModuleCompanies = () => {
         dispatch(fetchComapanies());
     },[dispatch]);
 
-
-    const  handleValidationcode = ()=>{
-
-        window.location.replace('/formValidateCode')
+    const  handleResponseCompany = () =>{
+        window.location.replace("/responseCompany")
     }
-    const company = useSelector(state => state.company.companies)
-    const companyDisable = company.filter(compania => !compania.active);
-    const  notify = companyDisable.length
 
+    const  handlereview = ()=>{
+        window.location.replace('/reviewCompany')
+    }
 
     return (
     <div>
@@ -107,35 +105,41 @@ const ModuleCompanies = () => {
 
                 {/* TABLE */}
 
-                <div className="float-end mr-6">
+                <div className="float-end mr-6 flex flex-row">
+                    <Link to={"/companies"}>
+                        <button
+                            className={"flex gap-2.5 items-center py-2.5 px-5 me-2 mb-2 text-sm font-medium focus:outline-none rounded-lg border border-gray-200 bg-gray-100 text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}>
+                            Companies
+                        </button>
+                    </Link>
                     <button
                         className={"flex gap-2.5 items-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}
-                        onClick={handleValidationcode}>
-                        creation authorization
+                        onClick={handlereview}>
+                        Review Company
+                    </button>
 
-                       <div className="flex">
-                            <RiNotification2Line className="text-xl"/>
-                           <p className="flex align-bottom">{notify} </p>
-                       </div>
-
+                    <button
+                        className={"flex gap-2.5 items-center py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"}
+                        onClick={handleResponseCompany}>
+                        Response Company
                     </button>
                 </div>
                 <div
                     className="rounded-3xl p-8 flex flex-col md:flex-row gap-8 w-full justify-center  border-2 border-transparent transition-all mb-6">
-                    <TableCompanies data={companies} />
+                    <TableCompanies data={companies}/>
                 </div>
             </div>
-        </div>
+       </div>
         )}
         {userRole.includes('CLIENTE') && (
-        <div>
-            <HeaderCustomer />
-            {companiesUser ? (
-            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-                <h1 className="text-center text-xl mb-8">Information from your company</h1>
-                <div className="grid grid-cols-5 gap-8">
-                    <div className="col-span-5 xl:col-span-3">
-                        <div className="rounded-sm border border-stroke bg-white shadow-default">
+            <div>
+                <HeaderCustomer/>
+                {companiesUser ? (
+                    <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+                        <h1 className="text-center text-xl mb-8">Information from your company</h1>
+                        <div className="grid grid-cols-5 gap-8">
+                            <div className="col-span-5 xl:col-span-3">
+                                <div className="rounded-sm border border-stroke bg-white shadow-default">
                                 <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
                                     <h3 className="font-medium text-black dark:text-white">Company Data</h3>
                                 </div>
@@ -230,7 +234,7 @@ const ModuleCompanies = () => {
                             <h3 className="font-medium text-black">Progress Bar</h3>
                         </div>
                         <br />
-                        <div className="max-w-xl mx-auto my-4 border-b-2 pb-4">	
+                        <div className="max-w-xl mx-auto my-4 pb-4">	
                             <div className="flex pb-3">
 
                                 {/* STATE 1: REQUEST SENT */}
@@ -251,7 +255,7 @@ const ModuleCompanies = () => {
                                     </div>
                                 </div>
                                 <div className="flex-1">
-                                    <div className={`w-10 h-10 ${companiesUser.stateCompany === 'pending' || companiesUser.stateCompany === 'Reviewed' || companiesUser.stateCompany === 'Finalized' ?  'bg-green-400 mx-auto rounded-full' : ''} text-lg text-white flex items-center`}>
+                                    <div className={`w-10 h-10 ${companiesUser.stateCompany === 'pending' || companiesUser.stateCompany === 'Reviewed' || companiesUser.stateCompany === 'Finalized' || companiesUser.stateCompany === 'Rejected' ?  'bg-green-400 mx-auto rounded-full' : ''} text-lg text-white flex items-center`}>
                                         <span className="text-white text-center w-full"><RiCheckLine className="w-full fill-current white"/></span>
                                     </div>
                                 </div>
@@ -260,7 +264,7 @@ const ModuleCompanies = () => {
                                 {/* STATE 3: REVIEWED */}
                                 <div className="w-1/6 align-center items-center align-middle content-center flex">
                                     <div className="w-full bg-grey-light rounded items-center align-middle align-center flex-1">
-                                        {(companiesUser.stateCompany === 'Reviewed' || companiesUser.stateCompany === 'Finalized') && (
+                                        {(companiesUser.stateCompany === 'Reviewed' || companiesUser.stateCompany === 'Finalized' || companiesUser.stateCompany === 'Rejected') && (
                                             <div className="bg-green-500 text-xs leading-none py-1 text-center text-gray-100 rounded " style={{width: 100+'%'}}></div>
                                         )}
                                         {(companiesUser.stateCompany === 'pending') && (
@@ -269,8 +273,8 @@ const ModuleCompanies = () => {
                                     </div>
                                 </div>
                                 <div className="flex-1">
-                                    <div className={`w-10 h-10 ${companiesUser.stateCompany === 'Reviewed' || companiesUser.stateCompany === 'Finalized' ? 'bg-green-400 mx-auto rounded-full' : ''} mx-auto rounded-full text-lg text-white flex items-center`}>
-                                        {(companiesUser.stateCompany === 'Reviewed' || companiesUser.stateCompany === 'Finalized')&&(
+                                    <div className={`w-10 h-10 ${companiesUser.stateCompany === 'Reviewed' || companiesUser.stateCompany === 'Finalized' || companiesUser.stateCompany === 'Rejected' ? 'bg-green-400 mx-auto rounded-full' : ''} mx-auto rounded-full text-lg text-white flex items-center`}>
+                                        {(companiesUser.stateCompany === 'Reviewed' || companiesUser.stateCompany === 'Finalized'|| companiesUser.stateCompany === 'Rejected')&&(
                                                 <span className="text-white text-center w-full"><RiCheckLine className="w-full fill-current white"/></span>
                                         )}
                                         {(companiesUser.stateCompany === 'pending') && (
@@ -289,15 +293,21 @@ const ModuleCompanies = () => {
                                         {(companiesUser.stateCompany === 'Reviewed') && (
                                                 <div className="bg-green-500 text-xs leading-none py-1 text-center text-gray-100 rounded " style={{width: 0+'%'}}></div>
                                         )}
+                                        {(companiesUser.stateCompany === 'Rejected') && (
+                                            <div className="bg-red-500 text-xs leading-none py-1 text-center text-gray-100 rounded " style={{width: 100+'%'}}></div>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="flex-1">
-                                    <div className={`w-10 h-10 ${companiesUser.stateCompany === 'Finalized' ? 'bg-green-400 mx-auto rounded-full' : ''} mx-auto rounded-full text-lg text-white flex items-center`}>
+                                    <div className={`w-10 h-10 ${companiesUser.stateCompany === 'Finalized' ? 'bg-green-400 mx-auto rounded-full' : ''} ${companiesUser.stateCompany === 'Rejected' ? 'bg-red-500 mx-auto rounded-full' : ''} mx-auto rounded-full text-lg text-white flex items-center`}>
                                         {(companiesUser.stateCompany === 'Finalized')&&(
                                                 <span className="text-white text-center w-full"><RiCheckLine className="w-full fill-current white"/></span>
                                         )}
                                         {(companiesUser.stateCompany === 'Reviewed' || companiesUser.stateCompany === 'pending') && (
                                             <span className="text-black text-center w-full">4</span>
+                                        )}
+                                        {(companiesUser.stateCompany === 'Rejected')&&(
+                                                <span className="text-white text-center w-full"><RiCloseFill className="w-full fill-current white"/></span>
                                         )}
                                     </div>
                                 </div>
@@ -324,6 +334,21 @@ const ModuleCompanies = () => {
                                     Finalized
                                 </div>			
                             </div>
+                            
+                            {
+                                companiesUser.stateCompany === 'Rejected' ? (
+                                    <div className="border-t-2 border-gray-100 mt-7">
+                                        <p className="text-center mt-1">Your company has been <span className="text-red-500">rejected</span></p>
+                                    </div>
+                                ) : (
+                                    <div className="border-t-2 border-gray-100 mt-7 flex justify-center items-center flex-col">
+                                        <p className="text-center mt-1">Your company has been <span className="text-green-600">accepted</span></p>
+                                        <Link to={"/services"}>
+                                            <button className="bg-green-700 hover:bg-green-800 text-white px-4 py-3 rounded-lg transition mt-4">Register Services</button>
+                                        </Link>
+                                    </div>
+                                )
+                            }
                         </div>
                     </div>
                     <div className="col-span-5 xl:col-span-2">

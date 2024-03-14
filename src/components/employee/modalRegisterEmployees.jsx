@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {addUser, clearMessage} from "../../Store/UserSlice";
+import { RiArrowLeftLine } from "react-icons/ri";
 
 const ModalRegisterEmployees = () => {
-
 
     const [names, setNames] = useState("");
     const [lastNames, setLastNames] = useState("");
@@ -177,7 +177,11 @@ const ModalRegisterEmployees = () => {
                             <div className="relative bg-white rounded-lg shadow">
                                 <div
                                     className="flex items-center justify-between p-4 md:p-5 border-b border-blue-300 rounded-t">
-                                    <h3 className="text-lg font-semibold text-gray-900">
+                                        <button type="button" onClick={() => {setStep(1)}} className="text-gray-400 bg-transparent hover:bg-blue-200 hover:text-blue-900 rounded-lg text-sm h-8 w-8 mr-11 inline-flex justify-center items-center">
+                                            <RiArrowLeftLine className="w-5 h-5"/>
+                                        </button>
+
+                                    <h3 className="text-lg font-semibold text-gray-900 text-center">
                                         Register a new Employee
                                     </h3>
 
