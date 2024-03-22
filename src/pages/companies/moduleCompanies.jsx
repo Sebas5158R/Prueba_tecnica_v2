@@ -336,11 +336,14 @@ const ModuleCompanies = () => {
                             </div>
                             
                             {
-                                companiesUser.stateCompany === 'Rejected' ? (
+                                companiesUser.stateCompany === 'Rejected' && (
                                     <div className="border-t-2 border-gray-100 mt-7">
                                         <p className="text-center mt-1">Your company has been <span className="text-red-500">rejected</span></p>
                                     </div>
-                                ) : (
+                                )
+                            }
+                            {
+                                companiesUser.stateCompany === 'Finalized' && (
                                     <div className="border-t-2 border-gray-100 mt-7 flex justify-center items-center flex-col">
                                         <p className="text-center mt-1">Your company has been <span className="text-green-600">accepted</span></p>
                                         <Link to={"/services"}>

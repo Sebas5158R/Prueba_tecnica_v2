@@ -179,7 +179,6 @@ const  Profile =()=>{
                                 <label htmlFor="phoneNumber"
                                        className="block text-sm font-medium text-gray-700">Password</label>
                                 <input type="text" id="password" name="password" placeholder="New password"
-                                       onChange={handleChange}
                                        className="w-full border-2 border-gray-100 rounded-xl p-4 mt-1 bg-transparent"/>
                             </div>
                             <div className="col-span-2">
